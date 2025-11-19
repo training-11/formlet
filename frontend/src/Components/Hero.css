@@ -1,0 +1,17 @@
+.hero {
+   /* strong pink - adjust to match screenshot */
+  /* color: #fff; */
+  /* padding: 48px 0 80px; */
+}
+.hero-inner {
+    background: #317a35;
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  gap:24px;
+  align-items:center;
+  padding:0 20px;
+}
+@media (max-width:900px){
+  .hero-inner { flex-direction:column; text-align:center; padding-bottom:40px; }
+}

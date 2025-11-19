@@ -1,0 +1,37 @@
+.hero-features {
+    margin-top: -40px;
+  background:#f4f1ec;
+  display:flex;
+  justify-content:center;
+  gap:140px;
+  padding:80px 0;
+  text-align:center;
+}
+
+.feature-box img {
+  width:90px;
+  margin-bottom:12px;
+}
+
+.feature-box p {
+  font-family:Georgia, serif;
+  font-size:22px;
+  line-height:1.2;
+}
+
+.hero-features {
+  background: #f4f1ec;
+  display: flex;
+  justify-content: center;
+  gap: 140px;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.feature-box p {
+  color: black;      /* ← FIX HERE */
+  font-family: Georgia, serif;
+  font-size: 22px;
+  line-height: 1.2;
+}
+

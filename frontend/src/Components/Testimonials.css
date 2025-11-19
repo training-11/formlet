@@ -1,0 +1,114 @@
+/* Testimonials.css - isolated styles for the testimonial section */
+
+.testimonials {
+  position: relative; /* IMPORTANT: allows overlay without breaking layout */
+  padding: 72px 20px 100px;
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
+  overflow: hidden;
+  /* background image set inline from component */
+}
+
+/* semi-transparent overlay for contrast */
+.testimonials::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #317a35; /* pink overlay */
+  z-index: 0;
+}
+
+/* inner container sits above overlay */
+.testimonials-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1150px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px 20px;
+}
+
+/* title */
+.testimonials-title {
+  font-size: 44px;
+  margin: 6px 0 48px;
+  font-family: Georgia, serif;
+}
+
+/* grid: two columns on desktop, one column on small screens */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 60px;
+  align-items: start;
+  justify-items: center;
+}
+
+/* each testimonial card */
+.testimonial {
+  max-width: 540px;    /* ensures paragraph wraps and doesn't spread across page */
+  text-align: left;
+  color: #fff;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+/* large decorative quote */
+.quote-mark {
+  font-size: 84px;
+  line-height: 0.6;
+  color: rgba(255,255,255,0.96);
+  margin-bottom: 12px;
+  transform: translateY(6px);
+}
+
+/* paragraph */
+.testimonial-text {
+  font-size: 22px;
+  line-height: 1.7;
+  color: #fff;
+  margin: 6px 0 20px;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* highlighted inline box (white background, black text) */
+.highlight {
+  display: inline-block;    /* important to keep white box attached to the word/phrase */
+  background: #fff;
+  color: #111;
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-family: Georgia, serif;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* author */
+.testimonial-author {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.95);
+  margin-top: 12px;
+}
+
+/* responsiveness */
+@media (max-width: 1000px) {
+  .testimonials-title { font-size: 36px; margin-bottom: 32px; }
+  .quote-mark { font-size: 64px; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 36px; }
+  .testimonial { text-align: center; max-width: 700px; }
+  .testimonial-text { text-align: center; }
+  .highlight { white-space: normal; } /* allow highlight to wrap on small screens */
+}
+
+@media (max-width: 480px) {
+  .testimonials { padding: 48px 12px; }
+  .testimonials-title { font-size: 28px; }
+  .testimonial-text { font-size: 18px; line-height: 1.5; }
+  .quote-mark { font-size: 52px; }
+}

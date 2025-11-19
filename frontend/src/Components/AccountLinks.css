@@ -1,0 +1,7 @@
+.acct { display:flex; gap:14px; align-items:center; font-size:14px; }
+.acct .delivery { color:#333; }
+.acct .signin { text-decoration:underline; color:#111; }
+.acct .avatar {
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:#111;color:#fff;font-size:15px;
+}
