@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  formlet-backend:
+    build: ./backend
+    container_name: formlet-backend
+    restart: always
+    environment:
+      - PORT=8010
+      - MONGO_URL=mongodb://localhost:27017/crud
+    ports:
+      - "8010:8010"
+
+  formlet-frontend:
+    build: ./frontend
+    container_name: formlet-frontend
+    restart: always
+    ports:
+      - "8090:80"
+    depends_on:
+      - formlet-backend
+
