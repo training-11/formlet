@@ -4,8 +4,10 @@ import "./StepsSection.css";
 export default function StepsSection() {
   return (
     <section className="steps-section">
+      <div className="Header">
+        <h1>How Farmlet Works</h1>
+      </div>
       <div className="steps-container">
-       
         <div className="step-box">
           <img className="step-img" src="/icons/step1.png" alt="Step 1" />
 
@@ -20,7 +22,6 @@ export default function StepsSection() {
           </p>
         </div>
 
-      
         <div className="step-box">
           <img className="step-img" src="/icons/step2.png" alt="Step 2" />
 

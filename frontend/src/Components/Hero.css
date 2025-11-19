@@ -5,7 +5,7 @@
 }
 .hero-inner {
     background: #317a35;
-  max-width:1200px;
+  /* max-width:1200px; */
   margin:0 auto;
   display:flex;
   gap:24px;

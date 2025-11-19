@@ -41,6 +41,10 @@
   font-family: Arial, sans-serif;
 }
 
+
+.Header{
+    margin-top: -10px;
+}
 @media (max-width: 900px) {
   .steps-container {
     flex-direction: column;
