@@ -5,7 +5,7 @@ export default function StepsSection() {
   return (
     <section className="steps-section">
       <div className="steps-container">
-        {/* STEP 1 */}
+       
         <div className="step-box">
           <img className="step-img" src="/icons/step1.png" alt="Step 1" />
 
@@ -20,7 +20,7 @@ export default function StepsSection() {
           </p>
         </div>
 
-        {/* STEP 2 */}
+      
         <div className="step-box">
           <img className="step-img" src="/icons/step2.png" alt="Step 2" />
 
