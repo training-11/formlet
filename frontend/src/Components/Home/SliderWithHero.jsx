@@ -7,7 +7,7 @@ const slides = [
     percent: "92%",
     lines: [
       "of customers say",
-      "Riverford's fruit & veg boxes",
+      "myFarmlet's fruit & veg boxes",
       "make eating fruit & veg",
     ],
     highlight: "easier and tastier",
@@ -17,7 +17,7 @@ const slides = [
     percent: "97%",
     lines: [
       "of customers say",
-      "Riverford's fruit & veg boxes help",
+      "myFarmlet's fruit & veg boxes help",
       "their family",
     ],
     highlight: "eat more healthily",
@@ -26,7 +26,7 @@ const slides = [
     percent: "90%",
     lines: [
       "of customers say",
-      "Riverford's fruit & veg boxes help their family",
+      "myFarmlet's fruit & veg boxes help their family",
     ],
     highlight: "reduce ultra-processed foods",
     bottom: "in their diet",

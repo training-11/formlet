@@ -53,7 +53,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <p>Terms and conditions | Privacy information | Cookie policy</p>
         <small>
-          © 2017-2025 Riverford Organic Farmers Ltd, Buckfastleigh, Devon, TQ11
+          © 2017-2025 myFarmlet Organic Farmers Ltd, Buckfastleigh, Devon, TQ11
           0JU.
         </small>
       </div>

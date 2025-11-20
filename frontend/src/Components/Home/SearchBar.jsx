@@ -6,7 +6,7 @@ export default function SearchBar() {
     <div className="searchbar">
       <input
         className="search-input"
-        placeholder="Search Riverford"
+        placeholder="Search myFarmlet"
         aria-label="Search"
       />
       <button className="search-btn" aria-label="Search button">
