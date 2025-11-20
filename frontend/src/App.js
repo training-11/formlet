@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "./Components/Navbar";
-import Hero from "./Components/Hero";
-import Footer from "./Components/Footer";
-import StepsSection from "./Components/StepsSection";
-import Testimonials from "./Components/Testimonials";
-import GrownForFlavour from "./Components/GrownForFlavour";
-import SliderWithHero from "./Components/SliderWithHero";
+import Navbar from "./Components/Home/Navbar";
+import Hero from "./Components/Home/Hero";
+import Footer from "./Components/Home/Footer";
+import StepsSection from "./Components/Home/StepsSection";
+import Testimonials from "./Components/Home/Testimonials";
+import GrownForFlavour from "./Components/Home/GrownForFlavour";
+import SliderWithHero from "./Components/Home/SliderWithHero";
 import "./App.css";
 
 export default function App() {

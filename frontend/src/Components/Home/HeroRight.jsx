@@ -1,7 +1,7 @@
 import React from "react";
 import "./HeroRight.css";
 
-import HeroImage from "../Images/HeroImage.jpeg";
+import HeroImage from "../../Images/HeroImage.jpeg";
 
 export default function HeroRight() {
   return (

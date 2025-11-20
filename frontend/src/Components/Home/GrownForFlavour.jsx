@@ -1,9 +1,9 @@
 import React from "react";
 import "./GrownForFlavour.css";
-import maize from "../Images/maize.jpeg";
-import tractorRed from "../Images/tractorRed.jpg";
-import onions from "../Images/onions.jpeg";
-import HeroImage from "../Images/HeroImage.jpeg";
+import maize from "../../Images/maize.jpeg";
+import tractorRed from "../../Images/tractorRed.jpg";
+import onions from "../../Images/onions.jpeg";
+import HeroImage from "../../Images/HeroImage.jpeg";
 
 export default function GrownForFlavour() {
   const cards = [
