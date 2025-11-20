@@ -1,6 +1,6 @@
 import React from "react";
 import "./Testimonials.css";
-
+// small change
 export default function Testimonials() {
   const BG_IMAGE = "/mnt/data/9e468c0c-ebff-4d37-8749-cd5cd4dbc2e1.png";
 

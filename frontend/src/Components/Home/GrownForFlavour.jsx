@@ -20,6 +20,8 @@ export default function GrownForFlavour() {
       text: "Working with them over the long-term means that our food is completely traceable and we are supporting farmers who do the right thing.",
     },
   ];
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"></link>
+
 
   return (
     <section className="grown-section">

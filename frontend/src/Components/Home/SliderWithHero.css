@@ -5,8 +5,9 @@
   background-color: #61B860;
   text-align: center;
   color: white;
-  font-family: "Cormorant Garamond", serif;
+  font-family: 'Amatic SC', cursive;
   padding-bottom: 80px;
+  font-weight: bold;
 }
 
 .hero-slide {

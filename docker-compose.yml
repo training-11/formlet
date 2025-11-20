@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  formlet-backend:
+    build: ./backend
+    container_name: formlet-backend
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=8010
+      - MONGO_URL=mongodb://host.docker.internal:27017/crud
+    ports:
+      - "8010:8010"
+    networks:
+      - formlet-network
+
+  formlet-frontend:
+    build: ./frontend
+    container_name: formlet-frontend
+    restart: always
+    ports:
+      - "8090:80"
+    depends_on:
+      - formlet-backend
+    networks:
+      - formlet-network
+
+networks:
+  formlet-network:
+    driver: bridge
+

@@ -14,6 +14,8 @@ export default function StepsSection() {
           <h2 className="step-title">
             Choose a weekly <br /> box of goodness
           </h2>
+          <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"></link>
+
 
           <p className="step-description">
             We offer a variety of set boxes to suit your needs, harvested from

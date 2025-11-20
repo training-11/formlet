@@ -15,7 +15,7 @@ export default function Hero() {
       </div>
 
       <HeroCTA />
-      <HeroCurve />
+      {/* <HeroCurve /> */}
       <HeroFeatures />
     </section>
   );
