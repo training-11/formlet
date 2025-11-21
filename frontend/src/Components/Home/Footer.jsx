@@ -2,7 +2,6 @@ import React from "react";
 import "./Footer.css";
 import appstore from "../../Images/AppStore.png";
 import playstore from "../../Images/PlayStore.png";
-//starting of function
 import facebook from "../../Images/FB.svg";
 import twitter from "../../Images/X.svg";
 import pinterest from "../../Images/Pinterest.svg";
