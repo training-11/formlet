@@ -1,5 +1,8 @@
 import React from "react";
 import "./StepsSection.css";
+import HeroFeatures2 from "../../Images/HeroFeatures2.jpg";
+import HeroFeatures3 from "../../Images/HeroFeatures3.jpg";
+import HeroFeatures1 from "../../Images/HeroFeatures1.jpg";
 
 export default function StepsSection() {
   return (
@@ -9,13 +12,15 @@ export default function StepsSection() {
       </div>
       <div className="steps-container">
         <div className="step-box">
-          <img className="step-img" src="/icons/step1.png" alt="Step 1" />
+          <img className="step-img" src={HeroFeatures2} alt="Step 1" />
 
           <h2 className="step-title">
             Choose a weekly <br /> box of goodness
           </h2>
-          <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"></link>
-
+          <link
+            href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap"
+            rel="stylesheet"
+          ></link>
 
           <p className="step-description">
             We offer a variety of set boxes to suit your needs, harvested from
@@ -25,7 +30,7 @@ export default function StepsSection() {
         </div>
 
         <div className="step-box">
-          <img className="step-img" src="/icons/step2.png" alt="Step 2" />
+          <img className="step-img" src={HeroFeatures3} alt="Step 2" />
 
           <h2 className="step-title">
             Add farm-fresh <br /> essentials
@@ -39,7 +44,7 @@ export default function StepsSection() {
         </div>
 
         <div className="step-box">
-          <img className="step-img" src="/icons/step3.png" alt="Step 3" />
+          <img className="step-img" src={HeroFeatures1} alt="Step 3" />
 
           <h2 className="step-title">
             Free delivery to <br /> your door
