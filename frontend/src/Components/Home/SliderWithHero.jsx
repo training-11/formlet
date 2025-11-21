@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./SliderWithHero.css";
-import VegBox from "../../Images/HeroImage.jpeg";
+import VegBox from "../../Images/hero3.png";
 
 const slides = [
   {

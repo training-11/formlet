@@ -2,7 +2,7 @@
 
 .hero-container {
   width: 100%;
-  background-color: #61B860;
+  background-color:rgb(0,179,93);
   text-align: center;
   color: white;
   font-family: 'Amatic SC', cursive;
@@ -16,47 +16,49 @@
 }
 
 .percent {
-  font-size: 110px;
+  font-size: 130px;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-bottom: -0px;
 }
 
 .line {
-  font-size: 35px;
+  margin-top: -50px;
+  font-size: 40px;
   margin: 5px 0;
 }
 
 .highlight {
   display: inline-block;
-  margin-top: 20px;
-  padding: 10px 35px;
+  margin-top: 30px;
+  padding: 20px 40px;
   background: white;
   color: black;
-  font-size: 32px;
-  border: 3px solid black;
+  font-size: 45px;
 }
 
 .arrow {
   position: absolute;
   top: 50%;
-  font-size: 95px;
+  font-size: 200px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
-  transform: translateY(-50%);
-  font-weight: 300;
+  transform: rotate(-360deg);
+  font-weight: 200;
 }
 
-.left { left: 120px; }
-.right { right: 120px; }
+.left { left: 40px; }
+.right { right: 40px; }
 
 .hero-bottom {
-  margin-top: -80px;
+  margin-top: -150px;
+  font-family: "Work Sans",sans-serif;
+
 }
 
 .veg-img {
-  width: 750px;
+  width: 900px;
 }
 
 .join {
@@ -65,8 +67,9 @@
 }
 
 .big-text {
-  font-size: 90px;
+  font-size: 150px;
   margin: 20px 0 40px;
+  font-family: 'Amatic SC',sans-serif;
 }
 
 .start-btn {

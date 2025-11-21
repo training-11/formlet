@@ -8,7 +8,7 @@ import HeroImage from "../../Images/HeroImage.jpeg";
 export default function GrownForFlavour() {
   const cards = [
     {
-      img: maize,
+      img: onions,
       text: "Farming sustainably is at the heart of all we do, looking after our soil, wildlife, and water sources. We think that small-scale farming tastes best.",
     },
     {
@@ -16,7 +16,7 @@ export default function GrownForFlavour() {
       text: "Anything we can't grow or make ourselves comes from our group of organic growers and producers who share our values.",
     },
     {
-      img: onions,
+      img: maize,
       text: "Working with them over the long-term means that our food is completely traceable and we are supporting farmers who do the right thing.",
     },
   ];

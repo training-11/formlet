@@ -3,10 +3,12 @@
 
 .grown-section {
   position: relative;
-  background: #f4f1ec;
+  background: HEX#00C853;
   padding-bottom: 120px;
   overflow-x: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:"Work Sans",sans-serif;
+  line-height: 1.8;
+
 }
 
 .grown-angled-top {
@@ -43,17 +45,17 @@
 
 .grown-title {
     margin-top: 120px;
-  font-family: 'Amatic SC', cursive;
-  font-size: 46px;
-  font-weight: 400;
+  font-family:"Amatic SC",sans-serif;
+  font-size: 60px;
   color: #3a2a19;
   margin-bottom: 60px;
+  font-weight: bold;
 }
 
 .grown-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
+  gap: 60px;
   justify-items: center;
   align-items: start;
   padding: 0 20px;
@@ -76,15 +78,16 @@
 }
 
 .grown-card-text {
+  font-family: "Work Sans",sans-serif;
+  font-weight: 450;
   margin-top: 22px;
-  font-size: 17px;
-  line-height: 1.8;
-  color: #3a2a19;
+  font-size: 16px;
+  line-height: 2.0;
+    color: #3a2a19;
   max-width: 320px;
-  text-align: left;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
-  font-family: "Work Sans",sans-serif;
 }
 
 @media (max-width: 1000px) {

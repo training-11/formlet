@@ -5,7 +5,7 @@ export default function HeroFeatures() {
   return (
     <div className="hero-features">
       <div className="feature-box">
-        <img src="/icons/tractor.png" alt="tractor" />
+        <img src="../../images/farmers.png" alt="tractor" />
         <p>
           Direct from
           <br />
@@ -17,7 +17,7 @@ export default function HeroFeatures() {
       </div>
 
       <div className="feature-box">
-        <img src="/icons/bee.png" alt="organic" />
+        <img src="../../images/Organic.png" alt="organic icon" className="feature-icon" />
         <p>
           100%
           <br />
@@ -26,7 +26,7 @@ export default function HeroFeatures() {
       </div>
 
       <div className="feature-box">
-        <img src="/icons/chemicals.png" alt="no chemicals" />
+        <img src="../../images/chemicals.png" alt="no chemicals icon" />
         <p>
           No artificial
           <br />

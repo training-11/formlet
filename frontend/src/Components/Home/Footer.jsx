@@ -3,6 +3,13 @@ import "./Footer.css";
 import appstore from "../../Images/AppStore.png";
 import playstore from "../../Images/PlayStore.png";
 //starting of function
+import facebook from "../../Images/FB.svg";
+import twitter from "../../Images/X.svg";
+import pinterest from "../../Images/Pinterest.svg";
+import instagram from "../../Images/Instagram.svg";
+import youtube from "../../Images/Youtube.svg";
+
+
 export default function Footer() {
   return (
     <footer className="footer">
@@ -10,13 +17,9 @@ export default function Footer() {
         <div className="footer-column">
           <h3>About us</h3>
           <p>Careers</p>
-          <p>Our restaurant</p>
-          <p>Wholesale</p>
           <p>Sustainability</p>
           <p>Our packaging</p>
           <p>Growers & makers</p>
-          <p>Modern slavery statement</p>
-          <p>Gender pay gap report</p>
         </div>
 
         <div className="footer-column">
@@ -42,20 +45,26 @@ export default function Footer() {
       </div>
 
       {/* SOCIAL ICONS */}
-      <div className="social-row">
-        <i className="fab fa-facebook"></i>
-        <i className="fab fa-twitter"></i>
-        <i className="fab fa-pinterest"></i>
-        <i className="fab fa-instagram"></i>
-        <i className="fab fa-youtube"></i>
-      </div>
+      <div className="social-icons">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <img src={facebook} alt="Facebook" className="social-icon" />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+            <img src={twitter} alt="Twitter" className="social-icon" />
+          </a>
+          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer">
+            <img src={pinterest} alt="Pinterest" className="social-icon" />
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <img src={instagram} alt="Instagram" className="social-icon" />
+          </a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+            <img src={youtube} alt="YouTube" className="social-icon" />
+          </a>
 
+          </div>
       <div className="footer-bottom">
         <p>Terms and conditions | Privacy information | Cookie policy</p>
-        <small>
-          © 2017-2025 myFarmlet Organic Farmers Ltd, Buckfastleigh, Devon, TQ11
-          0JU.
-        </small>
       </div>
     </footer>
   );

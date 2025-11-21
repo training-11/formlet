@@ -6,6 +6,7 @@ import StepsSection from "./Components/Home/StepsSection";
 import Testimonials from "./Components/Home/Testimonials";
 import GrownForFlavour from "./Components/Home/GrownForFlavour";
 import SliderWithHero from "./Components/Home/SliderWithHero";
+import FaqSection from "./Components/Home/FaqSection";
 import "./App.css";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
       <Testimonials />
       <GrownForFlavour />
       <SliderWithHero/>
+      <FaqSection/>
 
       <Footer />
     </div>
