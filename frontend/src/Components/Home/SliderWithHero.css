@@ -2,12 +2,13 @@
 
 .hero-container {
   width: 100%;
-  background-color:#00c060;
+  background-color:#01BF64;
   text-align: center;
   color: white;
   font-family: 'Amatic SC', cursive;
   padding-bottom: 60px;
   font-weight: bold;
+  
 }
 
 .hero-slide {
@@ -21,7 +22,7 @@
   font-size: 100px;
   font-weight: 500;
   padding-top: -20px;
-  top: -120px;
+  top: -130px;
   position: relative;
   display: flex;
   justify-content: center;
