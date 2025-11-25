@@ -1,15 +1,16 @@
 import React from "react";
 import "./HeroFeatures.css";
-import HeroFeatures6 from "../../Images/HeroFeatures6.jpg";
-import HeroFeatures4 from "../../Images/HeroFeatures4.jpg";
-import HeroFeatures5 from "../../Images/HeroFeatures5.jpg";
+
+import farmers from "../../Images/farmers.png";
+import organic from "../../Images/organic.jpeg";
+import chemicals from "../../Images/chemicals.png";
 // HeroFeatures6.jpg
 
 export default function HeroFeatures() {
   return (
     <div className="hero-features">
       <div className="feature-box">
-        <img src={HeroFeatures6} alt="tractor" />
+        <img src={farmers} alt="tractor" />
         <p>
           Direct from
           <br />
@@ -31,7 +32,7 @@ export default function HeroFeatures() {
       </div>
 
       <div className="feature-box">
-        <img src={HeroFeatures4} alt="organic icon" className="feature-icon" />
+        <img src={organic} alt="organic icon" className="feature-icon" />
         <p>
           100%
           <br />
@@ -40,7 +41,7 @@ export default function HeroFeatures() {
       </div>
 
       <div className="feature-box">
-        <img src={HeroFeatures5} alt="no chemicals icon" />
+        <img src={chemicals} alt="no chemicals icon" />
         <p>
           No artificial
           <br />
