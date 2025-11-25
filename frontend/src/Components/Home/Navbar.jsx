@@ -1,55 +1,110 @@
-import React from "react";
-import SearchBar from "./SearchBar";
-import AccountLinks from "./AccountLinks";
+import React, { useState } from "react";
 import "./Navbar.css";
+import { FaUser } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
+import { BsCalendarEvent } from "react-icons/bs";
 import logo from "../../Images/Logo 1.png";
-import farmlet from "../../Images/Farmletlogo.png";
-
-import { Link } from "react-router-dom";
-
 export default function Navbar() {
+  const [activeTab, setActiveTab] = useState("Shop");
+
+  const submenus = {
+    Shop: [
+      "Seasonal boxes",
+      "Christmas",
+      "What's new",
+      "Recipe boxes & kits",
+      "Fruit, veg & salad",
+      "Essentials",
+      "Meat",
+    ],
+    About: [
+      "Our story",
+      "Ethics & ethos",
+      "Sustainability",
+      "Farmers & growers",
+      "Packaging & recycling",
+    ],
+    Recipes: [
+      "Browse all recipes",
+      "Quick & easy",
+      "Vegetarian & vegan",
+      "Healthy recipes",
+      "Seasonal recipes",
+    ],
+    Delivery: ["Your delivery schedule "],
+Account: ["FAQs", "Help and contact", "Sign in or create account"],
+
+  };
+
+  const handleHover = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
-    <header className="nav-wrap">
-      <div className="nav-inner">
+    <>
+      {/* Top Navbar */}
+      <nav className="main-navbar" onMouseLeave={() => setActiveTab("Shop")}>
+
         <div className="nav-left">
-         <div className="logo-img"><img src={logo} alt="logo" /></div>
-         {/* <img src={logo} alt="logo" /> */}
-
-          {/* <div className="logo">Farmlet</div> */}
-          <div className="logo">Farmlet</div>
-
-          {/* <nav className="main-links" aria-label="Main navigation">
-            <a href="#">Shop</a>
-            <a href="#">About Farmlet</a>
-          </nav>
-          </nav> */}
-          <nav className="main-links" aria-label="Main navigation">
-  <Link to="/shop">Shop</Link>
-  <Link to="/about">About Farmlet</Link>
-
-</nav>
-
+          <img
+            src={logo}
+            alt="logo"
+            className="nav-logo"
+          />
         </div>
+
+        <ul className="nav-center">
+          <li
+            className={activeTab === "Shop" ? "active" : ""}
+            onMouseEnter={() => handleHover("Shop")}
+          >
+            Shop
+          </li>
+          <li
+            className={activeTab === "About" ? "active" : ""}
+            onMouseEnter={() => handleHover("About")}
+          >
+            About Formlet 
+          </li>
+      </ul>
 
         <div className="nav-right">
-          <SearchBar />
-          <AccountLinks />
-        </div>
-      </div>
+                     {/* Move search box here */}
+<div className="search-box">
+  <input type="text" placeholder="Search Formlet" />
+  <FiSearch size={20} />
+</div>
+  <div
+    className={`right-item ${activeTab === "Delivery" ? "active" : ""}`}
+    onMouseEnter={() => handleHover("Delivery")}
+  >
+    <span>
+      Your delivery<br />schedule
+    </span>
+    <BsCalendarEvent size={25}/>
+  </div>
 
-      <div className="nav-submenu">
-        <img src={farmlet} alt="Farmlet Logo" />
+  <div
+    className={`right-item ${activeTab === "Account" ? "active" : ""}`}
+    onMouseEnter={() => handleHover("Account")}
+  >
+    <span>
+      Sign in or<br />create account
+    </span>
+    <FaUser size={25} />
+  </div>
+</div>
 
-        <div className="submenu-inner">
-          {/* <a href="#">Seasonal boxes</a>
-          <a href="#">Christmas</a>
-          <a href="#">What's new</a>
-          <a href="#">Recipe boxes & kits</a>
-          <a href="#">Fruit, veg & salad</a>
-          <a href="#">Essentials</a>
-          <a href="#">Meat</a> */}
-        </div>
+      </nav>
+
+      {/* Submenu */}
+      <div className="submenu" onMouseLeave={() => setActiveTab("Shop")}>
+        {submenus[activeTab].map((item, index) => (
+          <span key={index} className="submenu-item">
+            {item}
+          </span>
+        ))}
       </div>
-    </header>
+    </>
   );
 }

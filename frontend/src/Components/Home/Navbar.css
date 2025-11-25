@@ -1,63 +1,126 @@
-.nav-wrap {
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  font-family: Arial, sans-serif;
-  
-    
-}
-.nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4px 14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height: 80px;
-}
-.nav-left { display:flex; gap:28px; align-items:center; }
+/* Main Navbar */
+.main-navbar {
+   height: 72px;  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 25px;
+  background: #F8F3EA;
+  font-family: sans-serif;
 
-.logo-img img {
-  
-  width:160px;
-  height: auto;
- 
-  
 }
-.nav-left { display:flex; gap:12px; align-items:center;}
-
-.logo-img img {
-  width: 70px;        
-  height: auto;
-  margin-top: -10px
+.nav-left {
+margin-left: 30px;
+}
+.nav-logo {
+   height: 85px;         
+  width: 200px;          
+  cursor: pointer;
+  object-fit: contain;
 }
 
-.logo {
-  font-weight:700;
-  font-size:22px;
-  letter-spacing:1px;
-  
-  
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+ background: transparent;
+
 }
 
-.main-links a {
-  margin-right:18px;
+.nav-center li {
+  padding: 26px 20px;
+  
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-center li.active {
+  border-bottom: 3px solid #01BF64;
+  background-color: #dbf1e7;
   color: #000;
-  text-decoration:none;
-  font-size:18px;
-  font-family: "work sans" sans-serif;
-  font-size:16px;
-  font-family: “Work Sans”,sans-serif;
-}
-.nav-right { display:flex; gap:16px; align-items:center; }
 
-.nav-submenu { border-top:1px solid #f3f0ee; background: #fff;  height: 60px;}
-.nav-submenu img {
-  width: 160px;           
-  height:auto;
-  margin-left: 70px;      
 }
 
-.submenu-inner {
-  max-width:1200px; margin:0 auto; padding:10px 20px; display:flex; gap:22px; overflow:auto;
+/* Search Box */
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: white;
+  width: 325px;
+  margin: 0 30px;   
 }
-.submenu-inner a { color:#333; text-decoration:none; white-space:nowrap; font-size:14px; }
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  
+}
+
+.right-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 16px 10px;
+  border-bottom: 3px solid transparent;
+}
+
+.right-item span {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Pink highlight same as left nav */
+.right-item.active,
+.right-item:hover {
+  border-bottom: 3px solid #01BF64;
+  background-color: #dbf1e7;
+  color: #000;
+}
+
+/* Icons style */
+.right-item svg {
+  font-size: 18px;
+}
+/* Submenu Bar */
+.submenu {
+  background-color: #ffffff;
+  padding: 12px 25px;
+  display: flex;
+  justify-content: center;   
+  align-items: center;
+  border-bottom: 1px solid #e3e3e3;
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+}
+
+/* Submenu Items */
+.submenu-item {
+  cursor: pointer;
+  margin: 0 25px;              /* Equal spacing on both sides */
+  white-space: nowrap;         /* Prevents text from breaking */
+}
+
+.submenu-item:hover {
+  color: #01BF64;              /* Riverford pink hover */
+}
