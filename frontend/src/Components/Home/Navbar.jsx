@@ -5,6 +5,7 @@ import "./Navbar.css";
 import logo from "../../Images/Logo 1.png";
 import farmlet from "../../Images/Farmletlogo.png";
 
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -15,11 +16,19 @@ export default function Navbar() {
          {/* <img src={logo} alt="logo" /> */}
 
           {/* <div className="logo">Farmlet</div> */}
+          <div className="logo">Farmlet</div>
 
-          <nav className="main-links" aria-label="Main navigation">
+          {/* <nav className="main-links" aria-label="Main navigation">
             <a href="#">Shop</a>
             <a href="#">About Farmlet</a>
           </nav>
+          </nav> */}
+          <nav className="main-links" aria-label="Main navigation">
+  <Link to="/shop">Shop</Link>
+  <Link to="/about">About Farmlet</Link>
+
+</nav>
+
         </div>
 
         <div className="nav-right">
