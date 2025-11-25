@@ -1,11 +1,14 @@
 .hero-right { flex:1; display:flex; justify-content:flex-end; }
 .hero-right img {
-  width:520px;
-  max-width:100%;
+  width:750px;
+  height: auto;
+  /* max-width:100%; */
   display:block;
-  box-shadow: 0 30px 30px rgba(0,0,0,0.25);
-  transform: translateY(6px);
+  /* box-shadow: 0 30px 30px rgba(0,0,0,0.25); */
+  transform: translateY(-650px);
   border-radius:2px;
+  
+ 
 }
 @media (max-width:900px){
   .hero-right img { width:360px; margin-top:18px; }

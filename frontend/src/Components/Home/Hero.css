@@ -2,9 +2,16 @@
    /* strong pink - adjust to match screenshot */
   /* color: #fff; */
   /* padding: 48px 0 80px; */
+
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+
 }
 .hero-inner {
-    background: #61B860;
+    /* background: #61B860; */
   /* max-width:1200px; */
   margin:0 auto;
   display:flex;

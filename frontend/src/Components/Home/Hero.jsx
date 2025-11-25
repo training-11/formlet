@@ -5,10 +5,13 @@ import HeroCTA from "./HeroCTA";
 import HeroCurve from "./HeroCurve";
 import HeroFeatures from "./HeroFeatures";
 import "./Hero.css";
+import bgImage from "../../Images/background1.png";
+
 
 export default function Hero() {
   return (
     <section className="hero">
+       <img src={bgImage} alt="background" />
       <div className="hero-inner">
         <HeroLeft />
         <HeroRight />

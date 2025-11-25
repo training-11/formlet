@@ -1,17 +1,25 @@
-.searchbar { display:flex; align-items:center; }
+.searchbar { display:flex; align-items:center; width: 450px;  
+padding:12px 14px;}
 .search-input {
-  padding:8px 10px;
+  padding:12px 14px;
   border:1px solid #ccc;
   border-right:none;
   border-radius:4px 0 0 4px;
-  width:260px;
+  width:360px;
   font-size:14px;
+  font-family: "work sans",sans-serif;
 }
 .search-btn {
-  padding:8px 10px;
+  padding:12px 14px;
   border:1px solid #ccc;
   border-left:none;
   border-radius:0 4px 4px 0;
+  width: 51px;
+ 
   background:#fff;
   cursor:pointer;
+}
+
+.search-btn i {
+  font-size: 15px;            
 }
