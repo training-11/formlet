@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { FaUser } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
-import { BsCalendarEvent } from "react-icons/bs";
+import SignInModal from "./SignInModal"; 
+// import { FaUser } from "react-icons/fa";
+// import { FiSearch } from "react-icons/fi";
+// import { BsCalendarEvent } from "react-icons/bs";
 import logo from "../../Images/Logo 1.png";
+import searchIcon from '../../Images/Search icon.png';
+import CalendarIcon from "../../Images/Calendar icon.png";
+import accountIcon from "../../Images/Account icon.png";
+
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Shop");
+ const [openModal, setOpenModal] = useState(false);
 
   const submenus = {
     Shop: [
@@ -54,10 +60,10 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
         </div>
 
         <ul className="nav-center">
-          <li
-            className={activeTab === "Shop" ? "active" : ""}
-            onMouseEnter={() => handleHover("Shop")}
-          >
+         <li
+  className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
+  onMouseEnter={() => handleHover("Shop")}
+>
             Shop
           </li>
           <li
@@ -69,10 +75,12 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       </ul>
 
         <div className="nav-right">
-                     {/* Move search box here */}
+  
 <div className="search-box">
   <input type="text" placeholder="Search Formlet" />
-  <FiSearch size={20} />
+  {/* <FiSearch size={20} /> */}
+  <img src={searchIcon} alt="Search" style={{ width: 23, height: 23 }} />
+
 </div>
   <div
     className={`right-item ${activeTab === "Delivery" ? "active" : ""}`}
@@ -81,18 +89,21 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
     <span>
       Your delivery<br />schedule
     </span>
-    <BsCalendarEvent size={25}/>
+    {/* <BsCalendarEvent size={25}/> */}
+    <img src={CalendarIcon} alt="Calendar" style={{ width: 30, height: 30 }} />
   </div>
 
-  <div
-    className={`right-item ${activeTab === "Account" ? "active" : ""}`}
-    onMouseEnter={() => handleHover("Account")}
-  >
-    <span>
-      Sign in or<br />create account
-    </span>
-    <FaUser size={25} />
-  </div>
+<div
+  className={`right-item ${activeTab === "Account" ? "active" : ""}`}
+  onMouseEnter={() => handleHover("Account")}
+  onClick={() => setOpenModal(true)}   // <<--- add this
+>
+  <span className="underline-link">
+    Sign in or<br /><span >create account</span>
+  </span>
+  <img src={accountIcon} alt="Account" style={{ width: 30, height: 30 }} />
+</div>
+
 </div>
 
       </nav>
@@ -105,6 +116,7 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
           </span>
         ))}
       </div>
+            <SignInModal open={openModal} onClose={() => setOpenModal(false)} />
     </>
   );
 }

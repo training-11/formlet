@@ -1,0 +1,148 @@
+/* ===== Modal Overlay ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* ===== Modal Box ===== */
+.modal-container {
+  width: 70%;
+  max-width: 900px;
+  background: #f8f3ea;
+  display: flex;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== Close Button ===== */
+.modal-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+/* ===== Modal Panels ===== */
+.modal-left,
+.modal-right {
+  flex: 1;
+  padding: 40px 30px;
+}
+
+.modal-right {
+  background: #fbf8f3;
+}
+
+/* ===== Typography ===== */
+.modal-left h2,
+.modal-right h3 {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+.underline {
+  width: 150px;
+  height: 2px;
+  background: #01BF64;
+  margin: 0px auto 10px auto;
+}
+
+
+.underline2 {
+  width: 290px;
+  height: 2px;
+  background: #01BF64;
+  margin: 0px auto 10px auto;
+}
+
+.modal-subtext {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+/* ===== Inputs ===== */
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.inputs {
+  width: 100%;
+  padding: 10px;
+  border: 1.5px solid #ccc;
+  border-radius: 2px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+/* ===== Password Field ===== */
+.password-box {
+  position: relative;
+}
+
+.show-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ===== Buttons ===== */
+.green-btn {
+  width: 100%;
+  padding: 12px;
+  background: #01BF64;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 3px;
+  margin-top: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.green-btn:hover {
+  opacity: 0.9;
+}
+
+/* ===== Extra ===== */
+.forgot {
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.modal-logo {
+  width: 110px;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+/* ===== Responsive ===== */
+@media(max-width: 768px) {
+  .modal-container {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .modal-left, .modal-right {
+    padding: 20px;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./SliderWithHero.css";
 import VegBox from "../../Images/hero3.png";
+import livelife from "../../Images/livelife.png";
 
 const slides = [
   {
@@ -66,8 +67,8 @@ export default function SliderWithHero() {
       <div className="hero-bottom">
         <img src={VegBox} alt="veg" className="veg-img" />
         <p className="join">Join the thousands of families who</p>
-        <h2 className="big-text">Live Life on the Veg</h2>
-        <button className="start-btn">Get started</button>
+        <img src={livelife} alt="Live Life on the Veg" className="livelife-img" />
+           <button className="start-btn">Get started</button>
       </div>
     </div>
   );

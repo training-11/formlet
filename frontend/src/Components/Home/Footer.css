@@ -1,9 +1,8 @@
 .footer {
-  /* background: url("https://i.ibb.co/GQs7PWc/green-bg.png"); */
-  background-color: #61B860;
+  background: url(https://media.riverford.co.uk/images/footer-bg-small.webp) no-repeat center top rgba(0, 0, 0, 0);
   background-size: cover;
   padding: 60px 40px;
-  color: black;
+  color: white;
   font-family: 'Inter', sans-serif;
 }
 
@@ -70,7 +69,7 @@
 
 .social-icon:hover {
   background-color: rgb(92, 116, 119);
-  color: #61B860;
+  color: #01BF64;
   transform: scale(1.1);
 }
 .footer-bottom {

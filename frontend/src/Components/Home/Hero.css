@@ -1,24 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home-container {
+  background: #f4f1ec;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Hero Section */
 .hero {
-   /* strong pink - adjust to match screenshot */
-  /* color: #fff; */
-  /* padding: 48px 0 80px; */
-
-
+  width: 100%;
+  min-height: 100vh;
+  /*background-color: #d91c5c;*/
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
 
+.hero-content {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 0 40px;
 }
-.hero-inner {
-    /* background: #61B860; */
-  /* max-width:1200px; */
-  margin:0 auto;
-  display:flex;
-  gap:24px;
-  align-items:center;
-  padding:0 20px;
+
+/* Left Side - Text */
+.hero-left {
+  flex: 1;
+  color: white;
+  max-width: 600px;
 }
-@media (max-width:900px){
-  .hero-inner { flex-direction:column; text-align:center; padding-bottom:40px; }
+
+.hero-title {
+  font-family: 'Amatic SC', cursive;
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.hero-Text {
+  font-family: 'Amatic SC', cursive;
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.hero-Text p {
+  margin-bottom: 10px;
+}
+
+.hero-button {
+  background: white;
+  color: black;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 18px 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background: #f8f8f8;
+}
+
+/* Right Side - Image */
+.hero-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 700px;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 70px;
+  }
+  
+  .hero-Text {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+  
+  .hero-left {
+    max-width: 100%;
+  }
+  
+  .hero-title {
+    font-size: 60px;
+  }
+  
+  .hero-Text {
+    font-size: 28px;
+  }
+  
+  .hero-button {
+    font-size: 18px;
+    padding: 16px 40px;
+  }
+  
+  .hero-right {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 20px;
+  }
+  
+  .hero-content {
+    padding: 0 20px;
+  }
+  
+  .hero-title {
+    font-size: 50px;
+  }
+  
+  .hero-features {
+    font-size: 24px;
+  }
+  
+  .hero-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 40px;
+  }
+  
+  .hero-features {
+    font-size: 20px;
+  }
+  
+  .hero-button {
+    font-size: 16px;
+    padding: 14px 30px;
+  }
 }
