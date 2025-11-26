@@ -15,9 +15,9 @@ export default function HeroCTA() {
 
       <div className="trust-score">
         Trustscore <strong>4.8</strong> out of <strong>19538</strong> reviews
-      </div>
+      </div> */}
 
-      <button className="cta-btn">Get started</button> */}
+      {/*<button className="cta-btn">Get started</button> */}
     </div>
   );
 }

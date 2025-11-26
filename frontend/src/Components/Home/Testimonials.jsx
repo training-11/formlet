@@ -39,8 +39,6 @@ export default function Testimonials() {
               The convenience of having fresh organic fruit &amp; veg delivered to my door each week is essential to
                my<span className="highligh">family eating well.</span>
             </p>
-
-            <div className="testimonial-author"></div>
           </article>
         </div>
       </div>

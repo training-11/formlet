@@ -3,7 +3,7 @@
 
 .grown-section {
   position: relative;
-  background: HEX#00C853;
+  background: HEX#01BF64;
   padding-bottom: 120px;
   overflow-x: hidden;
   font-family:"Work Sans",sans-serif;
@@ -22,7 +22,7 @@
   transform-origin: top left;
 
   background:
-    linear-gradient(90deg, #61B860 0%, #61B860 0%),
+    linear-gradient(90deg, #01BF64 0%, #01BF64 0%),
 
     radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 2px, transparent 3px),
     radial-gradient(circle at 40% 70%, rgba(255,255,255,0.02) 0 1.5px, transparent 2px),
