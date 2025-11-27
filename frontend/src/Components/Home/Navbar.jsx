@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./Navbar.css";
 import SignInModal from "./SignInModal"; 
 // import { FaUser } from "react-icons/fa";
@@ -12,11 +12,13 @@ import accountIcon from "../../Images/Account icon.png";
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Shop");
  const [openModal, setOpenModal] = useState(false);
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
+  const [dropdownPos, setDropdownPos] = useState({ left: 0 });
+  const submenuRef = useRef({});
 
   const submenus = {
     Shop: [
       "Seasonal boxes",
-      "Christmas",
       "What's new",
       "Recipe boxes & kits",
       "Fruit, veg & salad",
@@ -24,11 +26,11 @@ export default function Navbar() {
       "Meat",
     ],
     About: [
-      "Our story",
       "Ethics & ethos",
-      "Sustainability",
-      "Farmers & growers",
-      "Packaging & recycling",
+      "Growers & makers",
+      "Our restaurant",
+      "Careers",
+      "Wicked Leeks magazine"
     ],
     Recipes: [
       "Browse all recipes",
@@ -42,6 +44,76 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
 
   };
 
+  const dropdownData = {
+    "Seasonal boxes": [
+      "Christmas boxes",
+      "Veg boxes",
+      "Fruit & veg boxes",
+      "Fruit & snacking boxes",
+      "Fruit, veg & salad bags",
+      "Meat boxes",
+      "See all"
+    ],
+    "Ethics & ethos": [
+      "Why Farmlet?",
+      "Why Organic?",
+      "Thoughtful packaging",
+      "Sustainability & climate action",
+      "Outstanding business",
+      "Certified B Corp",
+      "Employee Ownership",
+      "Founder's wishes",
+      "Who is Guy Singh-Watson?",
+      "Charity partnerships"
+    ],
+    "Recipe boxes & kits" :[
+      "Recipe boxes",
+      "Recipe kits",
+      "See all"
+    ],
+    "Fruit, veg & salad":[
+      "Fruit",
+      "Vegetables",
+"Salad",
+"Herbs & spices",
+"British fruit & veg",
+"See all"
+    ],
+    "Essentials":[
+      "Dairy & eggs",
+"Bakery",
+"Store cupboard",
+"Cheese & deli",
+"Yogurt & kefir",
+"Vegan range",
+"Drinks",
+"Breakfast",
+"Books & gifts",
+"See all"
+    ],
+    "Meat":[
+      "Meat boxes",
+"Christmas meat",
+"Beef",
+"Chicken",
+"Turkey",
+"Lamb",
+"Pork",
+"Duck",
+"Venison",
+"Sausages, bacon & burgers",
+"Quick & easy"
+    ]
+  };
+
+    const showDropdown = (item) => {
+    setActiveSubmenu(item);
+    if (submenuRef.current[item]) {
+      const rect = submenuRef.current[item].getBoundingClientRect();
+      setDropdownPos({ left: rect.left + rect.width / 2 });
+    }
+  };
+
   const handleHover = (tab) => {
     setActiveTab(tab);
   };
@@ -49,7 +121,8 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
   return (
     <>
       {/* Top Navbar */}
-      <nav className="main-navbar" onMouseLeave={() => setActiveTab("Shop")}>
+      {/* <nav className="main-navbar" onMouseLeave={() => setActiveTab("Shop")}> */}
+      <nav className="main-navbar">
 
         <div className="nav-left">
           <img
@@ -108,14 +181,35 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
 
       </nav>
 
-      {/* Submenu */}
-      <div className="submenu" onMouseLeave={() => setActiveTab("Shop")}>
-        {submenus[activeTab].map((item, index) => (
-          <span key={index} className="submenu-item">
+{/* SUB MENU */}
+      <div
+        className="submenu"
+        onMouseLeave={() => setActiveSubmenu(null)}
+      >
+        {submenus[activeTab]?.map((item, i) => (
+          <span
+            key={i}
+            className="submenu-item"
+            ref={(el) => (submenuRef.current[item] = el)}
+            onMouseEnter={() => showDropdown(item)}
+          >
             {item}
           </span>
         ))}
       </div>
+
+      {/* DROPDOWN */}
+      {dropdownData[activeSubmenu] && (
+        <div
+          className="dropdown-menu"
+          style={{ left: dropdownPos.left }}
+          onMouseLeave={() => setActiveSubmenu(null)}
+        >
+          {dropdownData[activeSubmenu].map((d, i) => (
+            <div key={i} className="dropdown-item">{d}</div>
+          ))}
+        </div>
+      )}
             <SignInModal open={openModal} onClose={() => setOpenModal(false)} />
     </>
   );
