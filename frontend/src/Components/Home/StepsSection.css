@@ -1,6 +1,7 @@
 .steps-section {
   background: #f4f1ec;
-  padding: 5px 0;
+  padding: 50px 0;
+  
   text-align: center;
   font-family: 'Amatic SC' , cursive;
 }
@@ -15,7 +16,7 @@
 }
 
 .step-box {
-  width: 400px;
+  width: 300px;
 }
 
 .step-img {
@@ -45,7 +46,8 @@
 
 
 .Header{
-    margin-top: -15px;
+    margin-top: -90px;
+    margin-bottom: 60px;
     font-size: 30px;
 }
 @media (max-width: 900px) {

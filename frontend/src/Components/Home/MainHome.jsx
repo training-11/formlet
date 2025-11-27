@@ -8,6 +8,7 @@ import Testimonials from "./Testimonials";
 import GrownForFlavour from "./GrownForFlavour";
 import SliderWithHero from "./SliderWithHero";
 import FaqSection from "./FaqSection";
+
 function MainHome() {
   return (
     <div>

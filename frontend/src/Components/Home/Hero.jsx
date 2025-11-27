@@ -31,7 +31,7 @@ export default function Home() {
           <div className="hero-right">
             <img 
               src={heroImage} 
-              alt="Fresh vegetable box from Riverford" 
+              alt="Fresh vegetable box from Farmlet" 
               className="hero-image"
             />
           </div>
