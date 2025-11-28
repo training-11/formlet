@@ -126,16 +126,13 @@ margin-left: 90px;
   background: #ffffff;
   border-bottom: 1px solid #eee;
   height: 48px;  
+  
 }
 
 .submenu-item {
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  /* padding-top: 18px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 18px; */
   padding: 0 15px;
   height: 100%;                 /* 👈 Expand to full fixed height */
   display: flex;               
@@ -176,4 +173,253 @@ margin-left: 90px;
 @keyframes fadeDown {
   from { opacity: 0; transform: translate(-50%, -10px); }
   to { opacity: 1; transform: translate(-50%, 0px); }
+}
+.mobile-search-icon {
+  display: none;   /* hidden on desktop */
+}
+.mobile-submenu {
+  display: none;   /* hidden on desktop */
+}
+.mobile-full-dropdown {
+  display: none;   /* hidden on desktop */
+}
+/* ============================================ */
+/*              📱 MOBILE RESPONSIVE NAVBAR     */
+/* ============================================ */
+
+@media (max-width: 768px) {
+
+  /* --- Top Navbar --- */
+  .main-navbar {
+    height: 60px;
+    padding: 0 15px;
+    justify-content: space-between;
+  }
+
+  .nav-left {
+    margin-left: 0;
+  }
+
+  .nav-logo {
+    height: 65px;
+    width: auto;
+  }
+
+  /* Hide desktop items completely */
+  .nav-center,
+  .search-box,
+  .right-item span,
+  .submenu:not(.mobile-submenu) {
+    display: none !important;
+  }
+
+  .submenu {
+    display: none !important;
+  }
+
+  /* mobile dropdown must be visible */
+  .mobile-full-dropdown {
+    display: block !important;
+  }
+  /* Icons on right */
+  .nav-right {
+    display: flex;
+    gap: 18px;
+    margin-right: 0;
+  }
+
+  .nav-right img {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* --- MOBILE SUB MENU (Shop / About / Recipes) --- */
+  .mobile-submenu {
+    width: 100%;
+    display: flex !important;
+    justify-content: space-around;
+    background: #ffffff;
+    height: 46px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+  }
+
+  .mobile-submenu-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+     background: transparent !important;
+     color: #333;
+  }
+
+   .mobile-submenu-item.active {
+    background: transparent !important;
+    border-bottom: none !important;
+    color: #01BF64 !important;  /* Riverford pink */
+    font-weight: 700;
+  }
+
+  /* --- DROPDOWN UNDER SHOP (Full width like Riverford) --- */
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    transform: none;
+    border-radius: 0;
+    background: #faf6f0;
+    padding: 15px 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .dropdown-item {
+    padding: 14px;
+    text-align: center;
+    font-size: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  /* Show search icon on mobile */
+  .mobile-search-icon {
+    display: block !important;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+  }
+   /* Hide desktop search-box */
+  .search-box {
+    display: none !important;
+  }
+
+   .mobile-dropdown {
+    position: static !important;
+    width: 100% !important;
+    transform: none !important;
+    background: #faf6f0;
+    border: none;
+    box-shadow: none;
+    padding: 10px 0;
+  }
+  .mobile-full-dropdown {
+  width: 100%;
+  background: #faf6f0;
+  padding: 15px 0;
+}
+.mobile-dropdown-item {
+  padding: 14px 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.mob-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.mob-desc {
+  font-size: 13px;
+  color: #666;
+  margin-top: 3px;
+}
+
+.mobile-dropdown-overlay {
+  position: fixed;
+  top: 105px;           /* sits below mobile navbar */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 106px);
+  /* background: rgba(0, 0, 0, 0.35);  */
+  z-index: 999;
+  overflow-y: auto;
+}
+
+   /* ================================
+   📱 Mobile Search Overlay (Clone)
+   ================================= */
+.mobile-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #fdfcf8;
+  z-index: 3000;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;   /* Space between title & X button */
+  align-items: center;              /* Align X button vertically center */
+  padding: 5px 0;
+  margin-top: -30px;
+}
+
+.search-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #222;
+  letter-spacing: 0.2px;
+  width: 300px;
+}
+
+.close-btn {
+
+  font-size: 24px;           /* Same size as screenshot */
+  color: #222;
+  padding: 0;
+
+  margin-right: -5px;
+    width: 34px;
+  height: 34px;
+  padding: 0;
+  box-sizing: border-box;
+  background: #111;            /* dark black circle */
+  border-radius: 50%;
+  border: 3px solid white;     /* ✔ white border like Riverford */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: 200;             /* clean X */
+  line-height: 1;
+  color: white;
+
+  cursor: pointer;
+  transition: 0.25s ease;  
+}
+
+.close-btn:hover {
+  border-color: #01BF64;           /* ✔ border turns black */
+  transform: scale(1.07);       /* gentle zoom */
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border: 1px solid #d6c7a1;
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: #fff;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-popup-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
 }

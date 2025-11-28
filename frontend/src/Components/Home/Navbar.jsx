@@ -14,6 +14,9 @@ export default function Navbar() {
  const [openModal, setOpenModal] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ left: 0 });
+  // const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
   const submenuRef = useRef({});
 
   const submenus = {
@@ -46,7 +49,6 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
 
   const dropdownData = {
     "Seasonal boxes": [
-      "Christmas boxes",
       "Veg boxes",
       "Fruit & veg boxes",
       "Fruit & snacking boxes",
@@ -106,6 +108,43 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
     ]
   };
 
+  const mobileDropdownContent = {
+  Shop: [
+    {
+      title: "Seasonal boxes",
+      desc: "Our range of organic fruit, veg & meat boxes"
+    },
+    {
+      title: "What's new",
+      desc: "Fresh in this week from our fields & friends"
+    },
+    {
+      title: "Recipe boxes & kits",
+      desc: "All you need for inspiring seasonal meals"
+    },
+    {
+      title: "Fruit, veg & salad",
+      desc: "Choose from the best organic produce"
+    },
+    {
+      title: "Essentials",
+      desc: "Dairy, eggs, bakery, store cupboard & more"
+    },
+    {
+      title: "Meat",
+      desc: "The highest welfare organic British meat"
+    }
+  ],
+    About: [
+    { title: "Ethics & ethos", desc: "Organic farming, packaging & values" },
+    { title: "Growers & makers", desc: "Meet the farmers who grow your food" },
+    { title: "Our restaurant", desc: "Our award-winning organic restaurant" },
+    { title: "Careers", desc: "Learn more about careers at Farmlet" },
+    { title: "Wicked Leeks magazine", desc: "Opinion pieces, ethical lifestyle & more" }
+  ]
+};
+
+
     const showDropdown = (item) => {
     setActiveSubmenu(item);
     if (submenuRef.current[item]) {
@@ -118,11 +157,42 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
     setActiveTab(tab);
   };
 
+
+
+const handleMobileClick = (tab) => {
+  if (window.innerWidth > 768) {
+    setActiveTab(tab);
+    return;
+  }
+
+  // Mobile toggle open/close
+  if (activeTab === tab) {
+    setActiveTab(null);
+    setActiveSubmenu(null);
+    return;
+  }
+
+  // Open new tab
+  setActiveTab(tab);
+
+  if (tab === "Shop") {
+    setActiveSubmenu("Shop");
+  } else if (tab === "About") {
+    setActiveSubmenu("About");
+  } else {
+    setActiveSubmenu(null);
+  }
+};
+
+
+
+
   return (
     <>
       {/* Top Navbar */}
       {/* <nav className="main-navbar" onMouseLeave={() => setActiveTab("Shop")}> */}
-      <nav className="main-navbar">
+      <nav className="main-navbar" >
+        
 
         <div className="nav-left">
           <img
@@ -148,6 +218,16 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       </ul>
 
         <div className="nav-right">
+          {/* MOBILE SEARCH ICON (always visible on mobile) */}
+  <img 
+    src={searchIcon} 
+    alt="Search" 
+    className="mobile-search-icon"
+    // onClick={() => {
+    // if (window.innerWidth <= 768) setSearchOpen(true);
+      onClick={() => setMobileSearchOpen(true)}
+  
+  />
   
 <div className="search-box">
   <input type="text" placeholder="Search Farmlet" />
@@ -178,8 +258,26 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
 </div>
 
 </div>
-
+     
       </nav>
+  {/* MOBILE SUBMENU */}
+<div className="mobile-submenu">
+  <div
+    className={`mobile-submenu-item ${activeTab === "Shop" ? "active" : ""}`}
+    onClick={() => handleMobileClick("Shop")}
+  >
+    Shop
+  </div>
+
+  <div
+    className={`mobile-submenu-item ${activeTab === "About" ? "active" : ""}`}
+    onClick={() => handleMobileClick("About")}
+  >
+    About Farmlet
+  </div>
+
+</div>
+    
 
 {/* SUB MENU */}
       <div
@@ -199,17 +297,86 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       </div>
 
       {/* DROPDOWN */}
+   
       {dropdownData[activeSubmenu] && (
-        <div
-          className="dropdown-menu"
-          style={{ left: dropdownPos.left }}
-          onMouseLeave={() => setActiveSubmenu(null)}
-        >
-          {dropdownData[activeSubmenu].map((d, i) => (
-            <div key={i} className="dropdown-item">{d}</div>
-          ))}
+  <div className="dropdown-menu mobile-dropdown"style={{ left: dropdownPos.left }}
+          onMouseLeave={() => setActiveSubmenu(null)}>
+    {dropdownData[activeSubmenu].map((d, i) => (
+      <div key={i} className="dropdown-item">{d}</div>
+    ))}
+  </div>
+)}
+{activeSubmenu && window.innerWidth <= 768 && (
+  <div className="mobile-dropdown-overlay">
+    <div className="mobile-full-dropdown">
+      {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
+        <div key={i} className="mobile-dropdown-item">
+          <div className="mob-title">{item.title}</div>
+          <div className="mob-desc">{item.desc}</div>
         </div>
-      )}
+      ))}
+    </div>
+  </div>
+)}
+
+{/* 📱 MOBILE FULL DROPDOWN (Riverford style)
+{activeSubmenu && window.innerWidth <= 768 && (
+  <div className="mobile-full-dropdown">
+    {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
+      <div key={i} className="mobile-dropdown-item">
+        <div className="mob-title">{item.title}</div>
+        <div className="mob-desc">{item.desc}</div>
+      </div>
+    ))}
+  </div>
+)} */}
+
+{/* 📱 MOBILE SEARCH POPUP */}
+{/* {searchOpen && window.innerWidth <= 768 && (
+  <div className="mobile-search-overlay">
+    <div className="mobile-search-box">
+      <div className="search-header">
+        <span className="search-title">Search Farmlet</span>
+        <button className="close-btn" onClick={() => setSearchOpen(false)}>✕</button>
+      </div>
+
+      <div className="search-input-row">
+        <input type="text" placeholder="Search Farmlet" className="search-input" />
+        <img src={searchIcon} className="search-popup-icon" alt="search"/>
+      </div>
+    </div>
+  </div>
+)} */}
+{/* 📱 Mobile Search Popup */}
+{mobileSearchOpen && window.innerWidth <= 768 && (
+  <div className="mobile-search-overlay">
+    
+    <div className="search-header">
+      <div className="search-title">Search Farmlet</div>
+
+      <button
+        className="close-btn"
+        onClick={() => setMobileSearchOpen(false)}
+      >
+        ✕
+      </button>
+    </div>
+
+    <div className="search-input-row">
+      <input
+        type="text"
+        placeholder="Search Farmlet"
+        className="search-input"
+      />
+      <img src={searchIcon} alt="" className="search-popup-icon" />
+    </div>
+
+  </div>
+)}
+
+
+
+
             <SignInModal open={openModal} onClose={() => setOpenModal(false)} />
     </>
   );

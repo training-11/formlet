@@ -1,148 +1,464 @@
-/* ===== Modal Overlay ===== */
+/* ================== MODAL LAYOUT ================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 999;
 }
 
-/* ===== Modal Box ===== */
 .modal-container {
-  width: 70%;
-  max-width: 900px;
-  background: #f8f3ea;
+  width: 760px;
+  height: auto;
+  background: #f6eddf;
+  border-radius: 12px;
   display: flex;
-  border-radius: 4px;
-  position: relative;
   overflow: hidden;
+  position: relative;
+  font-family: "Roboto", sans-serif;
 }
 
-/* ===== Close Button ===== */
+/* ================== RIGHT SIDE LOGO FIX ================== */
+.side-logo {
+  width: 90px;           /* PERFECT size like Riverford */
+  max-width: 90px;
+  height: auto;
+  display: block;
+  margin: 0 auto 14px auto;  /* nice space below */
+  transform: translateY(10px);  /* slight visual lowering */
+}
+
+/* ===================== PERFECT RIVERFORD CLOSE BUTTON ===================== */
 .modal-close {
   position: absolute;
-  right: 15px;
-  top: 10px;
-  background: none;
-  border: none;
-  font-size: 32px;
+  top: -10px;                   /* exact position like Riverford */
+  right: 8px;
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  box-sizing: border-box;
+  background: #111;            /* dark black circle */
+  border-radius: 50%;
+  border: 2px solid white;     /* ✔ white border like Riverford */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 35px;
+  font-weight: 200;             /* clean X */
+  line-height: 1;
+  color: white;
+
   cursor: pointer;
+  transition: 0.25s ease;      /* smooth animation */
 }
 
-/* ===== Modal Panels ===== */
-.modal-left,
-.modal-right {
-  flex: 1;
-  padding: 40px 30px;
-}
-
-.modal-right {
-  background: #fbf8f3;
-}
-
-/* ===== Typography ===== */
-.modal-left h2,
-.modal-right h3 {
-  font-family: Georgia, serif;
-  font-weight: 700;
-  text-align: center;
-}
-
-.underline {
-  width: 150px;
-  height: 2px;
-  background: #01BF64;
-  margin: 0px auto 10px auto;
+/* ✔ Hover effect: border becomes black, circle becomes light */
+.modal-close:hover {
+  border-color: #01BF64;           /* ✔ border turns black */
+  transform: scale(1.07);       /* gentle zoom */
 }
 
 
-.underline2 {
-  width: 290px;
-  height: 2px;
-  background: #01BF64;
-  margin: 0px auto 10px auto;
-}
 
+
+/* ================== TEXT ================== */
 .modal-subtext {
-  text-align: center;
-  margin-bottom: 25px;
   font-size: 15px;
+  color: #444;
+  line-height: 22px;
+  text-align: center;
+  margin-bottom: 22px;
 }
 
-/* ===== Inputs ===== */
-label {
-  display: block;
+
+/* ===== LEFT SIDE LAYOUT ===== */
+.modal-left {
+  width: 50%;
+  padding: 50px 55px;
+  background: #f4ebdc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Title */
+.modal-title {
+  font-family: "Amatic SC";
+  font-size: 52px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Underline */
+.underline {
+  width: 155px;
+  height: 1.6px;
+  background: #222;
+  margin: 0 auto 28px auto;
+}
+
+/* Subtext center aligned */
+.modal-subtext-center {
+  font-size: 15px;
+  color: #444;
+  text-align: center;
+  line-height: 22px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+/* Label text */
+.label-text {
+  width: 100%;
   font-size: 14px;
-  margin-bottom: 5px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
 }
 
+/* Input fields */
+
+.input-box,
 .inputs {
   width: 100%;
-  padding: 10px;
-  border: 1.5px solid #ccc;
-  border-radius: 2px;
-  margin-bottom: 18px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
   font-size: 14px;
+  outline: none;
+  margin-bottom: 32px;
+}
+.input-box::placeholder,
+.inputs::placeholder {
+  color: #888;
+}
+.input-box:focus,
+.inputs:focus {
+  border-color: #666;
 }
 
-/* ===== Password Field ===== */
+/* Password Box */
 .password-box {
+  width: 100%;
   position: relative;
 }
-
 .show-btn {
   position: absolute;
-  top: 10px;
   right: 10px;
-  cursor: pointer;
+  top: 12px;
   font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
 }
 
-/* ===== Buttons ===== */
-.green-btn {
-  width: 100%;
-  padding: 12px;
+/* SIGN IN BUTTON (MATCHES RIVERFORD) */
+ .modal-left .small-btn {
+  width: 210px;
+  height: auto;              
+  min-height: 42px;           
+
   background: #01BF64;
+  border: none;
   color: white;
   font-weight: 600;
-  border: none;
-  border-radius: 3px;
-  margin-top: 5px;
-  cursor: pointer;
   font-size: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  padding: 10px 12px;    
+
+  display: flex;              
+  align-items: center;        
+  justify-content: center;    
+  text-align: center;        
+
+  line-height: 1.3;           
+  word-break: keep-all;
 }
 
-.green-btn:hover {
+.modal-left .small-btn:hover {
   opacity: 0.9;
 }
 
-/* ===== Extra ===== */
-.forgot {
-  text-align: center;
-  margin-top: 15px;
+
+/* Forgot password */
+.forgot-link {
+  font-size: 14px;
+  color: #222;
   text-decoration: underline;
   cursor: pointer;
-  font-size: 14px;
+  text-align: center;
+  width: 100%;
+}
+.forgot-link:hover {
+  color: black;
 }
 
-.modal-logo {
-  width: 110px;
+
+/* ===== RIGHT SIDE LAYOUT ===== */
+.modal-right {
+  width: 50%;
+  padding: 55px 55px;
+  background: #f0e6d7;   /* ✔ correct Riverford color */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Right side logo (bigger + perfect spacing) */
+.side-logo {
+  width: 110px;          /* ✔ bigger like Riverford */
+  height: auto;
+  margin: 0 auto 18px auto;
   display: block;
-  margin: auto;
-  margin-bottom: 10px;
 }
 
-/* ===== Responsive ===== */
-@media(max-width: 768px) {
+/* Title on right */
+.modal-right .modal-title {
+  font-size: 52px;
+  font-weight: 600;
+  margin-top: 0px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Underline */
+.modal-right .underline {
+  width: 265px;
+  height: 1.6px;
+  background: #222;
+  margin: 0 auto 28px auto;
+}
+
+/* Right side description text */
+.modal-right .modal-subtext-center {
+  width: 100%;
+  font-size: 15px;
+  color: #444;
+  text-align: center;
+  line-height: 22px;
+  margin-bottom: 28px;
+}
+
+/* Label alignment (same as left) */
+.modal-right .label-text {
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+/* Input box (same as left) */
+.modal-right .input-box {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 24px;
+}
+.modal-right .input-box:focus {
+  border-color: #666;
+}
+
+/* Right side button */
+.modal-right .small-btn {
+  width: 210px;
+  height: auto;               
+  min-height: 42px;           
+
+  background: #01BF64;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  padding: 10px 12px;        
+
+  display: flex;              
+  align-items: center;       
+  justify-content: center;    
+  text-align: center;         
+
+  line-height: 1.3;           
+  word-break: keep-all;
+}
+
+.modal-right .small-btn:hover {
+  opacity: 0.9;
+}
+
+
+
+/* ===== Responsive adjustments (mobile / tablet) ===== */
+
+/* tablet / small desktops */
+@media (max-width: 760px) {
+  .modal-overlay {
+    align-items: flex-start; 
+    padding: 40px 0;      
+    background: rgba(0,0,0,0.35);   
+    display: flex;
+    justify-content: center;
+    overflow-y: auto; /* scroll entire popup like Riverford */
+    padding: 0;
+    position: fixed;
+    /* margin-top: 20px; */
+    
+  }
   .modal-container {
-    flex-direction: column;
-    width: 90%;
+   
+     width: 100% ! important;
+    max-width: 500px;
+    min-height: 100vh;
+    /* border-radius: 0px; */
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden;
+   background: #fdfcf8;        /* Riverford tone */
+    /* box-shadow: 0 6px 25px rgba(0,0,0,0.15); */
   }
 
-  .modal-left, .modal-right {
-    padding: 20px;
+  .modal-left,
+  .modal-right {
+    width: 100%;
+    padding: 34px 30px;
+  
+  }
+
+  .modal-right .underline,
+  .modal-left .underline {
+    width: 190px;
+  }
+.modal-right{
+
+   background: #f0e6d7;
+}
+.modal-right .modal-title{
+  padding-top: 20px;
+}
+  .modal-left .input-box {
+    margin-bottom: 84px;
+  }
+  .modal-left .small-btn{
+    width:50px;
+    background-color: #01BF64;
+  }
+  .modal-title {
+    /* font-size: 40px; */
+    font-size: 42px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 12px;
+  
+    color: #3b2f2f;
+  }
+
+  .modal-close {
+  
+      position: absolute;
+    top: 16px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    font-size: 29px;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-close:hover {
+    border-color: #01BF64;
+    transform: scale(1.07);
+  }
+  .side-logo {
+    display: none;
+  }
+  .modal-right .label-text {
+    margin-top: 10px;
+  }
+}
+
+/* small phones */
+@media (max-width: 420px) {
+  .modal-container {
+    width: calc(100% - 36px);
+    max-width: 420px;
+    border-radius: 8px;
+     background: #fdfcf8;
+  }
+
+  .modal-left,
+  .modal-right {
+    padding: 26px 18px;
+  }
+
+  .modal-title {
+    font-size: 32px;
+  }
+
+  .underline {
+    width: 160px;
+    height: 1.4px;
+  }
+
+  .modal-close {
+    top: -6px;
+    right: 10px;
+    width: 30px;          
+    height: 30px;
+    padding: 0;
+    font-size: 14px;
+    border-width: 2px;
+  }
+
+  /* make action buttons easier to tap on phones */
+  /* .modal-left .small-btn,
+  .modal-right .small-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 14px;
+  } */
+   .modal-left .small-btn {
+    width: 160px;
+    /* margin: 0 auto; */
+  min-height: 44px;
+   padding: 12px 14px;
+  }
+/* +  .modal-right .small-btn {
++    width: 100%;
++    min-height: 44px;
++    padding: 12px 14px;
++  } */
+
+  .modal-subtext {
+    font-size: 14px;
+  }
+
+  .input-box,
+  .inputs {
+    height: 40px;
+    margin-bottom: 18px;
+  }
+  .side-logo{
+    display: none;
   }
 }
