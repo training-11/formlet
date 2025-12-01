@@ -21,12 +21,11 @@ export default function Navbar() {
 
   const submenus = {
     Shop: [
-      "Seasonal boxes",
+      "Fresh Fruit & Vegetables boxes",
       "What's new",
-      "Recipe boxes & kits",
-      "Fruit, veg & salad",
+      "Leafy & others ",
       "Essentials",
-      "Meat",
+      "Daily & eggs",
     ],
     About: [
       "Ethics & ethos",
@@ -48,13 +47,9 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
   };
 
   const dropdownData = {
-    "Seasonal boxes": [
-      "Veg boxes",
-      "Fruit & veg boxes",
-      "Fruit & snacking boxes",
-      "Fruit, veg & salad bags",
-      "Meat boxes",
-      "See all"
+    "Fresh Fruit & Vegetables boxes": [
+      "Fresh Fruits",
+      "Fresh Vegetables",
     ],
     "Ethics & ethos": [
       "Why Farmlet?",
@@ -68,44 +63,28 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       "Who is Guy Singh-Watson?",
       "Charity partnerships"
     ],
-    "Recipe boxes & kits" :[
-      "Recipe boxes",
-      "Recipe kits",
-      "See all"
+    "Leafy & others" :[
+      "Leafy & Seasonings",
+      "Other vegetables",
+      
     ],
-    "Fruit, veg & salad":[
-      "Fruit",
-      "Vegetables",
-"Salad",
-"Herbs & spices",
-"British fruit & veg",
-"See all"
-    ],
+ 
     "Essentials":[
-      "Dairy & eggs",
-"Bakery",
-"Store cupboard",
-"Cheese & deli",
-"Yogurt & kefir",
-"Vegan range",
-"Drinks",
-"Breakfast",
-"Books & gifts",
-"See all"
+      "Dals & Rice",
+      "Ghees & Oils",
+      "Dehydrated ",
+    
     ],
-    "Meat":[
-      "Meat boxes",
-"Christmas meat",
-"Beef",
-"Chicken",
-"Turkey",
-"Lamb",
-"Pork",
-"Duck",
-"Venison",
-"Sausages, bacon & burgers",
-"Quick & easy"
+    "Daily & eggs":[
+      "Mlik",
+      "Eggs",
+      "Yogurts",
+      "Cheese",
+      "Butter & cream",
+      "Ghee",
+      "Ready to Cook",
     ]
+
   };
 
   const mobileDropdownContent = {
@@ -319,34 +298,7 @@ const handleMobileClick = (tab) => {
   </div>
 )}
 
-{/* 📱 MOBILE FULL DROPDOWN (Riverford style)
-{activeSubmenu && window.innerWidth <= 768 && (
-  <div className="mobile-full-dropdown">
-    {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
-      <div key={i} className="mobile-dropdown-item">
-        <div className="mob-title">{item.title}</div>
-        <div className="mob-desc">{item.desc}</div>
-      </div>
-    ))}
-  </div>
-)} */}
 
-{/* 📱 MOBILE SEARCH POPUP */}
-{/* {searchOpen && window.innerWidth <= 768 && (
-  <div className="mobile-search-overlay">
-    <div className="mobile-search-box">
-      <div className="search-header">
-        <span className="search-title">Search Farmlet</span>
-        <button className="close-btn" onClick={() => setSearchOpen(false)}>✕</button>
-      </div>
-
-      <div className="search-input-row">
-        <input type="text" placeholder="Search Farmlet" className="search-input" />
-        <img src={searchIcon} className="search-popup-icon" alt="search"/>
-      </div>
-    </div>
-  </div>
-)} */}
 {/* 📱 Mobile Search Popup */}
 {mobileSearchOpen && window.innerWidth <= 768 && (
   <div className="mobile-search-overlay">

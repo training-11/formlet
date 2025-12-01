@@ -1,5 +1,6 @@
+/* DESKTOP – unchanged (Riverford style) */
 .hero-features {
-  margin-top: -40px;       
+  margin-top: -40px;
   background: #f4f1ec;
   display: flex;
   justify-content: center;
@@ -10,28 +11,69 @@
 }
 
 .feature-box img {
-  width: 90px;              
-  height: auto;
-  object-fit: contain;
+  width: 90px;
   margin-bottom: 12px;
 }
 
 .feature-box p {
-  color: #000;
   font-family: "Amatic SC", cursive;
   font-size: 40px;
   font-weight: 700;
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin: 0;
 }
 
+/* 
 @media (max-width: 768px) {
   .hero-features {
     flex-direction: column;
     gap: 400px;
     padding: 50px 0;
     margin-top: 0;
+  }
+} */
+
+
+/* -------------------------------------- */
+/* 📱 MOBILE – EXACT RIVERFORD LAYOUT     */
+/* -------------------------------------- */
+@media (max-width: 768px) {
+
+  /* full mobile layout */
+  .hero-features {
+    flex-direction: column;
+    gap: 40px;
+    padding: 60px 0;
+  }
+
+  /* reorder items: organic first */
+  .hero-features .feature-box:nth-child(2) {
+    order: 1; /* 100% ORGANIC goes to top */
+  }
+
+  .hero-features .feature-box:nth-child(1),
+  .hero-features .feature-box:nth-child(3) {
+    order: 2; /* farmers + chemicals go below */
+  }
+
+  /* farmers + chemicals appear in row */
+  .hero-features.responsive-row {
+    display: flex;
+  }
+
+  /* convert them into one row */
+  .hero-features .feature-box:nth-child(1),
+  .hero-features .feature-box:nth-child(3) {
+    display: inline-flex;
+    flex-direction: column;
+    width: 45%;
+  
+  }
+
+  .feature-box img {
+    width: 70px;
+  }
+
+  .feature-box p {
+    font-size: 30px;
   }
 }
