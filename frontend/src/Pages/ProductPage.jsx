@@ -65,6 +65,20 @@ export default function ProductPage() {
         price: "₹65.00",
         location: "From Vandavasi",
         image: veg1,
+      },
+        {
+        name: "Knol Khol Green",
+        weight: "250 Gms",
+        price: "₹49.00",
+        location: "From DenkaniKottai",
+        image: veg2,
+      },
+      {
+        name: "Bottle Gourd",
+        weight: "600 Gms",
+        price: "₹65.00",
+        location: "From Vandavasi",
+        image: veg1,
       }
     ],
 

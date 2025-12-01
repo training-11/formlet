@@ -1,0 +1,173 @@
+/* POPUP BACKGROUND */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  z-index: 9999;
+}
+
+/* MAIN POPUP BOX */
+/* .popup-box {
+  width: 95%;
+  height: 85%;
+  background: #fff;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+} */
+ .popup-box {
+  width: 95%;
+  height: 92%;        /* Increased height */
+  max-height: 95vh;   /* Prevent overflow on small screens */
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+/* CLOSE BUTTON */
+.popup-close {
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* MAIN CONTENT AREA */
+.popup-content {
+  display: flex;
+  height: 100%;
+}
+
+/* LEFT SIDE MENU */
+.popup-sidebar {
+  width: 260px;
+  background: #f6f6f6;
+  padding-top: 20px;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.popup-sidebar-item {
+  padding: 18px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.popup-sidebar-item.active {
+  background: #e2f3e8;
+  font-weight: bold;
+}
+
+/* RIGHT SIDE PRODUCTS */
+.popup-right {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.popup-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* PRODUCTS GRID */
+.popup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.popup-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+}
+
+.popup-prod-img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.popup-location {
+  background: #444;
+  color: #fff;
+  padding: 6px 10px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.popup-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.popup-weight {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+
+.popup-price {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popup-order-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #01BF64;
+  color: white;
+  font-size: 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+/* BOTTOM FIXED LOGIN BAR */
+.popup-bottom-login {
+  width: 100%;
+  background: #01BF64;
+  padding: 18px;
+  text-align: center;
+  font-size: 22px;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+}
+
+
+/* hide scrollbar for popup content */
+.popup-right::-webkit-scrollbar,
+.popup-sidebar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.popup-right,
+.popup-sidebar {
+  -ms-overflow-style: none;  /* IE, Edge */
+  scrollbar-width: none;      /* Firefox */
+}

@@ -7,6 +7,16 @@ import searchIcon from '../../Images/Search icon.png';
 import CalendarIcon from "../../Images/Calendar icon.png";
 import accountIcon from "../../Images/Account icon.png";
 import { useNavigate } from "react-router-dom";
+import ProductPopup from "./ProductPopup";
+
+
+// IMAGES
+import fruit1 from "../../Images/fruit1.png";
+import fruit2 from "../../Images/fruit2.jpg";
+import veg1 from "../../Images/veg1.png";
+import veg2 from "../../Images/veg2.png";
+import leafy1 from "../../Images/leafy1.png";
+import leafy2 from "../../Images/leafy2.jpg";
 
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Shop");
@@ -16,7 +26,12 @@ export default function Navbar() {
   // const [searchOpen, setSearchOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
+const [openPopup, setOpenPopup] = useState(false);
+const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
+
   const submenuRef = useRef({});
+
+
 
   const submenus = {
     Shop: [
@@ -119,9 +134,15 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
 
 const navigate = useNavigate();
 
+// const handleDropdownClick = (category) => {
+//   navigate(`/products/${category.replace(/\s+/g, "-").toLowerCase()}`);
+// };
+
 const handleDropdownClick = (category) => {
-  navigate(`/products/${category.replace(/\s+/g, "-").toLowerCase()}`);
+  setSelectedCategory(category);
+  setOpenPopup(true);
 };
+
 
 
     const showDropdown = (item) => {
@@ -164,7 +185,44 @@ const handleMobileClick = (tab) => {
 };
 
 
+// const openProductPopup = (category) => {
+//   setPopupCategory(category);
+//   setPopupOpen(true);
+// };
 
+// const openProductPopup = (category) => {
+//   setSelectedCategory(category);
+//   setOpenPopup(true);
+// };
+
+const openProductPopup = (category) => {
+  setSelectedCategory(category);
+  setOpenPopup(true);
+};
+
+
+const allProducts = {
+  "Fresh Fruits": [
+    { name: "Sweet Lime", weight: "1000 Gms", price: "₹89.00", location: "From Vandavasi, Tamilnadu", image: fruit1 },
+    { name: "Nagpur Orange (500–600g)", weight: "500 Gms", price: "₹109.00", location: "From Nagpur, Maharashtra", image: fruit2 },
+    { name: "Sapota / Chiku", weight: "500 Gms", price: "₹79.00", location: "From Mysuru, Karnataka", image: fruit2 },
+     { name: "Nagpur Orange (500–600g)", weight: "500 Gms", price: "₹109.00", location: "From Nagpur, Maharashtra", image: fruit2 },
+    { name: "Sapota / Chiku", weight: "500 Gms", price: "₹79.00", location: "From Mysuru, Karnataka", image: fruit2 }
+  ],
+
+  "Fresh Vegetables": [
+    { name: "Chilli Green", weight: "100 Gms", price: "₹9.00", location: "From DenkaniKottai", image: veg1 },
+    { name: "Knol Khol Green", weight: "250 Gms", price: "₹49.00", location: "From DenkaniKottai", image: veg2 },
+    { name: "Bottle Gourd", weight: "600 Gms", price: "₹65.00", location: "From Vandavasi", image: veg1 }
+  ],
+
+  "Leafy and Seasonal": [
+    { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  ]
+};
+
+const categories = Object.keys(allProducts);
 
   return (
     <>
@@ -184,6 +242,7 @@ const handleMobileClick = (tab) => {
          <li
   className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
   onMouseEnter={() => handleHover("Shop")}
+  onClick={() => navigate("/products/fresh-fruits")}
 >
             Shop
           </li>
@@ -286,7 +345,10 @@ const handleMobileClick = (tab) => {
           >
     {dropdownData[activeSubmenu].map((d, i) => (
       <div key={i} className="dropdown-item"
-      onClick={() => handleDropdownClick(d)}
+   onClick={() => openProductPopup(d)}
+
+
+
       >
         {d}</div>
     ))}
@@ -334,6 +396,36 @@ const handleMobileClick = (tab) => {
   </div>
 )}
 
+
+ {/* PRODUCT POPUP */}
+      {/* <ProductPopup
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        title={selectedCategory}
+        products={allProducts[selectedCategory] || []}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      /> */}
+
+{/* <ProductPopup
+  open={openPopup}
+  onClose={() => setOpenPopup(false)}
+  title={selectedCategory}
+  products={allProducts[selectedCategory] || []}
+  categories={categories}
+  selectedCategory={selectedCategory}
+  setSelectedCategory={setSelectedCategory}
+/> */}
+<ProductPopup
+  open={openPopup}
+  onClose={() => setOpenPopup(false)}
+  title={selectedCategory}
+  products={allProducts[selectedCategory] || []}
+  categories={categories}
+  selectedCategory={selectedCategory}
+  setSelectedCategory={setSelectedCategory}
+/>
 
 
 
