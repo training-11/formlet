@@ -5,8 +5,12 @@
   background-color:#01BF64;
   text-align: center;
   color: white;
+<<<<<<< Updated upstream
   font-family: 'Amatic SC', cursive;
   padding-bottom: 60px;
+=======
+  font-family: "caveat", cursive;
+>>>>>>> Stashed changes
   font-weight: bold;
   
 }
