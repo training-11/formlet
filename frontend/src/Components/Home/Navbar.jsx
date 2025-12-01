@@ -23,7 +23,7 @@ export default function Navbar() {
     Shop: [
       "Fresh Fruit & Vegetables boxes",
       "What's new",
-      "Leafy & others ",
+      "Leafy & others",
       "Essentials",
       "Daily & eggs",
     ],
@@ -66,7 +66,6 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
     "Leafy & others" :[
       "Leafy & Seasonings",
       "Other vegetables",
-      
     ],
  
     "Essentials":[
