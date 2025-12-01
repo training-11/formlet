@@ -15,5 +15,6 @@ export default function App() {
         <Route path="/products/:category" element={<ProductPage />} />
       </Routes>
     </BrowserRouter>
+    
   );
 }
