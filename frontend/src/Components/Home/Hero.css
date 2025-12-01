@@ -47,8 +47,8 @@
 }
 
 .hero-title {
-  font-family: 'Amatic SC', cursive;
-  font-size: 90px;
+  font-family: 'caveat', cursive;
+  font-size: 60px;
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 60px;
@@ -57,7 +57,7 @@
 }
 
 .hero-Text {
-  font-family: 'Amatic SC', cursive;
+  font-family: 'caveat', cursive;
   font-size: 38px;
   font-weight: 400;
   margin-bottom: 60px;
