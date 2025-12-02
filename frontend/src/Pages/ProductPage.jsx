@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import "./ProductPage.css";
 import { HiMenu } from "react-icons/hi";
 import { FaChevronDown } from "react-icons/fa";
+// import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../Components/Home/Navbar";
 
 // IMAGES
 import fruit1 from "../Images/fruit1.png";
@@ -108,40 +110,21 @@ export default function ProductPage() {
         image: veg2,
       }
     ],
-
-    "Exotics": [
-      {
-        name: "Cherry Tomato",
-        weight: "200 Gms",
-        price: "₹80.00",
-        location: "From Bengaluru",
-        image: veg1,
-      }
-    ],
-
-    "MisFits": [
-      {
-        name: "Misfit Carrot",
-        weight: "500 Gms",
-        price: "₹40.00",
-        location: "From Ooty",
-        image: veg2,
-      }
-    ]
   };
 
   const categories = Object.keys(allProducts);
 
   return (
     <div className="product-page">
+    <Navbar />
 
       {/* HEADER BAR */}
-      <div className="top-bar">
+      {/* <div className="top-bar">
         <HiMenu size={26} className="menu-icon" />
         <div className="location">
           Bengaluru <FaChevronDown size={14} />
         </div>
-      </div>
+      </div> */}
 
       <div className="content-area">
 

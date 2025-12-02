@@ -217,11 +217,23 @@
 }
 
 /* Right side logo (bigger + perfect spacing) */
-.side-logo {
-  width: 110px;          /* ✔ bigger like Riverford */
+/* .side-logo {
+  width: 110px;         
   height: auto;
   margin: 0 auto 18px auto;
   display: block;
+} */
+
+.side-logo {
+  width: 90px;
+  max-width: 90px;
+  height: auto;
+  display: block;
+  margin: 0 auto 14px auto;
+
+  /* ✅ Exact orientation like your screenshot */
+  transform: scaleX(1) rotate(-205deg) translateY(10px);
+  transform-origin: center;
 }
 
 /* Title on right */

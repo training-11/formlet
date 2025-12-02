@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./Navbar.css";
 import SignInModal from "./SignInModal"; 
 
-import logo from "../../Images/Logo with typo.png";
+import logo from "../../Images/Updated Logo with typo.png";
 import searchIcon from '../../Images/Search icon.png';
 import CalendarIcon from "../../Images/Calendar icon.png";
 import accountIcon from "../../Images/Account icon.png";
@@ -132,6 +132,49 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
   ]
 };
 
+
+const allProducts = {
+  "Fresh Fruits": [
+    { name: "Sweet Lime", weight: "1000 Gms", price: "₹89.00", location: "From Vandavasi, Tamilnadu", image: fruit1 },
+    { name: "Nagpur Orange (500–600g)", weight: "500 Gms", price: "₹109.00", location: "From Nagpur, Maharashtra", image: fruit2 },
+    { name: "Sapota / Chiku", weight: "500 Gms", price: "₹79.00", location: "From Mysuru, Karnataka", image: fruit2 },
+     { name: "Nagpur Orange (500–600g)", weight: "500 Gms", price: "₹109.00", location: "From Nagpur, Maharashtra", image: fruit2 },
+    { name: "Sapota / Chiku", weight: "500 Gms", price: "₹79.00", location: "From Mysuru, Karnataka", image: fruit2 }
+  ],
+
+  "Fresh Vegetables": [
+    { name: "Chilli Green", weight: "100 Gms", price: "₹9.00", location: "From DenkaniKottai", image: veg1 },
+    { name: "Knol Khol Green", weight: "250 Gms", price: "₹49.00", location: "From DenkaniKottai", image: veg2 },
+    { name: "Bottle Gourd", weight: "600 Gms", price: "₹65.00", location: "From Vandavasi", image: veg1 }
+  ],
+
+  "Leafy & Seasonings": [
+    { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  ],
+
+  "Other vegetables" : [
+      { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  ],
+
+  "Dals & Rice" : [
+       { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  ],
+  "Ghees & Oils" : [
+       { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  ],
+  "Dehydrated" : [
+       { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  
+  ]
+  
+};
+
+
 const navigate = useNavigate();
 
 // const handleDropdownClick = (category) => {
@@ -185,42 +228,12 @@ const handleMobileClick = (tab) => {
 };
 
 
-// const openProductPopup = (category) => {
-//   setPopupCategory(category);
-//   setPopupOpen(true);
-// };
-
-// const openProductPopup = (category) => {
-//   setSelectedCategory(category);
-//   setOpenPopup(true);
-// };
-
 const openProductPopup = (category) => {
   setSelectedCategory(category);
   setOpenPopup(true);
 };
 
 
-const allProducts = {
-  "Fresh Fruits": [
-    { name: "Sweet Lime", weight: "1000 Gms", price: "₹89.00", location: "From Vandavasi, Tamilnadu", image: fruit1 },
-    { name: "Nagpur Orange (500–600g)", weight: "500 Gms", price: "₹109.00", location: "From Nagpur, Maharashtra", image: fruit2 },
-    { name: "Sapota / Chiku", weight: "500 Gms", price: "₹79.00", location: "From Mysuru, Karnataka", image: fruit2 },
-     { name: "Nagpur Orange (500–600g)", weight: "500 Gms", price: "₹109.00", location: "From Nagpur, Maharashtra", image: fruit2 },
-    { name: "Sapota / Chiku", weight: "500 Gms", price: "₹79.00", location: "From Mysuru, Karnataka", image: fruit2 }
-  ],
-
-  "Fresh Vegetables": [
-    { name: "Chilli Green", weight: "100 Gms", price: "₹9.00", location: "From DenkaniKottai", image: veg1 },
-    { name: "Knol Khol Green", weight: "250 Gms", price: "₹49.00", location: "From DenkaniKottai", image: veg2 },
-    { name: "Bottle Gourd", weight: "600 Gms", price: "₹65.00", location: "From Vandavasi", image: veg1 }
-  ],
-
-  "Leafy and Seasonal": [
-    { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
-    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
-  ]
-};
 
 const categories = Object.keys(allProducts);
 

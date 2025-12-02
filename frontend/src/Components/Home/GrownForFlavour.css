@@ -70,11 +70,26 @@
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   margin: 0 auto;
 }
-.grown-img {
+/* .grown-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+} */
+
+.grown-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* ✅ FIX for 3rd card — show full head clearly */
+.grown-card:nth-child(3) .grown-img {
+  height: auto;              /* ✅ VERY IMPORTANT */
+  object-fit: contain;       /* ✅ prevents cropping */
+  object-position: center;
 }
 
 .grown-card-text {

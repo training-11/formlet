@@ -15,9 +15,10 @@
 
 
  .popup-box {
+  margin-top: 80px;
   width: 95%;
-  height: 92%;        /* Increased height */
-  max-height: 95vh;   /* Prevent overflow on small screens */
+  height: 92%;       
+  max-height: 95vh;  
   background: #fff;
   border-radius: 12px;
   position: relative;
