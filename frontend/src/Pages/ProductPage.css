@@ -32,29 +32,78 @@
 }
 
 /* LEFT SIDEBAR */
-.left-sidebar {
-  width: 230px;
-  background: white;
-  padding-top: 15px;
-  overflow-y: scroll;
-  height: 100%;
-  border-right: 1px solid #ddd;
+/* container for the whole vertical list */
+.sidebar-container {
+  width: 120px;
+  padding: 10px 6px;
+  background: #f7f8f6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* 🔽 NEW LINES FOR SCROLLING */
+  max-height: calc(100vh - 120px); /* viewport height minus header/footer */
+  overflow-y: auto;
+}
+.sidebar-container::-webkit-scrollbar {
+  width: 4px;
 }
 
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: #c7dccc;
+  border-radius: 4px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+/* each tile (image + text) */
 .sidebar-item {
-  padding: 15px 20px;
-  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 16px;
 }
 
-.sidebar-item:hover {
-  background: #edf5ee;
-}
-
+/* active tile highlight */
 .sidebar-item.active {
-  background: #dcefe0;
-  font-weight: bold;
+  background: #eef9ee;
 }
+
+/* the rounded box behind the image */
+.icon-box {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  border: 1px solid #d3e5cf;
+  background: #f5fbf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the image itself */
+.sidebar-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* text under the icon */
+.sidebar-text {
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  color: #214225;
+}
+
+
 
 /* PRODUCTS GRID */
 .products-container {
