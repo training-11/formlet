@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ProductPopup.css";
 import { FaTimes } from "react-icons/fa";
 
@@ -11,6 +11,20 @@ export default function ProductPopup({
   selectedCategory,
   setSelectedCategory
 }) {
+
+  // ❗ Fix: useEffect must be inside the component
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";   // Disable background scroll
+    } else {
+      document.body.style.overflow = "auto";     // Enable background scroll
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";     // Cleanup
+    };
+  }, [open]);
+
   if (!open) return null;
 
   return (
@@ -20,8 +34,8 @@ export default function ProductPopup({
         <FaTimes className="popup-close" onClick={onClose} />
 
         <div className="popup-content">
-          
-          {/* LEFT SIDE MENU */}
+
+          {/* LEFT MENU */}
           <div className="popup-sidebar">
             {categories.map((cat, i) => (
               <div
@@ -36,7 +50,7 @@ export default function ProductPopup({
             ))}
           </div>
 
-          {/* RIGHT PRODUCTS GRID */}
+          {/* RIGHT PRODUCT AREA */}
           <div className="popup-right">
             <h2 className="popup-title">{title}</h2>
 
@@ -46,9 +60,14 @@ export default function ProductPopup({
                   <img src={prod.image} alt="" className="popup-prod-img" />
 
                   <div className="popup-location">{prod.location}</div>
+
                   <div className="popup-name">{prod.name}</div>
 
-                  <input className="popup-weight" value={prod.weight} readOnly />
+                  <input
+                    className="popup-weight"
+                    value={prod.weight}
+                    readOnly
+                  />
 
                   <div className="popup-price">{prod.price}</div>
 
