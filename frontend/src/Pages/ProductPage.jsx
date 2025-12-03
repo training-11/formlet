@@ -16,9 +16,9 @@ import leafy2 from "../Images/leafy2.jpg";
 import apple from "../Images/apple.png";
 import carrot from "../Images/carrot.png";
 import leaf from "../Images/leaf.png";
-import tomato from "../Images/tomato.png";
+// import tomato from "../Images/tomato.png";
 import dal from "../Images/dal.png";
-import orange from "../Images/orange.jpg";
+// import orange from "../Images/orange.jpg";
 import dairy from "../Images/dairy.png";
 import snacksncoffee from "../Images/snacksncoffee.png";
 import grains from "../Images/grains.png";
@@ -146,8 +146,8 @@ export default function ProductPage() {
   { img: apple, label: "Fresh Fruits" },
   { img: carrot, label: "Fresh Vegetables" },
   { img: leaf, label: "Leafy and Seasonings" },
-  { img: tomato, label: "Exotics" },
-  { img: orange, label: "MisFits" },
+  // { img: tomato, label: "Exotics" },
+  // { img: orange, label: "MisFits" },
   { img: dal, label: "Dals & Rice" },
   { img: dehydrated, label: "Dehydrated" },
   { img: grains, label: "Essentials" },

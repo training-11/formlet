@@ -67,8 +67,8 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       "Fresh Vegetables",
       "leafy and seasonings",
       "Other vegetables",
-      "Exotics",
-      "MisFits"
+      // "Exotics",
+      // "MisFits"
     ],
     "Ethics & ethos": [
       "Why Farmlet?",

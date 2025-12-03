@@ -26,10 +26,16 @@
 }
 
 /* MAIN CONTENT */
-.content-area {
+/* .content-area {
   display: flex;
   height: calc(100vh - 120px);
+} */
+ .content-area {
+  display: flex;
+  height: calc(100vh - 180px); /* updated */
+  overflow: hidden;
 }
+
 
 /* LEFT SIDEBAR */
 /* container for the whole vertical list */
@@ -42,9 +48,11 @@
   gap: 12px;
 
   /* 🔽 NEW LINES FOR SCROLLING */
-  max-height: calc(100vh - 120px); /* viewport height minus header/footer */
+  max-height: calc(100vh - 180px); /* viewport height minus header/footer */
   overflow-y: auto;
 }
+
+
 .sidebar-container::-webkit-scrollbar {
   width: 4px;
 }
