@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./Navbar.css";
 import SignInModal from "./SignInModal"; 
+import { Link } from "react-router-dom";
 
 import logo from "../../Images/Updated Logo with typo.png";
 import searchIcon from '../../Images/Search icon.png';
@@ -90,6 +91,10 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       "Dals & Rice",
       "Ghees & Oils",
       "Dehydrated ",
+      "Masalas and Dry Fruits",
+      "Snacks and coffee",
+      "Natural sweeteners",
+      "Ready to cook",
     
     ],
     "Daily & eggs":[
@@ -98,8 +103,6 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       "Yogurts",
       "Cheese",
       "Butter & cream",
-      "Ghee",
-      "Ready to Cook",
     ]
 
   };
@@ -151,30 +154,32 @@ const allProducts = {
     { name: "Knol Khol Green", weight: "250 Gms", price: "₹49.00", location: "From DenkaniKottai", image: veg2 },
     { name: "Bottle Gourd", weight: "600 Gms", price: "₹65.00", location: "From Vandavasi", image: veg1 }
   ],
-
-  "Leafy & Seasonings": [
+   
+  "Leafy & others": [
     { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
     { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
   ],
 
-  "Other vegetables" : [
-      { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
-    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
-  ],
+  // "Other vegetables" : [
+  //     { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+  //   { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  // ],
+"What's new" :[
 
-  "Dals & Rice" : [
+],
+  "Essentials" : [
        { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
     { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
   ],
-  "Ghees & Oils" : [
+  "Daily & eggs" : [
        { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
     { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
   ],
-  "Dehydrated" : [
-       { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
-    { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
+  // "Dehydrated" : [
+  //      { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
+  //   { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
   
-  ]
+ // ]
   
 };
 
@@ -247,13 +252,12 @@ const categories = Object.keys(allProducts);
       <nav className="main-navbar" >
         
 
-        <div className="nav-left">
-          <img
-            src={logo}
-            alt="logo"
-            className="nav-logo"
-          />
-        </div>
+       <div className="nav-left">
+  <Link to="/">
+    <img src={logo} alt="logo" className="nav-logo" />
+  </Link>
+</div>
+
 
         <ul className="nav-center">
          <li
