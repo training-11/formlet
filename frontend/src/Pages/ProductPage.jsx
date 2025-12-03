@@ -36,6 +36,19 @@ import dairy from "../Images/dairy.png";
 import snacksncoffee from "../Images/snacksncoffee.png";
 import grains from "../Images/grains.png";
 import dehydrated from "../Images/dehydrated.png";
+import otherveg1 from "../Images/otherveg1.jpg";
+import otherveg2 from "../Images/otherveg2.jpg";
+import otherveg3 from "../Images/otherveg3.jpg";
+import otherveg4 from "../Images/otherveg4.jpeg";
+import otherveg5 from "../Images/otherveg5.jpeg";
+import otherveg6 from "../Images/otherveg6.png";
+import otherveg7 from "../Images/otherveg7.png";
+import otherveg8 from "../Images/otherveg8.png";
+import dals1 from "../Images/dals1.png";
+
+
+
+
 export default function ProductPage() {
   const { category } = useParams();
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
@@ -188,10 +201,67 @@ export default function ProductPage() {
         price: "₹25.00",
         location: "From Hosur",
         image: veg2,
+      },
+      {
+        name: "Lemon (8pcs - 11pcs)",
+        weight: "250 Gms",
+        price: "₹57.00",
+        location: "From Kadapa",
+        image: otherveg1,
+      },
+       {
+        name: "Red Capsicum",
+        weight: "300 Gms",
+        price: "₹79.00",
+        location: "From Denkanikottai, Tamilnadu",
+        image: otherveg2,
+      },
+      {
+        name: "Sambar Onion",
+        weight: "500 Gms",
+        price: "₹65.00",
+        location: "From Harur",
+        image: otherveg3,
+      },
+       {
+        name: "Brown Channa Sprouts",
+        weight: "200 Gms",
+        price: "₹65.00",
+        location: "From Bengaluru, Karnataka",
+        image: otherveg4,
+      },
+       {
+        name: "Diced Yam",
+        weight: "250 Gms",
+        price: "₹95.00",
+        location: "From Bengaluru, Karnataka",
+        image: otherveg5,
+      },
+        {
+        name: "Ginger",
+        weight: "100 Gms",
+        price: "₹23.00",
+        location: "From DenkaniKottai",
+        image: otherveg6,
+      },
+        {
+        name: "Green Beans Cut",
+        weight: "200 Gms",
+        price: "₹95.00",
+        location: "From Bengaluru, Karnataka",
+        image: otherveg7,
+      },
+      {
+        name: "Ooty Potato",
+        weight: "500 Gms",
+        price: "₹80.00",
+        location: "From Nilgiris, Tamilnadu",
+        image: otherveg8,
       }
-    ],
 
-    "dairy": [
+
+    ],
+ "dairy": [
       {
         name: "Cherry Tomato",
         weight: "200 Gms",
@@ -208,6 +278,16 @@ export default function ProductPage() {
         price: "₹40.00",
         location: "From Ooty",
         image: veg2,
+      }
+      
+    ],
+       "Dals & Rice": [
+      {
+        name: "Unpolished Toor Dal",
+        weight: "500 Gms",
+        price: "₹189.00",
+        location: "From Bijapur, Karnataka",
+        image: dals1,
       }
       
     ]

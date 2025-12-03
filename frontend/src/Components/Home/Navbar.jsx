@@ -22,6 +22,12 @@ import veg1 from "../../Images/veg1.png";
 import veg2 from "../../Images/veg2.png";
 import leafy1 from "../../Images/leafy1.png";
 import leafy2 from "../../Images/leafy2.jpg";
+import veg3 from "../../Images/veg3.png";
+import veg4 from "../../Images/veg4.png";
+import veg5 from "../../Images/veg5.jpg";
+import veg6 from "../../Images/veg6.png";
+import veg7 from "../../Images/veg7.png";
+import veg8 from "../../Images/veg8.jpg";
 
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Shop");
@@ -154,11 +160,66 @@ const allProducts = {
     { name : "Banana Elakki", weight: "1000 Gms", price: "₹129.00", location: "From Denkanikottai, Tamilnadu", image: fruit6}
   ],
 
-  "Fresh Vegetables": [
-    { name: "Chilli Green", weight: "100 Gms", price: "₹9.00", location: "From DenkaniKottai", image: veg1 },
-    { name: "Knol Khol Green", weight: "250 Gms", price: "₹49.00", location: "From DenkaniKottai", image: veg2 },
-    { name: "Bottle Gourd", weight: "600 Gms", price: "₹65.00", location: "From Vandavasi", image: veg1 }
-  ],
+   "Fresh Vegetables": [
+        {
+          name: "Chilli Green",
+          weight: "100 Gms",
+          price: "₹9.00",
+          location: "From DenkaniKottai",
+          image: veg1,
+        },
+        {
+          name: "Knol Khol Green",
+          weight: "250 Gms",
+          price: "₹49.00",
+          location: "From DenkaniKottai",
+          image: veg2,
+        },
+        {
+          name: "Bottle Gourd",
+          weight: "600 Gms",
+          price: "₹65.00",
+          location: "From Vandavasi",
+          image: veg3,
+        },
+       {
+          name: "Chow Chow",
+          weight: "250 Gms",
+          price: "₹27.00",
+          location: "From Nilgiris",
+          image: veg4,
+        },
+       
+         {
+          name: "Yellow Pumpkin",
+          weight: "500 Gms",
+          price: "₹89.00",
+          location: "From Vandavasi, Tamilnadu",
+          image: veg5,
+        },
+        {
+          name: "Cabbage",
+          weight: "600 Gms",
+          price: "₹65.00",
+          location: "From Denkanikottai, Tamilnadu",
+          image: veg6,
+        },
+         {
+          name: "Long Beans / Yard Beans",
+          weight: "250 Gms",
+          price: "₹59.00",
+          location: "From Vandavasi, Tamilnadu",
+          image: veg7,
+        },
+  {
+          name: "LYam",
+          weight: "500 Gms",
+          price: "₹65.00",
+          location: "From Harur",
+          image: veg8,
+        },
+  
+      ],
    
   "Leafy & others": [
     { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
