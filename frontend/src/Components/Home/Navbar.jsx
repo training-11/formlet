@@ -65,8 +65,8 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
     "Fresh Fruit & Vegetables boxes": [
       "Fresh Fruits",
       "Fresh Vegetables",
-      "leafy and seasonings",
-      "Other vegetables",
+      // "leafy and seasonings",
+      // "Other vegetables",
       // "Exotics",
       // "MisFits"
     ],
