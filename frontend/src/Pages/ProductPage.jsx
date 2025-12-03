@@ -29,6 +29,9 @@ import leafy5 from "../Images/leafy5.jpg"
 import apple from "../Images/apple.png";
 import carrot from "../Images/carrot.png";
 import leaf from "../Images/leaf.png";
+import naturalsweet from "../Images/naturalsweet.png";
+import masalaanddry from "../Images/masalaanddry.png";
+import readycook from "../Images/readycook.png";
 // import tomato from "../Images/tomato.png";
 import dal from "../Images/dal.png";
 // import orange from "../Images/orange.jpg";
@@ -45,6 +48,47 @@ import otherveg6 from "../Images/otherveg6.png";
 import otherveg7 from "../Images/otherveg7.png";
 import otherveg8 from "../Images/otherveg8.png";
 import dals1 from "../Images/dals1.png";
+import dals2 from "../Images/dals2.png";
+import dals3 from "../Images/dals3.png";
+import dals4 from "../Images/dals4.png";
+import dals5 from "../Images/dals5.png";
+import dals6 from "../Images/dals6.png";
+import dals7 from "../Images/dals7.png";
+import dals8 from "../Images/dals8.png";
+import dals9 from "../Images/dals9.png";
+import deh1 from "../Images/deh1.jpg";
+import gra1 from "../Images/gra1.jpg";
+import gra2 from "../Images/gra2.jpg";
+import dai1 from "../Images/dai1.jpg";
+import dai2 from "../Images/dai2.jpg";
+import dai3 from "../Images/dai3.jpg";
+import dai4 from "../Images/dai4.png";
+import dai5 from "../Images/dai5.jpg";
+import dai6 from "../Images/dai6.jpg";
+import dai7 from "../Images/dai7.jpg";
+import dai8 from "../Images/dai8.jpg";
+import dai9 from "../Images/dai9.jpg";
+import sna1 from "../Images/sna1.jpg";
+import ns1 from "../Images/ns1.png";
+import ns2 from "../Images/ns2.png";
+import ns3 from "../Images/ns3.png";
+import ns4 from "../Images/ns4.png";
+import ns5 from "../Images/ns5.png";
+import ns6 from "../Images/ns6.jpeg";
+import ns7 from "../Images/ns7.png";
+import rc1 from "../Images/rc1.jpg";
+import rc2 from "../Images/rc2.jpg";
+import rc3 from "../Images/rc3.jpeg";
+import rc4 from "../Images/rc4.jpeg";
+import md1 from "../Images/md1.jpg";
+import md2 from "../Images/md2.jpg";
+import md3 from "../Images/md3.jpg";
+import md4 from "../Images/md4.jpg";
+import md5 from "../Images/md5.jpg";
+import md6 from "../Images/md6.png";
+import md7 from "../Images/md7.png";
+import md8 from "../Images/md8.png";
+import md9 from "../Images/md9.png";
 
 
 
@@ -271,13 +315,12 @@ export default function ProductPage() {
       }
     ],
 
-    "snacksncoffee": [
+    "Snacks & Coffee": [
       {
-        name: "Misfit coffee",
-        weight: "500 Gms",
-        price: "₹40.00",
-        location: "From Ooty",
-        image: veg2,
+        name: "Pure Blended Filter Coffee Powder",
+        weight: "100 Gms",
+        price: "₹135.00",
+        image: sna1,
       }
       
     ],
@@ -288,9 +331,305 @@ export default function ProductPage() {
         price: "₹189.00",
         location: "From Bijapur, Karnataka",
         image: dals1,
+      },
+      { 
+
+        name: "UWhite Urad Dal Whole",
+        weight: "500 Gms",
+        price: "₹149.00",
+        location: "From Thoothukudi, Tamilnadua",
+        image: dals2,
+      },
+      {
+
+        name: "Green Moong Dal Whole",
+        weight: "500 Gms",
+        price: "₹180.00",
+        location: "From Bijapur, Karnataka",
+        image: dals3,
+      },
+      {
+
+        name: "Masoor Dal",
+        weight: "500 Gms",
+        price: "₹145.00",
+        location: "From Nasik, Maharastra",
+        image: dals4,
+      },
+      {
+
+        name: "Sona Masoori Raw White Rice",
+        weight: "1000 Gms",
+        price: "₹179.00",
+        location: "From Bellary, Karnataka",
+        image: dals5,
+      },
+      {
+
+        name: "Ponni Raw Rice",
+        weight: "1000 Gms",
+        price: "₹189.00",
+        location: "From Harur, Tamilnadu",
+        image: dals6,
+      },
+      {
+
+        name: "Rajamudi Rice",
+        weight: "1000 Gms",
+        price: "₹159.00",
+        location: "From Hassan, Karnataka",
+        image: dals7,
+      },
+      {
+
+        name: "Red Rice - Rakthashali",
+        weight: "1000 Gms",
+        price: "₹229.00",
+        location: "From Bellary, Karnataka",
+        image: dals8,
+      },
+      {
+
+        name: "Thooyamalli Boiled Rice (Jasmine Rice)",
+        weight: "1000 Gms",
+        price: "₹199.00",
+        location: "From Harur, Tamilnadu",
+        image: dals9,
+      },
+    ],
+    "Dehydrated": [
+      {
+        name: "Ginger Powder",
+        weight: "50 Gms",
+        price: "₹189.00",
+        location: "From Harohalli, Karnataka",
+        image: deh1,
       }
-      
-    ]
+    ],
+    "Grains and millets": [
+      {
+        name: "Kodo Millet Semi polished (Harka, Varagu) ",
+        weight: "500 Gms",
+        price: "₹149.00",
+        location: "From Kanakapura, Karnataka",
+        image: gra1,
+      },
+      {
+        name: "Little Millet Semi Polished",
+        weight: "500 Gms",
+        price: "₹169.00",
+        location: "From Kanakapura, Karnataka",
+        image: gra2,
+      }
+    ],
+    "Dairy & eggs": [
+      {
+        name: "Akshayakalpa Organic Country Eggs (Pack of 6)",
+        weight: "6 pcs",
+        price: "₹150.00",
+        image: dai1,
+      },
+      {
+        name: "Akshayakalpa Organic Slim Milk",
+        weight: "1000 ML",
+        price: "₹135.00",
+        image: dai2,
+      },
+      {
+        name: "Akshayakalpa Organic Cow Milk",
+        weight: "1000 ML",
+        price: "₹126.00",
+        image: dai3,
+      },
+      {
+        name: "Akshayakalpa Organic Artisan Cheese Slices",
+        weight: "100 Gms",
+        price: "₹114.00",
+        image: dai4,
+      },
+      {
+        name: "Akshayakalpa Organic Probiotic Curd",
+        weight: "500 Gms",
+        price: "₹55.00",
+        image: dai5,
+      },
+      {
+        name: "Akshayakalpa Organic Country Eggs (Pack of 6)",
+        weight: "6 pcs",
+        price: "₹150.00",
+        image: dairy,
+      },
+      {
+        name: "Akshayakalpa-Artisanal Organic Set Curd",
+        weight: "200 Gms",
+        price: "₹40.00",
+        image: dai6,
+      },
+      {
+        name: "Akshayakalpa-Organic Cooking Butter Un-salted",
+        weight: "200 Gms",
+        price: "₹217.00",
+        image: dai7,
+      },
+      {
+        name: "Akshayakalpa - Organic Cheddar Plain Young/Mild",
+        weight: "200 Gms",
+        price: "₹329.00",
+        image: dai8,
+      },
+      {
+        name: "Eggs (Free Range)",
+        weight: "12 pcs",
+        price: "₹289.00",
+        image: dai9,
+      }
+    ],
+    "Natural Sweeteners": [
+      {
+        name: "Khandsari Sugar",
+        weight: "500 Gms",
+        price: "₹110.00",
+        location: "From Bengaluru, Karnataka",
+        image: ns1,
+      },
+      {
+        name: "Multi Floral Raw Honey",
+        weight: "250 Gms",
+        price: "₹249.00",
+        location: "From Puttur, Karnataka",
+        image: ns2,
+      },
+      {
+        name: "Wild Forest Honey",
+        weight: "250 Gms",
+        price: "₹239.00",
+        location: "From Palamu & Lathehar",
+        image: ns3,
+      },
+      {
+        name: "Bucket Jaggery",
+        weight: "1000 Gms",
+        price: "₹149.00",
+        location: "From Managulli, Karnataka",
+        image: ns4,
+      },
+      {
+        name: "Palm Jaggery",
+        weight: "500 Gms",
+        price: "₹269.00",
+        location: "From Harur, Tamilnadu",
+        image: ns5,
+      },
+      {
+        name: "Akshayakalpa Organic Multifloral Raw Honey",
+        weight: "250 Gms",
+        price: "₹200.00",
+        location: "From Bengaluru, Karnataka",
+        image: ns6,
+      },
+      {
+        name: "Jaggery Powder",
+        weight: "500 Gms",
+        price: "₹119.00",
+        location: "From Sitling, Tamilnadu",
+        image: ns7,
+      }
+    ],
+    "Ready to Cook": [
+      {
+        name: "Jumbo Rolled oats",
+        weight: "500 Gms",
+        price: "₹149.00",
+        location: "From Mumbai, MH",
+        image: rc1,
+      },
+      {
+        name: "Akshayakalpa - Organic Idli & Dosa Batter",
+        weight: "750 Gms",
+        price: "₹75.00",
+        location: "From Bengaluru, Karnataka",
+        image: rc3,
+      },
+      {
+        name: "Classic Tofu",
+        weight: "200 Gms",
+        price: "₹141.00",
+        location: "From Bengaluru, Karnataka",
+        image: rc2,
+      },
+      {
+        name: "Akshayakalpa - Organic Ragi Dosa",
+        weight: "750 Gms",
+        price: "₹85.00",
+        location: "From Bengaluru, Karnataka",
+        image: rc4,
+      }
+    ],
+    "Masalas and Dry Fruits": [
+      {
+        name: "Chia Seeds",
+        weight: "100 Gms",
+        price: "₹169.00",
+        location: "From Chennai, TN",
+        image: md1,
+      },
+      {
+        name: "Himalayan Pink Salt",
+        weight: "500 Gms",
+        price: "₹69.00",
+        location: "From Himachal, HP",
+        image: md2,
+      },
+      {
+        name: "Cinnamon",
+        weight: "100 Gms",
+        price: "₹229.00",
+        location: "From Chennai, TN",
+        image: md3,
+      },
+      {
+        name: "Clove",
+        weight: "50 Gms",
+        price: "₹159.00",
+        location: "From Chennai, TN",
+        image: md4    ,
+      },
+      {
+        name: "White Sesame Seeds",
+        weight: "100 Gms",
+        price: "₹110.00",
+        location: "From Chennai, TN",
+        image: md5,
+      },
+      {
+        name: "Cashew",
+        weight: "200 Gms",
+        price: "₹399.00",
+        location: "From Rampachodavaram, Andhra Pradesh",
+        image: md6,
+      },
+      {
+        name: "Almond",
+        weight: "250 Gms",
+        price: "₹383.00",
+        location: "From Kashmir",
+        image: md7,
+      },
+      {
+        name: "Dry Grapes Black",
+        weight: "250 Gms",
+        price: "₹259.00",
+        location: "From Kalihalli, Karnataka",
+        image: md8,
+      },
+      {
+        name: "Kashmiri Walnut Kernels",
+        weight: "250 Gms",
+        price: "₹519.00",
+        location: "From Kashmir",
+        image: md9,
+      }
+    ],  
   };
 
   const categories = Object.keys(allProducts);
@@ -303,9 +642,12 @@ export default function ProductPage() {
   // { img: orange, label: "MisFits" },
   { img: dal, label: "Dals & Rice" },
   { img: dehydrated, label: "Dehydrated" },
-  { img: grains, label: "Essentials" },
-  { img: dairy, label: "Daily & eggs" },
+  { img: grains, label: "Grains and millets" },
+  { img: dairy, label: "Dairy & eggs" },
   { img: snacksncoffee, label: "Snacks & Coffee" },
+  { img: naturalsweet, label: "Natural Sweeteners" },
+  { img: masalaanddry, label: "Masalas and Dry Fruits" },
+  { img: readycook, label: "Ready to Cook" },
 ];
 
   return (
