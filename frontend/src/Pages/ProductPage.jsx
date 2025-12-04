@@ -38,7 +38,7 @@ import dal from "../Images/dal.png";
 import dairy from "../Images/dairy.png";
 import snacksncoffee from "../Images/snacksncoffee.png";
 import grains from "../Images/grains.png";
-import dehydrated from "../Images/dehydrated.png";
+import Dehydrated from "../Images/Dehydrated.png";
 import otherveg1 from "../Images/otherveg1.jpg";
 import otherveg2 from "../Images/otherveg2.jpg";
 import otherveg3 from "../Images/otherveg3.jpg";
@@ -305,15 +305,7 @@ export default function ProductPage() {
 
 
     ],
- "dairy": [
-      {
-        name: "Cherry Tomato",
-        weight: "200 Gms",
-        price: "₹80.00",
-        location: "From Bengaluru",
-        image: veg1,
-      }
-    ],
+
 
     "Snacks & Coffee": [
       {
@@ -641,7 +633,7 @@ export default function ProductPage() {
   // { img: tomato, label: "Exotics" },
   // { img: orange, label: "MisFits" },
   { img: dal, label: "Dals & Rice" },
-  { img: dehydrated, label: "Dehydrated" },
+  { img: Dehydrated, label: "Dehydrated" },
   { img: grains, label: "Grains and millets" },
   { img: dairy, label: "Dairy & eggs" },
   { img: snacksncoffee, label: "Snacks & Coffee" },

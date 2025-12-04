@@ -69,6 +69,7 @@ import rc1 from "../../Images/rc1.jpg";
 import rc2 from "../../Images/rc2.jpg";
 import rc3 from "../../Images/rc3.jpeg";
 import rc4 from "../../Images/rc4.jpeg";
+import deh1 from "../../Images/deh1.jpg";
 
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Shop");
@@ -91,7 +92,7 @@ const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
       "What's new",
       "Leafy & others",
       "Essentials",
-      "Daily & eggs",
+      "Dairy & eggs",
     ],
     About: [
       "Ethics & ethos",
@@ -141,14 +142,14 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
     "Essentials":[
       "Dals & Rice",
       "Ghees & Oils",
-      "Dehydrated ",
+      "Dehydrated",
       "Masalas and Dry Fruits",
       "Snacks and coffee",
       "Natural sweeteners",
       "Ready to cook",
     
     ],
-    "Daily & eggs":[
+    "Dairy & eggs":[
       "Mlik",
       "Eggs",
       "Yogurts",
@@ -177,7 +178,7 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       desc: "Dairy, eggs, bakery, store cupboard & more"
     },
     {
-      title: "Daily & eggs",
+      title: "Dairy & eggs",
       desc: "The highest welfare organic British meat"
     }
   ],
@@ -511,7 +512,17 @@ const allProducts = {
                      price: "₹85.00",
                      location: "From Bengaluru, Karnataka",
                      image: rc4,
-                   }
+                   }, 
+
+                   {
+                           name: "Ginger Powder",
+                           weight: "50 Gms",
+                           price: "₹189.00",
+                           location: "From Harohalli, Karnataka",
+                           image: deh1,
+                         }
+                
+
 
 
   ],
@@ -604,11 +615,11 @@ const categoryParentMap = {
   "Ready to cook": "Essentials",
 
   // Daily & eggs group
-  "Mlik": "Daily & eggs",
-  "Eggs": "Daily & eggs",
-  "Yogurts": "Daily & eggs",
-  "Cheese": "Daily & eggs",
-  "Butter & cream": "Daily & eggs",
+  "Mlik": "Dairy & eggs",
+  "Eggs": "Dairy & eggs",
+  "Yogurts": "Dairy & eggs",
+  "Cheese": "Dairy & eggs",
+  "Butter & cream": "Dairy & eggs",
 };
 
 
