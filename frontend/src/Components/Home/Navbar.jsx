@@ -3,7 +3,7 @@ import "./Navbar.css";
 import SignInModal from "./SignInModal"; 
 import { Link } from "react-router-dom";
 
-import logo from "../../Images/Updated Logo with typo.png";
+import logo from "../../Images/New logo updated.png";
 import searchIcon from '../../Images/Search icon.png';
 import CalendarIcon from "../../Images/Calendar icon.png";
 import accountIcon from "../../Images/Account icon.png";
@@ -91,7 +91,7 @@ const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
       "What's new",
       "Leafy & others",
       "Essentials",
-      "Daily & eggs",
+      "Dairy & eggs",
     ],
     About: [
       "Ethics & ethos",
@@ -148,7 +148,7 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       "Ready to cook",
     
     ],
-    "Daily & eggs":[
+    "Dairy & eggs":[
       "Mlik",
       "Eggs",
       "Yogurts",
@@ -177,7 +177,7 @@ Account: ["FAQs", "Help and contact", "Sign in or create account"],
       desc: "Dairy, eggs, bakery, store cupboard & more"
     },
     {
-      title: "Daily & eggs",
+      title: "Dairy & eggs",
       desc: "The highest welfare organic British meat"
     }
   ],
@@ -364,10 +364,6 @@ const allProducts = {
    
   ],
 
-  // "Other vegetables" : [
-  //     { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
-  //   { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
-  // ],
 "What's new" :[
 
 ],
@@ -577,11 +573,7 @@ const allProducts = {
              image: dai9,
            }
   ],
-  // "Dehydrated" : [
-  //      { name: "Mint Leaves", weight: "100 Gms", price: "₹15.00", location: "From Ooty", image: leafy1 },
-  //   { name: "Coriander Leaves", weight: "100 Gms", price: "₹12.00", location: "From Nilgiris", image: leafy2 }
-  
- // ]
+
   
 };
 
@@ -603,20 +595,17 @@ const categoryParentMap = {
   "Natural sweeteners": "Essentials",
   "Ready to cook": "Essentials",
 
-  // Daily & eggs group
-  "Mlik": "Daily & eggs",
-  "Eggs": "Daily & eggs",
-  "Yogurts": "Daily & eggs",
-  "Cheese": "Daily & eggs",
-  "Butter & cream": "Daily & eggs",
+  // Dairy & eggs group
+  "Mlik": "Dairy & eggs",
+  "Eggs": "Dairy & eggs",
+  "Yogurts": "Dairy & eggs",
+  "Cheese": "Dairy & eggs",
+  "Butter & cream": "Dairy & eggs",
 };
 
 
 const navigate = useNavigate();
 
-// const handleDropdownClick = (category) => {
-//   navigate(`/products/${category.replace(/\s+/g, "-").toLowerCase()}`);
-// };
 
 const handleDropdownClick = (category) => {
   setSelectedCategory(category);

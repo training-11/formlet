@@ -305,15 +305,7 @@ export default function ProductPage() {
 
 
     ],
- "dairy": [
-      {
-        name: "Cherry Tomato",
-        weight: "200 Gms",
-        price: "₹80.00",
-        location: "From Bengaluru",
-        image: veg1,
-      }
-    ],
+
 
     "Snacks & Coffee": [
       {

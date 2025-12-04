@@ -1,18 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./FarmletPopup.css";
 
 export default function FarmletPopup() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const hasSeen = localStorage.getItem("farmletPopupSeen");
+
+    if (!hasSeen) {
+      setOpen(true);
+      document.body.style.overflow = "hidden";
+    }
+  }, []);
 
   const closePopup = () => {
     setOpen(false);
+    localStorage.setItem("farmletPopupSeen", "true");
     document.body.style.overflow = "auto";
   };
 
   if (!open) return null;
-
-  document.body.style.overflow = "hidden";
 
   return (
     <div className="popup-overlay">
@@ -43,3 +51,4 @@ export default function FarmletPopup() {
     </div>
   );
 }
+
