@@ -9,7 +9,7 @@ export default function GrownForFlavour() {
   const cards = [
     {
       img: onions,
-      text: "Farming sustainably is at the heart of all we do, looking after our soil, wildlife, and water sources. We think that small-scale farming tastes best.",
+      text: "Farming sustainably is at the heart of all we do,looking after our soil, wildlife, and water sources. We think that small-scale farming tastes best.",
     },
     {
       img: tractorRed,
