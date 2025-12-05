@@ -19,7 +19,7 @@
   width: 95%;
   height: 92%;       
   max-height: 95vh;  
-  background: #fff;
+  /* background: #fff; */
   border-radius: 12px;
   position: relative;
   display: flex;
@@ -35,6 +35,7 @@
   right: 25px;
   font-size: 28px;
   cursor: pointer;
+  color:black;
 }
 
 /* MAIN CONTENT AREA */
@@ -46,10 +47,13 @@
 /* LEFT SIDE MENU */
 .popup-sidebar {
   width: 260px;
-  background: #f4ebdc;
+  /* background: transparent; */
   padding-top: 20px;
   border-right: 1px solid #ddd;
   overflow-y: auto;
+   background: rgba(255, 255, 255, 0.18);   /* transparent liquid */
+  backdrop-filter: blur(12px);            /* glass / liquid blur */
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .popup-sidebar-item {
@@ -69,7 +73,11 @@
   flex: 1;
   padding: 30px;
   overflow-y: auto;
-  background-color: #f0e6d7;
+  /* background-color: #f0e6d7; */
+     background: rgba(255, 255, 255, 0.18);   
+  /* backdrop-filter: blur(12px);        */
+  -webkit-backdrop-filter: blur(12px); 
+  
 }
 
 .popup-title {
