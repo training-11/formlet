@@ -38,7 +38,7 @@ import dal from "../Images/dal.png";
 import dairy from "../Images/dairy.png";
 import snacksncoffee from "../Images/snacksncoffee.png";
 import grains from "../Images/grains.png";
-import Dehydrated from "../Images/Dehydrated.png";
+import Dehydrated from "../Images/dehydrated.png";
 import otherveg1 from "../Images/otherveg1.jpg";
 import otherveg2 from "../Images/otherveg2.jpg";
 import otherveg3 from "../Images/otherveg3.jpg";
