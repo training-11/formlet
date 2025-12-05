@@ -1,4 +1,4 @@
-/* Background overlay */
+/* 
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -13,7 +13,6 @@
   z-index: 9999;
 }
 
-/* Card same style as Farmlet sign-in modal */
 .farmlet-card {
   background: #f3e8d7; 
   width: 95%;
@@ -24,7 +23,7 @@
   text-align: center;
 }
 
-/* Title */
+
 .farmlet-title {
   font-size: 30px;
   font-weight: 700;
@@ -33,7 +32,7 @@
   margin-bottom: 15px;
 }
 
-/* Description */
+
 .farmlet-desc {
   font-size: 16px;
   color: #333;
@@ -41,7 +40,7 @@
   margin-bottom: 20px;
 }
 
-/* List */
+
 .farmlet-list {
   text-align: left;
   margin: 0 auto 25px auto;
@@ -51,7 +50,7 @@
   line-height: 1.7;
 }
 
-/* Button EXACT MATCH */
+
 .farmlet-btn {
   background: #01BF64;       
   color: white;
@@ -69,7 +68,7 @@
   background: #01BF64;
 }
 
-/* Animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -83,4 +82,5 @@
 
 .animate-fadeIn {
   animation: fadeIn 0.25s ease-out;
-}
+} 
+ */

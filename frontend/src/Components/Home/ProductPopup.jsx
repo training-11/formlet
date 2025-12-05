@@ -52,7 +52,7 @@ export default function ProductPopup({
 
           {/* RIGHT PRODUCT AREA */}
           <div className="popup-right">
-            <h2 className="popup-title">{title}</h2>
+            <h2 className="popup-title"></h2>
 
             <div className="popup-grid">
               {products.map((prod, index) => (
