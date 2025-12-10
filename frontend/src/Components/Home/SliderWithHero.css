@@ -326,3 +326,103 @@ button:hover {
   }
 
 }
+
+
+/* ============================
+   📱 TABLET — iPad Air (820px)
+   MATCH RIVERFORD DESIGN
+   ============================ */
+@media (max-width: 900px) {
+
+  .hero-container {
+    background-color: #01BF64;
+    padding: 50px 0 20px;
+    text-align: center;
+  }
+
+  /* SLIDE AREA */
+  .hero-slide {
+    width: 85%;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+  }
+
+  .percent {
+    font-size: 120px;          /* big like Riverford */
+    margin-top: 40px;
+    margin-bottom: 15px;
+  }
+
+  .line {
+    font-size: 28px;          /* same Riverford text size */
+    line-height: 1.2;
+    margin: 5px 0;
+    padding: 0px 50px;
+  }
+
+  .highlight {
+    font-size: 26px;
+    padding: 8px 35px;
+    margin-top: 15px;
+    background: #fff;
+    color: #000;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  
+
+ /* --- ARROWS EXACTLY LIKE RIVERFORD TABLET --- */
+.arrow {
+  position: absolute;
+  top: 120px !important;   /* Matches Riverford vertical alignment */
+  font-size: 150x !important; /* Arrow size identical to Riverford */
+  font-weight: 300;
+  color: white;
+  line-height: 0;
+  
+}
+
+/* Left arrow position */
+.left {
+  left: -140px !important;   /* Pull left arrow outside text block */
+}
+
+/* Right arrow position */
+.right {
+  right: -140px !important;  /* Pull right arrow outside text block */
+}
+
+
+  /* VEG IMAGE */
+  .veg-img {
+    width: 70%;
+    max-width: 600px;
+    margin: 30px auto 10px;
+    display: block;
+  }
+
+  /* BOTTOM SECTION */
+  .hero-bottom {
+    margin-top: -20px;
+    text-align: center;
+  }
+
+  .join {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .livelife-img {
+    width: 70%;
+    margin-bottom: 20px;
+  }
+
+  .start-btn {
+    width: 60%;
+    padding: 14px;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+}

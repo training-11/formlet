@@ -1,10 +1,27 @@
-import React from 'react';
+import React ,{ useEffect } from "react";
 import './Hero.css';
 import bgImage from '../../Images/background1.png';
 import heroImage from '../../Images/Hero image 1.png';
 import HeroFeatures from './HeroFeatures';
 
 export default function Home() {
+  useEffect(() => {
+  function ensureHeroOrder() {
+    const w = window.innerWidth;
+    if (w >= 768 && w <= 1024) {
+      const hero = document.querySelector('section.hero, .hero');
+      if (!hero) return;
+      const content = hero.querySelector('.hero-content');
+      const right = content?.querySelector('.hero-right');
+      const btn = content?.querySelector('.hero-button');
+      if (content && right && btn) content.insertBefore(btn, right.nextSibling);
+    }
+  }
+  ensureHeroOrder();
+  window.addEventListener('resize', ensureHeroOrder);
+  return () => window.removeEventListener('resize', ensureHeroOrder);
+}, []);
+
   return (
     <>
 

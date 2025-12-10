@@ -107,6 +107,69 @@
 }
 
 /* Responsive Design */
+/* ===== Tablet hero image fixes (paste at end of Hero.css) ===== */
+/* ===== Tablet: force stacked order + center image + button below image ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* ensure the hero content is a vertical column */
+  section.hero .hero-content,
+  .hero .hero-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 20px !important;
+  }
+
+  /* top: heading/text */
+  section.hero .hero-content > .hero-left,
+  .hero .hero-content > .hero-left {
+    order: 1 !important;
+    width: 100% !important;
+    max-width: 820px !important;
+  }
+
+  /* middle: image */
+  section.hero .hero-content > .hero-right,
+  .hero .hero-content > .hero-right {
+    order: 2 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  section.hero .hero-content > .hero-right img,
+  .hero .hero-content > .hero-right img,
+  .hero .hero-image img {
+    width: 70% !important;
+    max-width: 480px !important;
+    height: auto !important;
+    object-fit: contain !important;
+    margin: 12px auto 8px !important;
+    transform: none !important;
+  }
+
+  /* bottom: button MUST come after image */
+  section.hero .hero-content > .hero-button,
+  .hero .hero-content > .hero-button {
+    order: 3 !important;
+    display: block !important;
+    margin: 12px auto 28px !important;
+    font-size: 20px !important;
+    padding: 12px 34px !important;
+  }
+
+  /* extra protection: hide floating variants of button (if any) */
+  .hero .hero-button.float,
+  .hero .cta.float {
+    display: none !important;
+  }
+
+  /* stop horizontal scroll */
+  html, body { overflow-x: hidden !important; }
+}
 @media (max-width: 1200px) {
   .hero-title {
     font-size: 70px;
@@ -203,3 +266,6 @@
   }
   
 }
+
+
+

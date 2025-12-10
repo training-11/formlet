@@ -50,7 +50,7 @@
     margin-bottom: 60px;
     font-size: 20px;
 }
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
   .steps-container {
     flex-direction: column;
     align-items: center;
@@ -62,5 +62,44 @@
 
   .step-img {
     padding: 30px;
+  }
+} */
+
+/* 📱 Riverford-accurate tablet layout (iPad Air 820px) */
+@media (max-width: 1024px) {
+
+  .steps-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 780px;       /* EXACT Riverford width */
+    margin: 0 auto;
+    gap: 30px;
+    padding: 0 20px;
+  }
+
+  .step-box {
+    width: 100%;
+    text-align: center;
+  }
+
+  .step-img {
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    object-fit: contain;
+  }
+
+  .step-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .step-description {
+    font-size: 16px;
+    line-height: 1.7;
   }
 }

@@ -75,91 +75,81 @@
 }
 
 
-@media (max-width: 900px) {
-  .testimonials {
-    padding: 60px 16px;
-  }
+/* ---------- SHOW TWO BIG QUOTES SIDE-BY-SIDE (Riverford style) ---------- */
+/* Paste this at the end of your Testimonials.css (after existing rules) */
 
-  .testimonials-title {
-    font-size: 32px;
-    margin-bottom: 30px;
+@media (min-width: 768px) {
+
+  /* Use a two-column grid so both quotes sit exactly side-by-side */
+  .testimonials-inner {
+    max-width: 900px;           /* reading width similar to Riverford */
+    margin: 0 auto;
+    padding: 0 12px;
   }
 
   .testimonials-grid {
-    flex-direction: column;
-    gap: 30px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;  /* two columns */
+    gap: 48px 60px;                  /* vertical / horizontal gap */
+    align-items: start;
+    justify-items: center;
+    width: 100%;
   }
 
+  /* Each testimonial becomes a centered column block */
   .testimonial {
-    max-width: 100%;
+    width: 100%;
+    max-width: 420px;               /* controls line-length like Riverford */
     text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  .quote-mark {
-    font-size: 60px;
-    margin-bottom: 8px;
+  /* big decorative quote mark centered above each quote */
+  .quote-mark,
+  .testimonial > img[alt=""] /* fallback if you used img for the mark */ {
+    display: block;
+    margin: 0 auto 8px auto;
+    width: 120px;
+    height: auto;
   }
 
+  /* the quote text uses Caveat and is larger for tablet/desktop */
   .testimonial-text {
-    font-size: 18px;
+    font-family: 'caveat', cursive;
+    font-size: 26px;
+    line-height: 1.45;
+    margin: 0 auto 16px;
+    max-width: 380px;               /* limit the text width for nicer wrapping */
+    color: #fff;
   }
-/* 
+
+  .highligth, .highligh {
+    background: #f1e9d7;
+    color: #2e2400;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  /* author (if used) — small and spaced below */
   .testimonial-author {
     font-size: 12px;
-  } */
+    color: rgba(255,255,255,0.9);
+    margin-top: 16px;
+  }
+
+  /* keep mobile slider hidden at these widths */
+  .testimonials-mobile { display: none !important; }
+
+  /* ensure no horizontal overflow */
+  html, body { overflow-x: hidden !important; }
 }
-/* MOBILE SLIDER */
-.testimonials-mobile {
-  display: none;
-}
 
-@media (max-width: 768px) {
-  /* hide desktop */
-  .testimonials-grid {
-    display: none !important;
-  }
-
-  .testimonials-mobile {
-    display: block ;
-    position: relative;
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  .mobile-card {
-    max-width: 90%;
-    margin: 0 auto;
-    padding: 10px;
-  }
-
-  .testimonial-text {
-    font-size: 20px !important;
-    line-height: 1.4;
-  }
-
-  .quote-img {
-    width: 70px;
-    margin-bottom: 10px;
-  }
-
-  /* ARROWS FIX – EXACT LIKE RIVERFORD */
-  .arrow {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    font-size: 38px;
-    background: none;
-    border: none;
-    color: white;
-    font-weight: 300;
-    cursor: pointer;
-  }
-
-  .left {
-    left: 15px;
-  }
-
-  .right {
-    right: 15px;
-  }
+/* on wider desktop increase spacing a little */
+@media (min-width: 1200px) {
+  .testimonials-grid { gap: 56px 100px; }
+  .testimonial-text { font-size: 28px; max-width: 420px; }
+  .quote-mark { width: 140px; }
 }

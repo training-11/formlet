@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import "./Navbar.css";
 import SignInModal from "./SignInModal"; 
 import { Link } from "react-router-dom";
@@ -673,6 +673,48 @@ const openProductPopup = (category) => {
 
 
 const categories = Object.keys(allProducts);
+// at top of Navbar component (near other useState)
+const navCenterRef = useRef(null);
+
+// Toggle submenu on tablet click (desktop hover still works)
+const handleTabletToggle = (tab) => {
+  // if small mobile, delegate to your mobile handler
+  if (window.innerWidth < 768) {
+    handleMobileClick(tab);
+    return;
+  }
+
+  // toggle open/close on tablet / desktop click
+  if (activeTab === tab) {
+    setActiveTab(null);
+    setActiveSubmenu(null);
+  } else {
+    setActiveTab(tab);
+    setActiveSubmenu(tab === "Shop" ? "Shop" : "About");
+  }
+};
+
+// Close submenu when clicking outside or press ESC
+useEffect(() => {
+  function onDocClick(e) {
+    if (navCenterRef.current && !navCenterRef.current.contains(e.target)) {
+      setActiveTab(null);
+      setActiveSubmenu(null);
+    }
+  }
+  function onEsc(e) {
+    if (e.key === "Escape") {
+      setActiveTab(null);
+      setActiveSubmenu(null);
+    }
+  }
+  document.addEventListener("mousedown", onDocClick);
+  document.addEventListener("keydown", onEsc);
+  return () => {
+    document.removeEventListener("mousedown", onDocClick);
+    document.removeEventListener("keydown", onEsc);
+  };
+}, []);
 
   return (
     <>
@@ -687,7 +729,7 @@ const categories = Object.keys(allProducts);
 </div>
 
 
-        <ul className="nav-center">
+        {/* <ul className="nav-center">
          <li
   className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
   onMouseEnter={() => handleHover("Shop")}
@@ -701,7 +743,89 @@ const categories = Object.keys(allProducts);
           >
             About Farmlet 
           </li>
-      </ul>
+      </ul> */}
+{/* ---------- CENTER NAV (Logo left, search centered, nav center) ---------- */}
+<ul className="nav-center" ref={navCenterRef}>
+  <li
+    className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
+    onMouseEnter={() => handleHover("Shop")}        // desktop hover
+    onClick={() => handleTabletToggle("Shop")}      // tablet click
+    aria-haspopup="true"
+    aria-expanded={activeTab === "Shop"}
+  >
+    Shop
+  </li>
+
+  <li
+    className={`menu-item ${activeTab === "About" ? "active" : ""}`}
+    onMouseEnter={() => handleHover("About")}
+    onClick={() => handleTabletToggle("About")}
+    aria-haspopup="true"
+    aria-expanded={activeTab === "About"}
+  >
+    About Farmlet
+  </li>
+
+  {/* Submenu panel — rendered inside nav-center so it'll be centered like Riverford */}
+  <div
+    className={`submenu-panel ${activeSubmenu ? "show" : ""}`}
+    role="menu"
+    aria-hidden={!activeSubmenu}
+  >
+    <div className="submenu-grid">
+      {activeSubmenu === "Shop" && (
+        <>
+          {/* Use dropdownData or your mobileDropdownContent for the Shop list */}
+          {/* Example: show main Shop items — adjust array as needed */}
+          {[
+            "Seasonal boxes",
+            "What's new",
+            "Recipe boxes & kits",
+            "Fruit, veg & salad",
+            "Essentials",
+            "Meat"
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="submenu-item"
+              onClick={() => {
+                /* you can route to category or open popup */
+                // e.g. openProductPopup(item) or navigate('/products/...')
+                openProductPopup(item);
+                setActiveTab(null);
+                setActiveSubmenu(null);
+              }}
+            >
+              <div className="title">{item}</div>
+              {/* optional small desc (remove or replace with real text) */}
+              {/* <div className="desc">Short description for {item}</div> */}
+            </div>
+          ))}
+        </>
+      )}
+
+      {activeSubmenu === "About" && (
+        <>
+          {mobileDropdownContent.About.map((it, i) => (
+            <div
+              key={i}
+              className="submenu-item"
+              onClick={() => {
+                // navigate to About page or other action
+                // navigate('/about')
+                setActiveTab(null);
+                setActiveSubmenu(null);
+              }}
+            >
+              <div className="title">{it.title}</div>
+              <div className="desc">{it.desc}</div>
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  </div>
+</ul>
 
         <div className="nav-right">
           {/* MOBILE SEARCH ICON (always visible on mobile) */}
