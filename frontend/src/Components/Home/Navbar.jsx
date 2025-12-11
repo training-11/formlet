@@ -689,13 +689,7 @@ const categories = Object.keys(allProducts);
 
 
         <ul className="nav-center">
-         {/* <li
-  className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
-  onMouseEnter={() => handleHover("Shop")}
-  onClick={() => navigate("/products/fresh-fruits")}
->
-            Shop
-          </li> */}
+ 
           <li
   className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
   onMouseEnter={() => {
@@ -752,7 +746,7 @@ const categories = Object.keys(allProducts);
     </span>
     {/* <BsCalendarEvent size={25}/> */}
     <img src={CalendarIcon} alt="Calendar" style={{ width: 30, height: 30 }} />
-
+ </div>
 
 
 <div
@@ -764,7 +758,7 @@ const categories = Object.keys(allProducts);
     Sign in or<br /><span >create account</span>
   </span>
   <img src={accountIcon} alt="Account" style={{ width: 30, height: 30 }} />
-</div>
+
 </div>
 
 </div>
