@@ -131,25 +131,6 @@
   .grown-lead { font-size: 16px; margin-bottom: 24px; }
 
   /* 2 columns on tablet */
-  .grown-grid {
-    grid-template-columns: 1fr 1fr;   /* two equal columns */
-    gap: 36px;
-    align-items: start;
-    padding: 0 18px;
-  }
-
-  .grown-image-wrap {
-    width: 320px;
-    height: 180px;
-  }
-
-  .grown-card-text {
-    max-width: 320px;
-    font-size: 15px;
-    line-height: 1.9;
-    margin-top: 100px;
-    text-align: center;
-  }
 
   /* if you still have a 3rd (tractor) card and want it hidden on tablet,
      uncomment the rule below to hide its image while keeping its text:
@@ -174,12 +155,7 @@
 @media (min-width: 768px) and (max-width: 1024px) {
 
   /* center tractor replacement block and add space under the tractor text */
-  .grown-tractor-text {
-    max-width: 520px;
-    margin: 0 auto 28px auto;
-    text-align: center;
-    line-height: 1.7;
-  }
+  
 
   .grown-tractor-replacement {
     max-width: 420px;
@@ -224,10 +200,6 @@
   @media (min-width: 768px) and (max-width: 1024px) {
 
   /* Reduce gap between image and its text */
-  .grown-card-text {
-    margin-top: 14px !important;   /* reduce space */
-    padding-top: 0 !important;
-  }
 
   /* Some setups need this too */
   .grown-card p {
@@ -235,6 +207,10 @@
   }
 }
 
+
+}
+.grown-tractor-text {
+  display: none !important;
 }
 
 

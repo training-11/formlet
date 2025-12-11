@@ -9,15 +9,12 @@
   font-family: sans-serif;
 
 }
-.nav-left {
-margin-left: 90px;
-}
+
 .nav-logo {
    height: 155px;         
   width: 200px;          
   cursor: pointer;
   object-fit: contain;
-  margin-left: -100px;
 }
 
 .nav-center {
@@ -448,18 +445,18 @@ margin-left: 90px;
   padding: 0px 25px;
   background: #F8F3EA;
   font-family: sans-serif;
-  margin-left: -80px;
+  margin-left: -40px;
 
 }
 .nav-left {
-margin-left: 90px;
+margin-left: 10px;
 }
 .nav-logo {
    height: 155px;         
   width: 200px;          
   cursor: pointer;
   object-fit: contain;
-  margin-left: -100px;
+  margin-left: -30px;
 }
 
 .nav-center {

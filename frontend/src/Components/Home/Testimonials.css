@@ -153,3 +153,91 @@
   .testimonial-text { font-size: 28px; max-width: 420px; }
   .quote-mark { width: 140px; }
 }
+@media (max-width: 900px) {
+  .testimonials {
+    padding: 60px 16px;
+  }
+
+  .testimonials-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .testimonials-grid {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .testimonial {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .quote-mark {
+    font-size: 60px;
+    margin-bottom: 8px;
+  }
+
+  .testimonial-text {
+    font-size: 18px;
+  }
+/* 
+  .testimonial-author {
+    font-size: 12px;
+  } */
+}
+/* MOBILE SLIDER */
+.testimonials-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* hide desktop */
+  .testimonials-grid {
+    display: none !important;
+  }
+
+  .testimonials-mobile {
+    display: block ;
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .mobile-card {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .testimonial-text {
+    font-size: 20px !important;
+    line-height: 1.4;
+  }
+
+  .quote-img {
+    width: 70px;
+    margin-bottom: 10px;
+  }
+
+  /* ARROWS FIX – EXACT LIKE RIVERFORD */
+  .arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 38px;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 300;
+    cursor: pointer;
+  }
+
+  .left {
+    left: 15px;
+  }
+
+  .right {
+    right: 15px;
+  }
+}
