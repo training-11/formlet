@@ -758,7 +758,7 @@ useEffect(() => {
           >
             About Farmlet 
           </li>
-      </ul> */}
+      </ul> 
 {/* ---------- CENTER NAV (Logo left, search centered, nav center) ---------- */}
 <ul className="nav-center" ref={navCenterRef}>
   <li
