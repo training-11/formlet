@@ -1,13 +1,14 @@
 /* DESKTOP – unchanged (Riverford style) */
 .hero-features {
- margin-top: 0 !important;
+ margin-top: 0px !important;
   background: #f4f1ec;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 300px;
-  padding: 70px 80px;
+  padding: 50px 80px;
   text-align: center;
+  padding-top: 40px !important;
 }
 
 .feature-box img {
@@ -47,7 +48,9 @@
 
   /* full mobile layout - wrap to create rows */
   .hero-features {
-    margin-top: -160px;
+     margin-top: -40px !important;    
+    padding-top: 10px !important;   
+    padding-bottom: 40px;
     background: #f4f1ec;
     display: flex;
     flex-wrap: wrap;
@@ -75,8 +78,7 @@
     order: 1;
     width: 100%;
     /* margin-bottom: 50px; */
-    flex-basis: 100%;
-    
+    flex-basis: 100%;  
   }
 
   .hero-features .feature-box:nth-child(2) img {

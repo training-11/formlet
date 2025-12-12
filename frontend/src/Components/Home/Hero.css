@@ -13,20 +13,29 @@
 }
 
 /* Hero Section */
-.hero {
-  width: 100%;
-  min-height: 75vh;
-  /*background-color: #d91c5c;*/
+/* .hero {
+  background-color: #d91c5c;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+} */
+ .hero {
+  width: 100%;
+  min-height: 110vh;
+  /* background-size: 100% 100% !important;   */
+   background-size: cover !important;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-color: #f4f1ec;   /* fallback color matching green */
+  
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 0px 20px !important;
   position: relative;
   overflow: hidden;
 }
+
 
 .hero-content {
   max-width: 1400px;
@@ -44,7 +53,7 @@
   flex: 1 1 45%;
   color: white;
   max-width: 550px;
-  margin-top: 0px;
+  margin-top: -180px;
 }
 
 .hero-title {
@@ -100,9 +109,9 @@
 }
 
 .hero-image {
-  width: 100%;
+  width: 180%;
   max-width: 650px;
-  /* margin-top: -100px; */
+  margin-top: -150px;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
@@ -285,10 +294,26 @@ justify-content: center;
 
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 80px 15px !important;     /* reduce huge empty space */
-    min-height: auto;                  /* prevent stretching */
+  /* .hero {
+    padding: 80px 15px !important;    
+    min-height: auto;                  
+  } */
+     .hero {
+    background-size: cover !important;    /* keeps natural curve shape */
+    background-position: top center !important;
+    background-repeat: no-repeat;
+
+    min-height: 70vh;   /* ⭐ shows full U curve */
+    padding: 60px 15px 0 !important;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    overflow: visible !important;   /* ⭐ allows curve to show */
   }
+
 .hero-content {
     flex-direction: column;
     align-items: center;
@@ -319,20 +344,15 @@ justify-content: center;
   }
 
   .hero-image {
-    /* margin-top: -30px !important; */
+    margin-top: -30px !important;
      width: 100%;
-    max-width: 380px;
-    margin-top: 0 !important;
+    max-width: 480px;
+  
   }
 
   .hero-button {
-    display: block !important;
-    font-size: 16px !important;
-    padding: 12px 35px !important;
-    margin: 20px auto 0 !important;
-    width: auto !important;
-    min-width: 240px !important;
-  
+    display: none !important;
+
   }
 }
 

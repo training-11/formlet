@@ -71,6 +71,12 @@
 .left { left: 40px; }
 .right { right: 40px; }
 
+
+  /* Hide desktop CTA button on mobile */
+  .desktop-cta {
+    display: none !important;
+  }
+
 /* Mobile-specific arrow styling */
 @media (max-width: 768px) {
   .arrow {
