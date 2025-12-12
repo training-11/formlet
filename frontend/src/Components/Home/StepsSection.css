@@ -7,12 +7,12 @@
 }
 
 .steps-container {
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   gap: 60px;
   justify-content: center;
-  padding: 0 30px;
+  padding: 0 80px;
 }
 
 .step-box {
@@ -101,5 +101,82 @@
   .step-description {
     font-size: 16px;
     line-height: 1.7;
+  }
+}
+
+/* Large Desktop/Monitor View */
+@media (min-width: 1400px) {
+  .steps-container {
+    max-width: 1600px;
+    gap: 80px;
+    padding: 0 120px;
+  }
+  
+  .step-box {
+    width: 320px;
+  }
+  
+  .step-title {
+    font-size: 32px;
+  }
+  
+  .step-description {
+    font-size: 17px;
+  }
+}
+
+/* 📱 MOBILE VIEW — Riverford exact style */
+@media (max-width: 768px) {
+
+  .steps-section {
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .Header h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .steps-container {
+    display: block;     /* stack vertically */
+    max-width: 420px;   /* same width as Riverford mobile */
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .step-box {
+    width: 100%;
+    background: #F4F1EC;
+    margin-bottom: 50px;
+  }
+
+  .step-img {
+    width: 100%;
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    object-fit: contain;
+  }
+
+  .step-title {
+    font-size: 22px;
+    line-height: 1.4;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #3A2A19;
+    white-space: nowrap; 
+  }
+    .step-title br {
+    display: none;     /* hides the <br> only on mobile */
+  }
+
+
+  .step-description {
+    font-size: 15px;
+    line-height: 1.9;
+    padding: 0 10px;
+    color: #2E2400;
   }
 }

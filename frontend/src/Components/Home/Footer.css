@@ -1,7 +1,7 @@
 .footer {
   background-color: #01BF64;
   background-size: cover;
-  padding: 60px 40px;
+  padding: 60px 80px;
   color: white;
   font-family: 'Inter', sans-serif;
 }
@@ -11,6 +11,19 @@
   grid-template-columns: repeat(4, 1fr);
   column-gap: 60px;
   margin-bottom: 40px;
+  max-width: 1600px;
+  margin : 0 auto 40px
+}
+
+/* Large Desktop/Monitor View */
+@media (min-width: 1400px) {
+  .footer {
+    padding: 70px 120px;
+  }
+  
+  .footer-container {
+    column-gap: 80px;
+  }
 }
 
 .footer-column h3 {
@@ -51,6 +64,7 @@
   gap: 5px;
   margin-top: 10px;
   transform: translateX(-100px);
+  margin-right: -50px;
 }
 
 .social-icon {
@@ -97,5 +111,87 @@
   }
   .store-img {
     width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .footer {
+    background-color: #01BF64 !important;
+    padding: 40px 0;
+    color: white;
+  }
+
+
+  .footer-container {
+    display: block !important;
+    max-width: 420px;    
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 20px;
+  }
+
+  /* section heading */
+  .footer-column h3 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  /* footer items */
+  .footer-column p {
+    color: white !important; /* soft grey like riverford */
+    margin: 6px 0;
+    font-size: 15px;
+  }
+
+  /* spacing between footer groups */
+  .footer-column {
+    margin-bottom: 28px;
+  }
+
+ .store-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start; 
+  gap: 12px; /* space between icons */
+  margin-top: 10px;
+}
+
+.store-img {
+  width: 130px;
+  height: auto;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block;
+}
+  /* social icons centered */
+  .social-icons {
+    justify-content: left !important;
+    transform: none !important;
+    margin-top: 30px;
+    gap: 10px;
+    margin-left: 10px;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+
+  /* bottom text */
+  .footer-bottom {
+    max-width: 420px;
+    margin: 25px auto 0 auto;
+    text-align: left !important;
+    padding: 0 20px;
+  }
+
+  .footer-bottom p {
+    color: #c8d1c8;
+    font-size: 14px;
+    line-height: 1.5;
   }
 }

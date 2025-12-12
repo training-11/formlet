@@ -29,9 +29,9 @@ export default function GrownForFlavour() {
 
       <div className="grown-inner">
         <h2 className="grown-title">Grown for flavour</h2>
-        <p className="grown-tractor-text">
+        {/* <p className="grown-tractor-text">
   {cards[1].text}
-</p>
+</p> */}
 
         <div className="grown-grid">
           {cards.map((c, idx) => (

@@ -37,9 +37,11 @@
 .grown-inner {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-top: 150px; 
+  padding-left: 80px;
+  padding-right:80px;
   text-align: center;
 }
 
@@ -105,20 +107,78 @@
   
 }
 
-/* ===================================================== */
-/*            📱 TABLET RESPONSIVE VIEW ONLY              */
-/*            (Exact Riverford layout, 2 cards)           */
-/* ===================================================== */
+/* ⭐⭐⭐ EXACT RIVERFORD MOBILE VIEW ★★★ */
+@media (max-width: 768px) {
 
-/* ===================================================== */
-/*       📱 TABLET VIEW (768px–1024px) — Riverford Style  */
-/* ===================================================== */
+  .grown-section {
+    background: #f4f1ec !important;
+    padding: 0;
+  }
 
-/* ==========================
-   TABLET VIEW: 768px - 1024px
-   Heading + tractor-text full-width,
-   then 2 cards side-by-side (image beside text)
-   ========================== */
+  .grown-angled-top {
+    display: none !important;
+  }
+
+  .grown-inner {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f4f1ec;
+  }
+
+  .grown-title {
+    font-size: 32px;
+    font-family: "Caveat", cursive;
+    color: #3a2a19;
+    margin-bottom: 25px;
+  }
+
+  /* one card per screen */
+  .grown-grid {
+    display: block;
+  }
+
+  .grown-card {
+    margin-bottom: 50px;
+  }
+
+  /* ⭐ NO white box, NO padding — EXACT Riverford */
+  .grown-image-wrap {
+    width: 100%;
+    max-width: 380px;
+    height: 230px;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 auto 18px auto;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* ⭐ Image fills the container with rounded corners */
+  .grown-img {
+    width: 100%;
+    height: 230px;
+    display: block;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .grown-card-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #3b2f20;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  /* remove tractor text */
+  .grown-tractor-text {
+    display: none !important;
+  }
+}
+
+
 /* ==========================
    TABLET VIEW: 768px - 1024px
    - Tractor image hidden, tractor text full-width under heading
@@ -139,18 +199,7 @@
   */
 
 
-/* =========================
-   TABLET (768px - 1024px)
-   - hide tractor image
-   - move onion text to appear beside farmer image
-   - highlight moved text
-   ========================= */
 
-/* ===========================
-   TABLET ONLY: 768px - 1024px
-   Ensure clear spacing BELOW the "tractor" text
-   and push the image row down
-   =========================== */
 /* Tablet-only: ensure good spacing and hide duplicate */
 @media (min-width: 768px) and (max-width: 1024px) {
 
@@ -213,6 +262,23 @@
   display: none !important;
 }
 
+
+/* Large Desktop/Monitor View */
+@media (min-width: 1400px) {
+  .grown-inner {
+    max-width: 1600px;
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+  
+  .grown-title {
+    font-size: 65px;
+  }
+  
+  .grown-grid {
+    gap: 80px;
+  }
+}
 
 
 
