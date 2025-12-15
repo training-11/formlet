@@ -132,6 +132,7 @@
   width: 100%;
 }
 
+
 .submenu-item {
   cursor: pointer;
   font-size: 15px;
@@ -184,7 +185,7 @@
   display: none;   /* hidden on desktop */
 }
 .mobile-full-dropdown {
-  display: none;   /* hidden on desktop */
+  display: none;  
 }
 /* ============================================ */
 /*              📱 MOBILE RESPONSIVE NAVBAR     */
@@ -359,7 +360,7 @@
   justify-content: space-between;   /* Space between title & X button */
   align-items: center;              /* Align X button vertically center */
   padding: 5px 0;
-  margin-top: -30px;
+  margin-top: -50px;
 }
 
 .search-title {
@@ -626,6 +627,10 @@ margin-left: 10px;
 
 @media (max-width: 768px) {
 
+   html, body {
+    overflow-x: hidden;
+  }
+
   /* --- Top Navbar --- */
   .main-navbar {
     height: 60px;
@@ -777,23 +782,32 @@ margin-left: 10px;
    ================================= */
 .mobile-search-overlay {
   position: fixed;
-  top: 0;
+  /* top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100vh; */
   background: #fdfcf8;
   z-index: 3000;
-  padding: 22px;
+  /* padding: 22px; */
+    padding: 18px 16px 24px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; 
+    inset: 0;  
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;            /* ✅ STOP horizontal scroll */
+    box-sizing: border-box;
 }
 
 .search-header {
   display: flex;
-  justify-content: space-between;   /* Space between title & X button */
-  align-items: center;              /* Align X button vertically center */
+  justify-content: space-between;   
+  align-items: center;              
   padding: 5px 0;
-  margin-top: -30px;
+  /* margin-top: -30px; */
+  padding-bottom: 10px;
+  padding-top: 50px;
 }
 
 .search-title {
@@ -805,15 +819,15 @@ margin-left: 10px;
 }
 
 .close-btn {
-
+/* margin-top: -200px; */
+position: relative ;
   font-size: 24px;           /* Same size as screenshot */
   color: #222;
-  padding: 0;
+  /* padding: 0; */
 
-  margin-right: -5px;
+  /* margin-right: -5px; */
     width: 34px;
   height: 34px;
-  padding: 0;
   box-sizing: border-box;
   background: #111;            /* dark black circle */
   border-radius: 50%;
@@ -821,7 +835,8 @@ margin-left: 10px;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+   justify-content: space-between;
 
   font-size: 20px;
   font-weight: 200;             /* clean X */
@@ -861,12 +876,9 @@ margin-left: 10px;
 }
 
 }
-/* ============================================================
-   📱 TABLET LAYOUT — Exactly like Riverford (769px - 1024px)
-   ============================================================ */
+
 @media (min-width: 769px) and (max-width: 1024px) {
 
-  /* ROW 1 — Logo + Search + Icons */
   .main-navbar {
     display: flex;
     justify-content: space-between;
@@ -877,7 +889,6 @@ margin-left: 10px;
     border-bottom: none !important;
   }
 
-  /* Logo */
   .nav-left {
     margin-left: 0 !important;
   }
@@ -888,7 +899,6 @@ margin-left: 10px;
     margin: 0 !important;
   }
 
-  /* Search bar visible on tablet */
   .search-box {
     display: flex !important;
     width: 100%;
@@ -896,7 +906,7 @@ margin-left: 10px;
     margin: 0 20px !important;
   }
 
-  /* Right icons (calendar + account) */
+
   .nav-right {
     display: flex !important;
     flex-direction: row;
@@ -910,7 +920,7 @@ margin-left: 10px;
   }
 
   .right-item span {
-    display: none !important;  /* hide "your delivery schedule" text like Riverford */
+    display: none !important;  
   }
 
   .nav-right img {
@@ -927,11 +937,12 @@ margin-left: 10px;
     font-weight: 600;
   }
 
-  /* Submenus hidden on tablet */
-  /* .submenu,
-  .submenu-container {
+
+  .submenu,
+  .submenu-container,
+  .dropdown-menu  {
     display: none !important;
-  } */
+  }
 
    .mobile-submenu {
     display: flex !important;
@@ -955,7 +966,7 @@ margin-left: 10px;
   }
 
   .tablet-dropdown {
-    position: absolute;
+    /* position: absolute;
     top: 130px;
     left: 50%;
     transform: translateX(-50%);
@@ -964,12 +975,22 @@ margin-left: 10px;
     padding: 20px 0;
     border-radius: 6px;
     box-shadow: 0px 4px 20px rgba(0,0,0,0.15);
-    z-index: 9999;
+    z-index: 9999; */
+      position: absolute;
+  top: 164px;       
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  background: #faf6f0;
+  padding: 22px 0;
+  border-radius: 6px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+  z-index: 9999;
   }
 
   .tablet-dropdown-item {
     text-align: center;
-    padding: 12px 0;
+    padding: 14px 0;
   }
 
   .tablet-title {

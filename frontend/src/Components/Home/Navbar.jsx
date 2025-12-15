@@ -689,15 +689,29 @@ const categories = Object.keys(allProducts);
 
 
         <ul className="nav-center">
- <li
+ {/* <li
   className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
   onMouseEnter={() => handleHover("Shop")}
   onClick={() => navigate("/products/fresh-fruits")}
 >
 
   Shop
-</li>
+</li> */}
+<li
+  className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
+   onMouseEnter={() => handleHover("Shop")}
+  onClick={() => {
+    if (window.innerWidth >= 769 && window.innerWidth <= 1024) {
+      setTabletDropdownOpen((prev) => !prev);
+      setActiveTab("Shop");
+    } else {
+      navigate("/products/fresh-fruits");
+    }
+  }}
 
+>
+  Shop
+</li>
           <li
             className={activeTab === "About" ? "active" : ""}
             onMouseEnter={() => handleHover("About")}
@@ -753,7 +767,7 @@ const categories = Object.keys(allProducts);
      
 
       </nav>
-      {tabletDropdownOpen && window.innerWidth >= 769 && window.innerWidth <= 1024 && (
+      {/* {tabletDropdownOpen && window.innerWidth >= 769 && window.innerWidth <= 1024 && (
   <div className="tablet-dropdown">
     {mobileDropdownContent["Shop"]?.map((item, i) => (
       <div key={i} className="tablet-dropdown-item">
@@ -762,9 +776,20 @@ const categories = Object.keys(allProducts);
       </div>
     ))}
   </div>
+)} */}
+{tabletDropdownOpen && window.innerWidth >= 769 && window.innerWidth <= 1024 && (
+  <div className="tablet-dropdown">
+    {mobileDropdownContent[activeTab]?.map((item, i) => (
+      <div key={i} className="tablet-dropdown-item">
+        <div className="tablet-title">{item.title}</div>
+        <div className="tablet-desc">{item.desc}</div>
+      </div>
+    ))}
+  </div>
 )}
+
   {/* MOBILE SUBMENU */}
-<div className="mobile-submenu">
+{/* <div className="mobile-submenu">
   <div
     className={`mobile-submenu-item ${activeTab === "Shop" ? "active" : ""}`}
     onClick={() => handleMobileClick("Shop")}
@@ -779,8 +804,41 @@ const categories = Object.keys(allProducts);
     About Farmlet
   </div>
 
+</div> */}
+ <div className="mobile-submenu">
+  <div
+    className={`mobile-submenu-item ${activeTab === "Shop" ? "active" : ""}`}
+    onClick={() => {
+      if (window.innerWidth >= 769 && window.innerWidth <= 1024) {
+        setActiveTab("Shop");
+        setTabletDropdownOpen(prev =>
+          activeTab === "Shop" ? !prev : true
+        );
+      } else {
+        handleMobileClick("Shop");
+      }
+    }}
+  >
+    Shop
+  </div>
+
+  <div
+    className={`mobile-submenu-item ${activeTab === "About" ? "active" : ""}`}
+    onClick={() => {
+      if (window.innerWidth >= 769 && window.innerWidth <= 1024) {
+        setActiveTab("About");
+        setTabletDropdownOpen(prev =>
+          activeTab === "About" ? !prev : true
+        );
+      } else {
+        handleMobileClick("About");
+      }
+    }}
+  >
+    About Farmlet
+  </div>
 </div>
-    
+   
 
 {/* SUB MENU */}
 <div
