@@ -646,16 +646,6 @@ export default function ProductPage() {
     <div className="product-page">
     <Navbar />
 
-      {/* HEADER BAR */}
-      {/* <div className="top-bar">
-        <HiMenu size={26} className="menu-icon" />
-        <div className="location">
-          Bengaluru <FaChevronDown size={14} />
-        </div>
-      </div> */}
-
-
-
       {/* MAIN CONTENT */}
       <div className="content-area">
         {/* LEFT SIDEBAR */}
@@ -678,7 +668,7 @@ export default function ProductPage() {
         </div>          
         {/* RIGHT PRODUCTS GRID */}
         <div className="products-container">
-          <h2 className="page-title">{selectedCategory}</h2>
+          {/* <h2 className="page-title">{selectedCategory}</h2> */}
 
           <div className="products">
             {allProducts[selectedCategory]?.map((prod, index) => (
