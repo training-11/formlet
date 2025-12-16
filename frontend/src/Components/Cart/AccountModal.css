@@ -1,0 +1,277 @@
+.account-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2600;
+    /* Higher than DeliveryModal */
+}
+
+.account-modal-container {
+    background: #FDFCF8;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 4px;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    /* Make scrollable if content is long */
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.account-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-title {
+    font-family: "Domine", serif;
+    font-size: 32px;
+    font-style: italic;
+    color: #4b3e2f;
+    margin-top: 40px;
+    margin-bottom: 5px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.account-underline {
+    width: 100px;
+    height: 1px;
+    background-color: #333;
+    margin: 0 auto 30px auto;
+}
+
+.account-helper {
+    text-align: center;
+    color: #4b3e2f;
+    margin-bottom: 20px;
+    padding: 0 40px;
+    font-size: 15px;
+}
+
+.account-form-body {
+    background-color: #f3efe8;
+    /* Beige background match */
+    padding: 30px 40px;
+}
+
+.account-field {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.account-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4b3e2f;
+}
+
+.account-field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.account-field input:focus {
+    outline: none;
+    border-color: #558b2f;
+}
+
+/* Password wrapper */
+.password-input-wrapper {
+    position: relative;
+}
+
+.show-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #01BF64;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.password-strength-label {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 5px;
+    color: #4b3e2f;
+}
+
+.phone-helper {
+    font-size: 12px;
+    color: #4b3e2f;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* Password Strength Bar */
+.strength-bar-container {
+    height: 4px;
+    background-color: #e0e0e0;
+    margin-top: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Phone Verification */
+.phone-verify-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.phone-verify-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px;
+    /* match your input height */
+    padding-right: 90px;
+}
+
+
+.verify-btn {
+    position: absolute;
+    right: 12px;
+    /* distance from the edge */
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    /* center contents vertically */
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    /* match visual height of "Show" */
+    padding: 0 6px;
+    font-size: 14px;
+    /* same as "Show" */
+    line-height: 1;
+    /* prevents vertical drift */
+    font-weight: 600;
+    color: #01BF64;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+
+
+
+/* .verify-btn:hover {
+    color: #0f42c3;
+    background: none;
+} */
+
+.verify-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.verified-badge {
+    position: absolute;
+    right: 10px;
+    color: green;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.otp-input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.otp-input {
+    flex: 1;
+    padding: 8px !important;
+}
+
+.verify-confirm-btn {
+    background: #01BF64;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.continue-account-btn {
+    width: 100%;
+    background-color: #01BF64;
+    /* Maroon */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.continue-account-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.cancel-account-btn {
+    background: none;
+    border: none;
+    color: #01BF64;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+.account-footer {
+    padding: 30px 40px;
+    background-color: #FDFCF8;
+    text-align: left;
+}
+
+.account-footer p {
+    font-size: 11px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.account-footer a {
+    color: #333;
+    text-decoration: underline;
+}

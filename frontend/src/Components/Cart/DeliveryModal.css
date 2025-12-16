@@ -1,0 +1,212 @@
+.delivery-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2500;
+    /* Higher than other modals */
+}
+
+.delivery-modal-container {
+    background: #FDFCF8;
+    /* Beige off-white */
+    width: 90%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 4px;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.delivery-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delivery-title {
+    font-family: "Domine", serif;
+    font-size: 32px;
+    font-style: italic;
+    color: #4b3e2f;
+    margin-bottom: 5px;
+    font-weight: 400;
+}
+
+.delivery-underline {
+    width: 100px;
+    height: 1px;
+    background-color: #333;
+    margin: 0 auto 30px auto;
+}
+
+.postcode-section {
+    text-align: left;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.postcode-label {
+    font-weight: 400;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.postcode-value {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.delivery-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: none;
+}
+
+.delivery-input:focus {
+    outline: none;
+    border-color: #558b2f;
+}
+
+.delivery-helper-text {
+    font-size: 13px;
+    color: #444;
+    text-align: left;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.continue-delivery-btn {
+    width: 100%;
+    background-color: #01BF64;
+    /* Maroon */
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.continue-delivery-btn:hover {
+    opacity: 1;
+}
+
+.cancel-delivery-btn {
+    background: none;
+    border: none;
+    color: #01BF64;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Saved Address Styles */
+.saved-address-container {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.saved-address-container h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.saved-address-card {
+    background: #f1f8e9;
+    border: 1px solid #c5e1a5;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #33691e;
+}
+
+.address-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.use-address-btn {
+    width: 100%;
+    background-color: #01BF64;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-new-address-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed #01BF64;
+    color: #01BF64;
+    padding: 12px;
+    border-radius: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.add-new-address-btn:hover {
+    background: #e8f5e9;
+}
+
+.back-to-saved-btn {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background: none;
+    border: none;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+}

@@ -27,7 +27,7 @@ function MainHome() {
         />
     
       <Hero />
-      <HeroFeatures/>
+      <HeroFeatures />
       <StepsSection />
       <Testimonials />
       <GrownForFlavour />

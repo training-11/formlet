@@ -1,0 +1,144 @@
+.postcode-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+
+.postcode-modal-container {
+    width: 90%;
+    max-width: 450px;
+    background-color: #FDFCF8;
+    /* Light beige like screenshot */
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.postcode-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.postcode-header {
+    background-color: #FDFCF8;
+    padding: 30px 20px 10px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.header-graphic-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotate(-2deg);
+    /* Slight tilt like the sticker in screenshot */
+}
+
+.graphic-icon {
+    font-size: 40px;
+    margin-bottom: -10px;
+    z-index: 1;
+}
+
+.postcode-title {
+    background-color: #000;
+    color: #fff;
+    font-family: "Domine", serif;
+    /* Serif font */
+    font-size: 28px;
+    padding: 5px 15px;
+    transform: rotate(-2deg);
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.postcode-body {
+    padding: 20px 40px 40px 40px;
+    text-align: center;
+}
+
+.warning-box {
+    font-size: 14px;
+    color: #4b3e2f;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.postcode-label {
+    display: block;
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+    color: #4b3e2f;
+    margin-bottom: 5px;
+}
+
+.postcode-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.postcode-error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.postcode-enter-btn {
+    width: 100%;
+    background-color: #C28B96;
+    /* Dusty pink/mauve from screenshot */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.postcode-enter-btn:hover {
+    background-color: #a8727d;
+}
+
+.postcode-footer {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #4b3e2f;
+}
+
+.signin-link {
+    text-decoration: underline;
+    color: #01BF64;
+    cursor: pointer;
+    font-weight: 600;
+}

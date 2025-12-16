@@ -1,6 +1,6 @@
 // middleware/auth.js
 import jwt from "jsonwebtoken";
-import User from "../models/usermodel.js"; // adjust path if needed
+import db from "../config/db.js";
 
 const auth = async (req, res, next) => {
   try {
@@ -15,18 +15,30 @@ const auth = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Attach user (without password)
-    const user = await User.findById(decoded.id).select("-password");
-    if (!user) {
+    // const user = users.find((u) => u._id === decoded.id); // OLD
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [decoded.id]);
+
+    if (rows.length === 0) {
       return res
         .status(401)
         .json({ message: "Invalid token: user not found." });
     }
 
-    req.user = user;
+    req.user = rows[0];
     next();
   } catch (error) {
     console.error("Auth middleware error:", error);
     return res.status(401).json({ message: "Token is not valid." });
+  }
+};
+
+
+
+export const admin = (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    res.status(403).json({ message: "Not authorized as admin" });
   }
 };
 

@@ -1,0 +1,225 @@
+.payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2800;
+}
+
+.payment-modal-container {
+    background: #FDFCF8;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 4px;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.payment-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.payment-title {
+    font-family: "Domine", serif;
+    font-size: 32px;
+    font-style: italic;
+    color: #4b3e2f;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 400;
+}
+
+.order-summary-accordion {
+    background-color: #f3efe8;
+    /* Beige header */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion-header {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #4b3e2f;
+}
+
+.accordion-icon {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.accordion-total {
+    font-weight: 700;
+    color: #4b3e2f;
+}
+
+.order-items-list {
+    background-color: #fbf9f4;
+    padding: 20px 30px;
+    border-bottom: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.summary-qty {
+    color: #666;
+    margin-left: 5px;
+}
+
+.summary-delivery,
+.summary-final-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    font-weight: 500;
+}
+
+.summary-final-total {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.payment-body {
+    padding: 30px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.pay-section-title {
+    font-size: 18px;
+    color: #4b3e2f;
+    margin-bottom: 20px;
+}
+
+.payment-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.payment-desc {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.payment-methods-icons {
+    margin-bottom: 20px;
+}
+
+.card-icon {
+    display: inline-block;
+    padding: 3px 8px;
+    margin: 0 5px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+}
+
+.pay-now-btn {
+    background-color: #01BF64;
+    color: white;
+    padding: 15px 30px;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+}
+
+.pay-now-btn:hover {
+    background-color: #0b6ed8;
+}
+
+.secure-badge {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #777;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lock-icon {
+    margin-right: 5px;
+}
+
+/* Promo Code Section */
+.promo-section {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.promo-header {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4b3e2f;
+    margin-bottom: 10px;
+}
+
+.promo-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.promo-input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.promo-apply-btn {
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #333;
+}
+
+.promo-apply-btn:hover {
+    background-color: #e0e0e0;
+}
