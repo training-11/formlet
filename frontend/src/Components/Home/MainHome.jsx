@@ -13,18 +13,20 @@ import IntroPopup from "./IntroPopup";
 function MainHome() {
   return (
     <div>
-        <IntroPopup />
-        {/* <FarmletPopup /> */}
-        <Navbar />
-    
+      <IntroPopup />
+      {/* <FarmletPopup /> */}
+      <Navbar />
+
       <Hero />
-      <HeroFeatures/>
+      <HeroFeatures />
       <StepsSection />
       <Testimonials />
       <GrownForFlavour />
-      <SliderWithHero/>
-      <FaqSection/>
-       
+      <SliderWithHero />
+
+
+      <FaqSection />
+
       <Footer />
     </div>
   )

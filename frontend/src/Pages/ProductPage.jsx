@@ -89,15 +89,31 @@ import md6 from "../Images/md6.png";
 import md7 from "../Images/md7.png";
 import md8 from "../Images/md8.png";
 import md9 from "../Images/md9.png";
-
-
-
+import { useAuth } from "../Context/AuthContext";
+import CartSidebar from "../Components/Cart/CartSidebar";
+import AddToCartModal from "../Components/Cart/AddToCartModal";
 
 export default function ProductPage() {
   const { category } = useParams();
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
+  const { isAuthenticated, addToCart } = useAuth(); // Context HOOK
+
+  // Modal State
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const title = category.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+  const handleOpenModal = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
+  const handleConfirmAddToCart = (product, quantity, frequency) => {
+    addToCart(product, quantity, frequency);
+    setModalOpen(false);
+    setSelectedProduct(null);
+  };
 
   // PRODUCT DATA FOR EACH CATEGORY
   const allProducts = {
@@ -109,7 +125,7 @@ export default function ProductPage() {
         location: "From Vandavasi, Tamilnadu",
         image: fruit1,
       },
-  
+
       {
         name: "Sapota / Chiku",
         weight: "500 Gms",
@@ -117,26 +133,28 @@ export default function ProductPage() {
         location: "From Mysuru, Karnataka",
         image: fruit3,
       },
-          { 
-            name: "Nagpur Orange (500–600g)", 
-            weight: "500 Gms", 
-            price: "₹89.00", 
-            location: "From Nagpur, Maharashtra", 
-            image: fruit2 ,
-          },
-           { 
-            name: "Nagpur Orange (1000–1200g)", 
-            weight: "500 Gms", 
-            price: "₹109.00", 
-            location: "From Nagpur, Maharashtra", 
-            image: fruit2 ,
-          },
-         { 
-            name: "Red Lady Papaya - Medium (1000g - 1200g) (Seedless)", weight: "1000 Gms", price: "₹109.00", location: "From Kadapa, Andhra Pradesh", image: fruit4 ,},
-          { 
-            name: "Red Lady Papaya - Medium (600g - 800g) (Seedless)", weight: "700 Gms", price: "₹89.00", location: "From Kadapa, Andhra Pradesh", image: fruit4 ,},
-           { name: "Watermelon Kiran", weight: "2000 Gms", price: "₹189.00", location: "From Denkanikottai, Tamilnadu", image: fruit5, },
-          { name : "Banana Elakki", weight: "1000 Gms", price: "₹129.00", location: "From Denkanikottai, Tamilnadu", image: fruit6,},
+      {
+        name: "Nagpur Orange (500–600g)",
+        weight: "500 Gms",
+        price: "₹89.00",
+        location: "From Nagpur, Maharashtra",
+        image: fruit2,
+      },
+      {
+        name: "Nagpur Orange (1000–1200g)",
+        weight: "500 Gms",
+        price: "₹109.00",
+        location: "From Nagpur, Maharashtra",
+        image: fruit2,
+      },
+      {
+        name: "Red Lady Papaya - Medium (1000g - 1200g) (Seedless)", weight: "1000 Gms", price: "₹109.00", location: "From Kadapa, Andhra Pradesh", image: fruit4,
+      },
+      {
+        name: "Red Lady Papaya - Medium (600g - 800g) (Seedless)", weight: "700 Gms", price: "₹89.00", location: "From Kadapa, Andhra Pradesh", image: fruit4,
+      },
+      { name: "Watermelon Kiran", weight: "2000 Gms", price: "₹189.00", location: "From Denkanikottai, Tamilnadu", image: fruit5, },
+      { name: "Banana Elakki", weight: "1000 Gms", price: "₹129.00", location: "From Denkanikottai, Tamilnadu", image: fruit6, },
     ],
 
     "Fresh Vegetables": [
@@ -161,15 +179,15 @@ export default function ProductPage() {
         location: "From Vandavasi",
         image: veg3,
       },
-     {
+      {
         name: "Chow Chow",
         weight: "250 Gms",
         price: "₹27.00",
         location: "From Nilgiris",
         image: veg4,
       },
-     
-       {
+
+      {
         name: "Yellow Pumpkin",
         weight: "500 Gms",
         price: "₹89.00",
@@ -183,14 +201,14 @@ export default function ProductPage() {
         location: "From Denkanikottai, Tamilnadu",
         image: veg6,
       },
-       {
+      {
         name: "Long Beans / Yard Beans",
         weight: "250 Gms",
         price: "₹59.00",
         location: "From Vandavasi, Tamilnadu",
         image: veg7,
       },
-{
+      {
         name: "LYam",
         weight: "500 Gms",
         price: "₹65.00",
@@ -229,7 +247,7 @@ export default function ProductPage() {
         location: "From DenkaniKottai",
         image: leafy4,
       },
-       {
+      {
         name: "Agathi Leaves",
         weight: "250 Gms",
         price: "₹35.00",
@@ -253,7 +271,7 @@ export default function ProductPage() {
         location: "From Kadapa",
         image: otherveg1,
       },
-       {
+      {
         name: "Red Capsicum",
         weight: "300 Gms",
         price: "₹79.00",
@@ -267,28 +285,28 @@ export default function ProductPage() {
         location: "From Harur",
         image: otherveg3,
       },
-       {
+      {
         name: "Brown Channa Sprouts",
         weight: "200 Gms",
         price: "₹65.00",
         location: "From Bengaluru, Karnataka",
         image: otherveg4,
       },
-       {
+      {
         name: "Diced Yam",
         weight: "250 Gms",
         price: "₹95.00",
         location: "From Bengaluru, Karnataka",
         image: otherveg5,
       },
-        {
+      {
         name: "Ginger",
         weight: "100 Gms",
         price: "₹23.00",
         location: "From DenkaniKottai",
         image: otherveg6,
       },
-        {
+      {
         name: "Green Beans Cut",
         weight: "200 Gms",
         price: "₹95.00",
@@ -314,9 +332,9 @@ export default function ProductPage() {
         price: "₹135.00",
         image: sna1,
       }
-      
+
     ],
-       "Dals & Rice": [
+    "Dals & Rice": [
       {
         name: "Unpolished Toor Dal",
         weight: "500 Gms",
@@ -324,7 +342,7 @@ export default function ProductPage() {
         location: "From Bijapur, Karnataka",
         image: dals1,
       },
-      { 
+      {
 
         name: "UWhite Urad Dal Whole",
         weight: "500 Gms",
@@ -584,7 +602,7 @@ export default function ProductPage() {
         weight: "50 Gms",
         price: "₹159.00",
         location: "From Chennai, TN",
-        image: md4    ,
+        image: md4,
       },
       {
         name: "White Sesame Seeds",
@@ -621,85 +639,113 @@ export default function ProductPage() {
         location: "From Kashmir",
         image: md9,
       }
-    ],  
+    ],
   };
 
   const categories = Object.keys(allProducts);
   const sidebarCategories = [
-  { img: apple, label: "Fresh Fruits" },
-  { img: carrot, label: "Fresh Vegetables" },
-  { img: leaf, label: "Leafy and Seasonings" },
-  { img :leafy1, label : "Other Vegetables"},
-  // { img: tomato, label: "Exotics" },
-  // { img: orange, label: "MisFits" },
-  { img: dal, label: "Dals & Rice" },
-  { img: Dehydrated, label: "Dehydrated" },
-  { img: grains, label: "Grains and millets" },
-  { img: dairy, label: "Dairy & eggs" },
-  { img: snacksncoffee, label: "Snacks & Coffee" },
-  { img: naturalsweet, label: "Natural Sweeteners" },
-  { img: masalaanddry, label: "Masalas and Dry Fruits" },
-  { img: readycook, label: "Ready to Cook" },
-];
+    { img: apple, label: "Fresh Fruits" },
+    { img: carrot, label: "Fresh Vegetables" },
+    { img: leaf, label: "Leafy and Seasonings" },
+    { img: leafy1, label: "Other Vegetables" },
+    // { img: tomato, label: "Exotics" },
+    // { img: orange, label: "MisFits" },
+    { img: dal, label: "Dals & Rice" },
+    { img: Dehydrated, label: "Dehydrated" },
+    { img: grains, label: "Grains and millets" },
+    { img: dairy, label: "Dairy & eggs" },
+    { img: snacksncoffee, label: "Snacks & Coffee" },
+    { img: naturalsweet, label: "Natural Sweeteners" },
+    { img: masalaanddry, label: "Masalas and Dry Fruits" },
+    { img: readycook, label: "Ready to Cook" },
+  ];
 
   return (
     <div className="product-page">
-    <Navbar />
+      <Navbar />
 
-      {/* MAIN CONTENT */}
-      <div className="content-area">
-        {/* LEFT SIDEBAR */}
-        <div className="sidebar-container">
-          {sidebarCategories.map((item) => (
-            <div
-  key={item.label}
-  className={
-    "sidebar-item" +
-    (item.label === selectedCategory ? " active" : "")
-  }
-  onClick={() => setSelectedCategory(item.label)}
->
-  <div className="icon-box">
-    <img src={item.img} alt={item.label} className="sidebar-icon" />
-  </div>
-  <span className="sidebar-text">{item.label}</span>
-</div>
-          ))}
-        </div>          
-        {/* RIGHT PRODUCTS GRID */}
-        <div className="products-container">
-          {/* <h2 className="page-title">{selectedCategory}</h2> */}
+      {/* HEADER BAR */}
+      {/* <div className="top-bar">
+        <HiMenu size={26} className="menu-icon" />
+        <div className="location">
+          Bengaluru <FaChevronDown size={14} />
+      {/* BODY LAYOUT: Flex container for Sidebar - Content - Cart */}
+      <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}>
 
-          <div className="products">
-            {allProducts[selectedCategory]?.map((prod, index) => (
-              <div className="product-card" key={index}>
-                <img
-                  src={prod.image}
-                  className="product-image"
-                  alt={prod.name}
-                />
-
-                <div className="product-location">{prod.location}</div>
-
-                <div className="product-name">{prod.name}</div>
-
-                <input
-                  className="weight-input"
-                  value={prod.weight}
-                  readOnly
-                />
-
-                <div className="product-price">{prod.price}</div>
-
-                <button className="order-btn">Login To Order</button>
+        {/* LEFT SIDEBAR & PRODUCTS GRID */}
+        <div className="content-area" style={{ flexGrow: 1, display: "flex" }}>
+          {/* LEFT SIDEBAR (Categories) */}
+          <div className="sidebar-container">
+            {sidebarCategories.map((item) => (
+              <div
+                key={item.label}
+                className={
+                  "sidebar-item" +
+                  (item.label === selectedCategory ? " active" : "")
+                }
+                onClick={() => setSelectedCategory(item.label)}
+              >
+                <div className="icon-box">
+                  <img src={item.img} alt={item.label} className="sidebar-icon" />
+                </div>
+                <span className="sidebar-text">{item.label}</span>
               </div>
             ))}
           </div>
+
+          {/* PRODUCT GRID */}
+          <div className="products-container" style={{ flexGrow: 1 }}>
+            <h2 className="page-title">{selectedCategory}</h2>
+
+            <div className="products">
+              {allProducts[selectedCategory]?.map((prod, index) => (
+                <div className="product-card" key={index}>
+                  <img
+                    src={prod.image}
+                    className="product-image"
+                    alt={prod.name}
+                  />
+
+                  <div className="product-location">{prod.location}</div>
+                  <div className="product-name">{prod.name}</div>
+                  <input className="weight-input" value={prod.weight} readOnly />
+                  <div className="product-price">{prod.price}</div>
+
+                  {isAuthenticated ? (
+                    <button className="order-btn" onClick={() => handleOpenModal(prod)}>
+                      Add to Cart
+                    </button>
+                  ) : (
+                    <button className="order-btn" onClick={() => alert("Please sign in or check your pincode first!")}>
+                      Login to Order
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* ADD TO CART MODAL */}
+        {modalOpen && (
+          <AddToCartModal
+            product={selectedProduct}
+            onClose={() => setModalOpen(false)}
+            onConfirm={handleConfirmAddToCart}
+          />
+        )}
+
+        {/* RIGHT CART SIDEBAR (Only if authenticated) */}
+        {isAuthenticated && (
+          <div style={{ width: "320px", flexShrink: 0 }}>
+            <CartSidebar />
+          </div>
+        )}
+
       </div>
 
-      {/* BOTTOM BAR */}
-      <div className="bottom-login-bar">Login To Order</div>
+      {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
+      {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
     </div>
   );
-} 
+}

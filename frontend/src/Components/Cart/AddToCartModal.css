@@ -1,0 +1,233 @@
+.add-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* Global box-sizing for modal context if not already set */
+* {
+    box-sizing: border-box;
+}
+
+.add-modal-container {
+    background: #FDFCF8;
+    width: 90%;
+    max-width: 550px;
+    /* Increased width as requested */
+    border-radius: 4px;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* HEADER */
+.add-modal-header {
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.header-overlay {
+    background: rgba(0, 50, 20, 0.7);
+    /* Dark green overlay for text checks readability */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.modal-product-name {
+    color: #fff;
+    font-family: "Domine", serif;
+    font-size: 28px;
+    font-weight: 400;
+    text-align: center;
+    padding: 0 40px;
+}
+
+.modal-close-icon {
+    /* position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: 2px solid white;
+    color: rgb(10, 10, 10);
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8; */
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close-icon:hover {
+    opacity: 1;
+}
+
+/* BODY */
+.add-modal-body {
+    padding: 0;
+    text-align: center;
+}
+
+.selection-section {
+    background-color: #f3efe8;
+    /* Beige background match */
+    padding: 20px 30px;
+}
+
+.confirmation-section {
+    background-color: #ffffff;
+    padding: 20px 30px;
+}
+
+.qty-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.qty-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.qty-btn {
+    font-size: 28px;
+    color: #01BF64;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+}
+
+.qty-btn:disabled {
+    color: #ccc;
+    cursor: default;
+}
+
+.qty-display {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 15px;
+    padding: 2px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 50px;
+}
+
+.modal-price {
+    font-weight: 700;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* FREQUENCY GRID */
+.frequency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+/* Make "Once only" span/stand out or keep similar */
+.freq-btn {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #555;
+    padding: 4px 2px;
+    font-size: 11px;
+    border-radius: 3px;
+    cursor: pointer;
+    min-height: 32px;
+    /* Reduced height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+}
+
+.freq-btn.active {
+    background-color: #558b2f;
+    /* Brighter green like design */
+    color: white;
+    border-color: #558b2f;
+    font-weight: 500;
+}
+
+/* Delivery Info */
+.delivery-info {
+    font-size: 14px;
+    color: #4b3e2f;
+    /* Dark brown text */
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.subscription-hint {
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.confirm-btn {
+    width: 100%;
+    background-color: #01BF64;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background-color: #01BF64;
+}

@@ -1,0 +1,61 @@
+.admin-pincodes-container {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-pincode-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.add-pincode-form input,
+.add-pincode-form select {
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    flex: 1;
+}
+
+.add-pincode-form button {
+    padding: 10px 20px;
+    background: #00a046;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.pincode-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pincode-table th,
+.pincode-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.pincode-table th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #475569;
+}
+
+.delete-btn {
+    padding: 6px 12px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}

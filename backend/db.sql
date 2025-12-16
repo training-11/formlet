@@ -1,0 +1,74 @@
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS pincodes;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+
+CREATE DATABASE IF NOT EXISTS myfarmlet;
+
+USE myfarmlet;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    address TEXT NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(10) DEFAULT 'user',
+    reset_token VARCHAR(255) NULL,
+    reset_expires DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS pincodes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pincode VARCHAR(20) NOT NULL UNIQUE,
+    delivery_day VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) DEFAULT 'pending', -- pending, paid, shipped, etc.
+    delivery_address TEXT,
+    delivery_notes TEXT,
+    delivery_date VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    frequency VARCHAR(50), -- e.g. "Every week"
+    image_url TEXT,
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+
+CREATE TABLE IF NOT EXISTS coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    discount_type ENUM('flat', 'percent') NOT NULL DEFAULT 'flat',
+    discount_amount DECIMAL(10,2) NOT NULL,
+    description VARCHAR(255) DEFAULT NULL,
+    expiry_date DATE DEFAULT NULL,
+    usage_limit INT DEFAULT NULL,
+    minimum_amount DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
+INSERT INTO users (name, email, password, address, role) 
+VALUES ('Admin', 'admin@farmlet.com', '$2b$10$vW6QGzhSFTD5gBovPRuiW.jr4XMKMz45psatIXoOs5py6R6BsKHE.', 'HQ', 'admin')
+ON DUPLICATE KEY UPDATE role='admin';
