@@ -51,9 +51,11 @@ const MobileStickyBar = () => {
   };
 
   // Only show on mobile screens
-  if (typeof window !== 'undefined' && window.innerWidth > 768) {
-    return null;
-  }
+ if (typeof window !== "undefined" && window.innerWidth > 1024) {
+  return null;
+}
+
+
 
   return (
     <div style={barStyle}>

@@ -8,7 +8,7 @@ export default function Home() {
   useEffect(() => {
   function ensureHeroOrder() {
     const w = window.innerWidth;
-    if (w >= 768 && w <= 1024) {
+    if (w <= 1024) {
       const hero = document.querySelector('section.hero, .hero');
       if (!hero) return;
       const content = hero.querySelector('.hero-content');
