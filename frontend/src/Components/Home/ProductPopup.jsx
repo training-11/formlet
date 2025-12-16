@@ -40,9 +40,8 @@ export default function ProductPopup({
             {categories.map((cat, i) => (
               <div
                 key={i}
-                className={`popup-sidebar-item ${
-                  selectedCategory === cat ? "active" : ""
-                }`}
+                className={`popup-sidebar-item ${selectedCategory === cat ? "active" : ""
+                  }`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -57,7 +56,7 @@ export default function ProductPopup({
             <div className="popup-grid">
               {products.map((prod, index) => (
                 <div className="popup-card" key={index}>
-                  <img src={prod.image} alt="" className="popup-prod-img" />
+                  <img src={prod.image_url && prod.image_url.startsWith("/uploads") ? `${window.ENV.BACKEND_API}${prod.image_url}` : prod.image_url} alt="" className="popup-prod-img" />
 
                   <div className="popup-location">{prod.location}</div>
 

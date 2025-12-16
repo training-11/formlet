@@ -1,7 +1,9 @@
 import db from "../config/db.js";
+import redisClient from "../config/redis.js";
 import Razorpay from "razorpay";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -56,7 +58,8 @@ export const createOrder = async (req, res) => {
                 amount: amountInPaise,
                 currency,
                 receipt: `receipt_order_${orderId}`,
-                payment_capture
+                payment_capture,
+                notes: { internal_order_id: orderId }
             });
         } catch (rzpError) {
             console.error("Razorpay Error:", rzpError);
@@ -287,18 +290,70 @@ export const verifyPaymentWebhook = async (req, res) => {
 
             if (event === "payment.captured") {
                 const payment = payload.payment.entity;
-                console.log(`Payment captured: ${payment.id} for Order: ${payment.order_id}`);
+                console.log(`Payment captured: ${payment.id} for Order Razorpay ID: ${payment.order_id}`);
 
-                // Extract local order ID from receipt if standard format used, 
-                // or search DB for razorpay_order_id if we saved it.
-                // Assuming description might contain "Order #123" or similar is not robust.
-                // Use razorpay_order_id from payload (payment.order_id) to update DB.
+                // 1. Get Internal Order ID from Notes
+                const notes = payment.notes;
 
-                // Example query (if we had razorpay_order_id in orders table):
-                // await db.query("UPDATE orders SET status = 'Paid' WHERE razorpay_order_id = ?", [payment.order_id]);
+                if (notes && notes.internal_order_id) {
+                    const internalOrderId = notes.internal_order_id;
 
-                // For now, since schema doesn't have razorpay_order_id, we just log it.
-                // If you want auto-status update, we need to add razorpay_order_id column to orders table.
+                    console.log(`Updating Status for Internal Order ID: ${internalOrderId} to 'paid'`);
+
+                    // 2. Update DB
+                    await db.query("UPDATE orders SET status = 'paid' WHERE id = ?", [internalOrderId]);
+
+                    // 3. Clear Admin Stats Cache (Revenue updated)
+                    if (redisClient && redisClient.isOpen) {
+                        try {
+                            await redisClient.del('admin_stats');
+                        } catch (e) { console.error("Redis Cache Clear Error", e); }
+                    }
+
+                    // 4. Send Email Notification to Admin
+                    try {
+                        // Fetch details for email
+                        const [orderRows] = await db.query(
+                            "SELECT o.*, u.name as user_name, u.email as user_email, u.phone as user_phone FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?",
+                            [internalOrderId]
+                        );
+
+                        if (orderRows.length > 0) {
+                            const orderDetails = orderRows[0];
+                            const transporter = nodemailer.createTransport({
+                                service: 'gmail',
+                                auth: {
+                                    user: process.env.EMAIL_USER,
+                                    pass: process.env.EMAIL_PASS
+                                }
+                            });
+
+                            const mailOptions = {
+                                from: process.env.EMAIL_USER,
+                                to: process.env.ADMIN_EMAIL, // Admin Email
+                                subject: `New Order Received - Order #${internalOrderId}`,
+                                text: `
+                                    New Order Received!
+                                    
+                                    Order ID: #${internalOrderId}
+                                    Customer: ${orderDetails.user_name}
+                                    Phone: ${orderDetails.user_phone}
+                                    Amount: ₹${orderDetails.total_amount}
+                                    
+                                    Please check Admin Panel for details.
+                                `
+                            };
+
+                            await transporter.sendMail(mailOptions);
+                            console.log(`Admin Notification Email sent for Order #${internalOrderId}`);
+                        }
+                    } catch (emailErr) {
+                        console.error("Failed to send Admin Notification Email:", emailErr);
+                    }
+
+                } else {
+                    console.warn("Payment captured but no internal_order_id found in notes.");
+                }
             }
             res.status(200).json({ status: "ok" });
         } else {

@@ -168,7 +168,7 @@ export default function AdminOrders() {
                                         <tr key={idx} style={{ borderBottom: '1px solid #f9f9f9' }}>
                                             <td style={{ padding: '8px' }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                    <img src={item.image_url} alt="" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                                                    <img src={item.image_url && item.image_url.startsWith("/uploads") ? `${window.ENV.BACKEND_API}${item.image_url}` : item.image_url} alt="" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
                                                     {item.product_name}
                                                 </div>
                                             </td>

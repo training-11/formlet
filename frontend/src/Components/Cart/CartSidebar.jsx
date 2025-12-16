@@ -264,7 +264,7 @@ export default function CartSidebar() {
                         <p className="empty-cart-msg">Your basket is empty.</p>
                     ) : cartItems.map((item, index) => (
                         <div className="cart-item" key={index}>
-                            <img src={item.image} alt={item.name} className="cart-item-img" />
+                            <img src={item.image_url && item.image_url.startsWith("/uploads") ? `${window.ENV.BACKEND_API}${item.image_url}` : item.image_url} alt={item.name} className="cart-item-img" />
                             <div className="cart-item-details">
                                 <div className="cart-row-top">
                                     <span className="cart-item-name">{item.name}</span>

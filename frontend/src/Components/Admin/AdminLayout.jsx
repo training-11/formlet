@@ -3,9 +3,13 @@ import "./Admin.css";
 import { useNavigate } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import AdminOrders from "./AdminOrders";
+import AdminCoupons from "./AdminCoupons";
+import AdminDeliveries from "./AdminDeliveries";
+import AdminInventory from "./AdminInventory";
 import AdminUsers from "./AdminUsers";
 import AdminPincodes from "./AdminPincodes";
-import AdminCoupons from "./AdminCoupons";
+// import AdminCategories from "./AdminCategories"; // Consolidating into Inventory
+// import AdminProducts from "./AdminProducts";
 import { useAuth } from "../../Context/AuthContext";
 
 export default function AdminLayout() {
@@ -28,7 +32,11 @@ export default function AdminLayout() {
         switch (activeTab) {
             case "dashboard": return <AdminDashboard />;
             case "orders": return <AdminOrders />;
+            case "deliveries": return <AdminDeliveries />;
+            case "inventory": return <AdminInventory />;
             case "users": return <AdminUsers />;
+            // case "categories": return <AdminCategories />;
+            // case "products": return <AdminProducts />;
             case "pincodes": return <AdminPincodes />;
             case "coupons": return <AdminCoupons />;
             default: return <AdminDashboard />;
@@ -51,6 +59,18 @@ export default function AdminLayout() {
                         onClick={() => setActiveTab("orders")}
                     >
                         Orders
+                    </div>
+                    <div
+                        className={`admin-nav-item ${activeTab === "deliveries" ? "active" : ""}`}
+                        onClick={() => setActiveTab("deliveries")}
+                    >
+                        Deliveries
+                    </div>
+                    <div
+                        className={`admin-nav-item ${activeTab === "inventory" ? "active" : ""}`}
+                        onClick={() => setActiveTab("inventory")}
+                    >
+                        Inventory
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "users" ? "active" : ""}`}
