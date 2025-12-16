@@ -1,13 +1,14 @@
 /* DESKTOP – unchanged (Riverford style) */
 .hero-features {
-  margin-top: 0px;
+ margin-top: 0px !important;
   background: #f4f1ec;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 300px;
-  padding: 70px 0;
+  padding: 50px 80px;
   text-align: center;
+  padding-top: 40px !important;
 }
 
 .feature-box img {
@@ -22,6 +23,22 @@
   margin: 0;
 }
 
+/* Large Desktop/Monitor View */
+@media (min-width: 1400px) {
+  .hero-features {
+    gap: 350px;
+    padding: 80px 120px;
+  }
+  
+  .feature-box img {
+    width: 115px;
+  }
+  
+  .feature-box p {
+    font-size: 30px;
+  }
+}
+
 
 
 /* -------------------------------------- */
@@ -29,62 +46,92 @@
 /* -------------------------------------- */
 @media (max-width: 768px) {
 
-  /* full mobile layout */
+  /* full mobile layout - wrap to create rows */
   .hero-features {
-    margin-top: -110px;
-     display: flex;
-    flex-direction: column;
-     align-items: center;
-    gap: 40px;
-    padding: 60px 0;
-     flex-wrap: nowrap;
-  }
-
-
-  /* reorder items: organic first */
-  .hero-features .feature-box:nth-child(2) {
-    order: 1; /* 100% ORGANIC goes to top */
+     margin-top: -190px !important;    
+    padding-top: 10px !important;   
+    padding-bottom: 40px;
+    background: #f4f1ec;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px 20px 60px;
     text-align: center;
+    gap: 0px;
+    width: 100%;
+    
   }
 
-  .hero-features .feature-box:nth-child(1),
-  .hero-features .feature-box:nth-child(3) {
-    order: 2; /* farmers + chemicals go below */
-     width: 45%;
-      display: flex;
-    justify-content: space-around; /* keep space perfect */
+  /* Reset all feature boxes */
+  .hero-features .feature-box {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    box-sizing: border-box;
   }
 
- 
-
-  /* farmers + chemicals appear in row */
-  .hero-features.responsive-row {
-   display: block;
-    text-align: center;
+  /* 100% ORGANIC (bee) - centered at top, full width */
+  .hero-features .feature-box:nth-child(2) {
+    order: 1;
+    width: 100%;
+    /* margin-bottom: 50px; */
+    flex-basis: 100%;  
   }
 
-  /* convert them into one row */
-  .hero-features .feature-box:nth-child(1),
-  .hero-features .feature-box:nth-child(3) {
-    display: inline-flex;
-    flex-direction: column;
-    width: 45%;
-  
+  .hero-features .feature-box:nth-child(2) img {
+    width: 120px;
+     margin-bottom: 10px;   
   }
- .hero-features .feature-box:nth-child(1) {
-    margin-right: auto;
+
+  .hero-features .feature-box:nth-child(2) p {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
   }
-  .hero-features .feature-box:nth-child(3) {
-    margin-left: auto;
-    margin-top: -190px;
+
+  /* Direct from farmers - left side of second row */
+  .hero-features .feature-box:nth-child(1) {
+    order: 2;
+    width: 48%;
+    flex-basis: 48%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-top: 50px;
   }
-  .feature-box img {
+
+  .hero-features .feature-box:nth-child(1) img {
     width: 70px;
+    margin-bottom: 10px;
   }
 
-  .feature-box p {
-    font-size: 25px;
+  .hero-features .feature-box:nth-child(1) p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* No artificial chemicals - right side of second row */
+  .hero-features .feature-box:nth-child(3) {
+    order: 3;
+    width: 48%;
+    flex-basis: 48%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-top: 50px;
+  }
+
+  .hero-features .feature-box:nth-child(3) img {
+    width: 70px;
+    margin-bottom: 10px;
+  }
+
+  .hero-features .feature-box:nth-child(3) p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
   }
 }
 
@@ -112,8 +159,8 @@
 
 /* ---------- font (paste at top of your main CSS once) ---------- */
 
-/* ---------- TABLET: 768px - 1024px (Riverford-like) ---------- */
-@media  (max-width: 1024px) {
+/* ---------- TABLET: 769px - 1024px (Riverford-like) ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
 
   /* ensure page can't scroll horizontally on tablet */
   html, body {
@@ -126,15 +173,16 @@
     width: 100%;
     max-width: 860px;        /* visual content width similar to Riverford tablet */
     margin: 0 auto;          /* center on page */
-    padding: 52px 20px;      /* breathing space above/below */
+    padding: 8px 10px;      /* breathing space above/below */
     background: #f4f1ec;
     display: flex;
     justify-content: center; /* center the 3 items */
     align-items: flex-start; /* keeps icons aligned to top of each box */
-    gap: 120px;              /* spacing between boxes (tweak +/- 10px if needed) */
+    gap: 50px;              /* spacing between boxes (tweak +/- 10px if needed) */
     text-align: center;
     overflow: hidden;        /* stop any child overflow */
   }
+
 
   /* make each feature box same size and centered */
   .hero-features .feature-box {
@@ -146,12 +194,12 @@
     justify-content: flex-start;
     text-align: center;
     margin: 0;               /* remove mobile offsets */
-    order: 0;                /* cancel any mobile reordering */
+    order: 0;               /* cancel any mobile reordering */
   }
 
   /* icon size tuned for tablet */
   .hero-features .feature-box img {
-    width: 96px;             /* Riverford-like icon size on tablet */
+    width: 76px;             /* Riverford-like icon size on tablet */
     height: auto;
     display: block;
     margin-bottom: 10px;
@@ -173,7 +221,5 @@
   .hero-features .feature-box:nth-child(3) {
     margin-top: 0;
   }
-
- 
-  }
+}
 

@@ -38,8 +38,10 @@ export default function Footer() {
 
         <div className="footer-column">
           <h3>Download our app</h3>
-          <img src={appstore} alt="app store" className="store-img" />
-          <img src={playstore} alt="google play" className="store-img" />
+         <div className="store-row">
+    <img src={appstore} alt="app store" className="store-img" />
+    <img src={playstore} alt="google play" className="store-img" />
+  </div>
         </div>
       </div>
 
