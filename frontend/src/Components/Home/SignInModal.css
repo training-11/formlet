@@ -16,7 +16,8 @@
   background: #f6eddf;
   border-radius: 12px;
   display: flex;
-  overflow: hidden;
+  /* overflow: hidden; Removed to show the close button */
+  overflow: visible;
   position: relative;
   font-family: "Roboto", sans-serif;
 }
@@ -44,9 +45,9 @@
 /* ===================== PERFECT RIVERFORD CLOSE BUTTON ===================== */
 .modal-close {
   position: absolute;
-  top: -10px;
-  /* exact position like Riverford */
-  right: 8px;
+  top: 15px;
+  /* top: -10px; OLD */
+  right: 15px;
 
   width: 44px;
   height: 44px;
@@ -103,6 +104,8 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 
 /* Title */
@@ -219,6 +222,7 @@
   cursor: pointer;
   text-align: center;
   width: 100%;
+  margin-top: 15px;
 }
 
 .forgot-link:hover {
@@ -237,6 +241,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 /* Right side logo (bigger + perfect spacing) */
@@ -377,7 +383,7 @@
   .modal-right {
     width: 100%;
     padding: 34px 30px;
-
+    border-radius: 0;
   }
 
   .modal-right .underline,
