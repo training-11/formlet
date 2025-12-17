@@ -83,7 +83,7 @@ const sendWelcomeSMS = async (phone, userName) => {
 // SIGNUP / CREATE
 export const create = async (req, res) => {
   try {
-    const { name, email, phone, address, password, pincode } = req.body;
+    const { name, email, phone, address, password } = req.body;
     if (!name || !email || !address || !password) {
       return res.status(400).json({ message: "All fields are required." });
     }
@@ -109,8 +109,8 @@ export const create = async (req, res) => {
     // Add pincode column if exists in DB, else this might error if I don't migrate DB.
     // I will migrate DB in next step.
     const [result] = await db.query(
-      "INSERT INTO users (name, email, phone, address, password, pincode) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, email, cleanPhone, address, hashedPassword, pincode]
+      "INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)",
+      [name, email, cleanPhone, address, hashedPassword]
     );
 
     const newUser = {
