@@ -1,10 +1,21 @@
-import { createClient } from 'redis';
+import { createClient } from "redis";
 
-const redisClient = createClient(); // Defaults to localhost:6379
+const redisClient = createClient({
+  socket: {
+    host: process.env.REDIS_HOST || "formlet-redis",
+    port: Number(process.env.REDIS_PORT) || 6379,
+  },
+});
 
-redisClient.on('error', (err) => console.log('Redis Client Error', err));
-redisClient.on('connect', () => console.log('Connected to Redis'));
+redisClient.on("connect", () => {
+  console.log("✅ Redis connected successfully");
+});
+
+redisClient.on("error", (err) => {
+  console.error("❌ Redis Client Error:", err);
+});
 
 await redisClient.connect();
 
 export default redisClient;
+
