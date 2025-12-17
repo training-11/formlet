@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import "./ProductPage.css";
+// import { HiMenu } from "react-icons/hi";
+// import { FaChevronDown } from "react-icons/fa";
+// import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../Components/Home/Navbar";
 
-const ProductPage = () => {
-  const { category } = useParams(); // URL param: fresh-fruits
+// IMAGES
+import { useAuth } from "../Context/AuthContext";
+import CartSidebar from "../Components/Cart/CartSidebar";
+import AddToCartModal from "../Components/Cart/AddToCartModal";
+
+export default function ProductPage() {
+  // const { category } = useParams(); // Unused for now
+  const { isAuthenticated, addToCart } = useAuth();
+
+  // Dynamic Data State
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
 
-  // Convert slug -> DB category name
-  const slugToName = (slug) => {
-    if (!slug) return null;
-    return slug
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
+  // Modal State
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Use Effect to Fetch Data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,77 +33,148 @@ const ProductPage = () => {
           fetch(`${window.ENV.BACKEND_API}/api/public/products`)
         ]);
 
-        if (!catRes.ok || !prodRes.ok) {
-          throw new Error("Failed to fetch data");
-        }
+        if (catRes.ok && prodRes.ok) {
+          const catData = await catRes.json();
+          setCategories(catData);
+          setProducts(await prodRes.json());
 
-        const catData = await catRes.json();
-        const prodData = await prodRes.json();
-
-        setCategories(catData);
-        setProducts(prodData);
-
-        const categoryFromUrl = slugToName(category);
-
-        if (
-          categoryFromUrl &&
-          catData.some(c => c.name === categoryFromUrl)
-        ) {
-          setSelectedCategory(categoryFromUrl);
-        } else if (catData.length > 0) {
-          setSelectedCategory(catData[0].name);
+          // Set initial category from URL or First available
+          if (catData.length > 0) {
+            // If URL param 'category' matches one, use it, else first
+            // For simplicity, sticking to logic
+            setSelectedCategory(catData[0].name);
+          }
         }
       } catch (err) {
-        console.error("Error loading products:", err);
-      } finally {
-        setLoading(false);
+        console.error("Failed to fetch product data", err);
       }
     };
-
     fetchData();
-  }, [category]);
+  }, []);
 
-  const currentCategoryObj = categories.find(
-    c => c.name === selectedCategory
-  );
+  const handleOpenModal = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
+  const handleConfirmAddToCart = (product, quantity, frequency) => {
+    addToCart(product, quantity, frequency);
+    setModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+  // Filter products by selected category
+  const currentCategoryObj = categories.find(c => c.name === selectedCategory);
 
   const filteredProducts = currentCategoryObj
     ? products.filter(p => p.category_id === currentCategoryObj.id)
     : [];
 
+  // Sidebar list
+  const sidebarCategories = categories.map(c => ({
+    label: c.name,
+    img: c.image_url,
+    id: c.id
+  }));
+
+  // Helper to resolve image path
+  const getImageUrl = (url) => {
+    if (url && url.startsWith("/uploads")) {
+      return `${window.ENV.BACKEND_API}${url}`;
+    }
+    return url;
+  };
+
   return (
-    <>
-      <Header />
+    <div className="product-page">
+      <Navbar />
 
-      <div className="container" style={{ padding: "20px" }}>
-        <h2>{selectedCategory || "Products"}</h2>
+      {/* HEADER BAR */}
+      {/* <div className="top-bar">
+        <HiMenu size={26} className="menu-icon" />
+        <div className="location">
+          Bengaluru <FaChevronDown size={14} />
+      {/* BODY LAYOUT: Flex container for Sidebar - Content - Cart */}
+      <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}>
 
-        {loading ? (
-          <p>Loading products...</p>
-        ) : filteredProducts.length === 0 ? (
-          <p>No products found in this category.</p>
-        ) : (
-          <div className="product-grid">
-            {filteredProducts.map(product => (
-              <div className="product-card" key={product.id}>
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  className="product-image"
-                />
-                <h4>{product.name}</h4>
-                <p>₹{product.price}</p>
-                <button>Add to Cart</button>
+        {/* LEFT SIDEBAR & PRODUCTS GRID */}
+        <div className="content-area" style={{ flexGrow: 1, display: "flex" }}>
+          {/* LEFT SIDEBAR (Categories) */}
+          <div className="sidebar-container">
+            {sidebarCategories.map((item) => (
+              <div
+                key={item.label}
+                className={
+                  "sidebar-item" +
+                  (item.label === selectedCategory ? " active" : "")
+                }
+                onClick={() => setSelectedCategory(item.label)}
+              >
+                <div className="icon-box">
+                  <img src={getImageUrl(item.img)} alt={item.label} className="sidebar-icon" />
+                </div>
+                <span className="sidebar-text">{item.label}</span>
               </div>
             ))}
           </div>
+
+          {/* PRODUCT GRID */}
+          <div className="products-container" style={{ flexGrow: 1 }}>
+            <h2 className="page-title">{selectedCategory}</h2>
+
+            <div className="products">
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((prod) => (
+                  <div className="product-card" key={prod.id}>
+                    <img
+                      src={getImageUrl(prod.image_url)}
+                      className="product-image"
+                      alt={prod.name}
+                    />
+
+                    <div className="product-location">{prod.location}</div>
+                    <div className="product-name">{prod.name}</div>
+                    <input className="weight-input" value={prod.weight} readOnly />
+                    <div className="product-price">₹{prod.price}</div>
+
+                    {isAuthenticated ? (
+                      <button className="order-btn" onClick={() => handleOpenModal(prod)}>
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <button className="order-btn" onClick={() => alert("Please sign in or check your pincode first!")}>
+                        Login to Order
+                      </button>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p>No products found in this category.</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ADD TO CART MODAL */}
+        {modalOpen && (
+          <AddToCartModal
+            product={selectedProduct}
+            onClose={() => setModalOpen(false)}
+            onConfirm={handleConfirmAddToCart}
+          />
         )}
+
+        {/* RIGHT CART SIDEBAR (Only if authenticated) */}
+        {isAuthenticated && (
+          <div style={{ width: "320px", flexShrink: 0 }}>
+            <CartSidebar />
+          </div>
+        )}
+
       </div>
 
-      <Footer />
-    </>
+      {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
+      {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
+    </div>
   );
-};
-
-export default ProductPage;
-
+}
