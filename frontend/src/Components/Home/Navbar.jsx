@@ -86,13 +86,13 @@ export default function Navbar({ mobileSearchOpen, setMobileSearchOpen, signInOp
 
   const submenuRef = useRef({});
 
-  const handleAccountClick = () => {
-    if (currentUser) {
-      setOpenOrderModal(true);
-    } else {
-      setOpenModal(true);
-    }
-  };
+  // const handleAccountClick = () => {
+  //   if (currentUser) {
+  //     setOpenOrderModal(true);
+  //   } else {
+  //     setOpenModal(true);
+  //   }
+  // };
 
 
 
@@ -834,14 +834,12 @@ export default function Navbar({ mobileSearchOpen, setMobileSearchOpen, signInOp
 
 
       {/* 📱 Mobile Search Popup */}
-      {mobileSearchOpen && window.innerWidth <= 768 && (
+      {/* {mobileSearchOpen && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
-
-      >
         {d}</div>
     ))}
   </div>
-)}</div>
+)}</div> */}
 
 {activeSubmenu && window.innerWidth <= 768 && (
   <div className="mobile-dropdown-overlay">
