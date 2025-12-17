@@ -66,6 +66,21 @@ const updateSchema = async () => {
         `);
         console.log("Product Tags table checked/created.");
 
+        // Check/Add 'pincode' column to 'users' table
+        try {
+            // Check if column exists
+            const [columns] = await connection.query("SHOW COLUMNS FROM users LIKE 'pincode'");
+            if (columns.length === 0) {
+                console.log("Adding 'pincode' column to 'users' table...");
+                await connection.query("ALTER TABLE users ADD COLUMN pincode VARCHAR(10) AFTER address");
+                console.log("'pincode' column added.");
+            } else {
+                console.log("'pincode' column already exists in 'users' table.");
+            }
+        } catch (err) {
+            console.error("Error checking/adding pincode column:", err.message);
+        }
+
         await connection.end();
         console.log("Schema update complete.");
         process.exit(0);
