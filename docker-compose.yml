@@ -1,99 +1,85 @@
 version: "3.8"
- 
+
 services:
-
+  # =========================
+  # MySQL Database
+  # =========================
   formlet-mysql:
-
     image: mysql:8.0
-
     container_name: formlet-mysql
-
     restart: always
-
     environment:
-
       MYSQL_ROOT_PASSWORD: root@123
-
       MYSQL_DATABASE: myfarmlet
-
     volumes:
-
       - formlet_mysql_data:/var/lib/mysql
-
       - ./backend/db.sql:/docker-entrypoint-initdb.d/db.sql
-
     ports:
-
       - "3307:3306"
-
     networks:
-
       - formlet-network
- 
+
+  # =========================
+  # Redis Cache
+  # =========================
+  formlet-redis:
+    image: redis:7-alpine
+    container_name: formlet-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - formlet-network
+
+  # =========================
+  # Backend (Node.js)
+  # =========================
   formlet-backend:
-
     build: ./backend
-
     container_name: formlet-backend
-
     restart: always
-
     depends_on:
-
       - formlet-mysql
-
+      - formlet-redis
     env_file:
-
       - ./backend/.env
-
     environment:
-
       - PORT=8010
-
       - DB_HOST=formlet-mysql
-
       - DB_USER=root
-
       - DB_PASSWORD=root@123
-
       - DB_NAME=myfarmlet
-
+      - REDIS_HOST=formlet-redis
+      - REDIS_PORT=6379
     ports:
-
       - "8010:8010"
-
     networks:
-
       - formlet-network
- 
+
+  # =========================
+  # Frontend (React + Nginx)
+  # =========================
   formlet-frontend:
-
     build: ./frontend
-
     container_name: formlet-frontend
-
     restart: always
-
     depends_on:
-
       - formlet-backend
-
     ports:
-
       - "8090:80"
-
     networks:
-
       - formlet-network
- 
+
+# =========================
+# Volumes
+# =========================
 volumes:
-
   formlet_mysql_data:
- 
+
+# =========================
+# Networks
+# =========================
 networks:
-
   formlet-network:
-
     driver: bridge
 
- 
