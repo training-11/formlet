@@ -2,12 +2,6 @@ version: "3.8"
  
 services:
 
-  # =========================
-
-  # MySQL Database (Formlet)
-
-  # =========================
-
   formlet-mysql:
 
     image: mysql:8.0
@@ -26,6 +20,8 @@ services:
 
       - formlet_mysql_data:/var/lib/mysql
 
+      - ./backend/db.sql:/docker-entrypoint-initdb.d/db.sql
+
     ports:
 
       - "3307:3306"
@@ -34,12 +30,6 @@ services:
 
       - formlet-network
  
-  # =========================
-
-  # Backend (Node.js)
-
-  # =========================
-
   formlet-backend:
 
     build: ./backend
@@ -76,12 +66,6 @@ services:
 
       - formlet-network
  
-  # =========================
-
-  # Frontend (React + Nginx)
-
-  # =========================
-
   formlet-frontend:
 
     build: ./frontend
@@ -102,25 +86,14 @@ services:
 
       - formlet-network
  
-# =========================
-
-# Volumes
-
-# =========================
-
 volumes:
 
   formlet_mysql_data:
  
-# =========================
-
-# Networks
-
-# =========================
-
 networks:
 
   formlet-network:
 
     driver: bridge
+
  
