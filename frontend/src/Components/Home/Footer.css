@@ -98,12 +98,12 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
   .footer-container {
     grid-template-columns: 1fr 1fr;
     row-gap: 40px;
   }
-}
+} */
 
 @media (max-width: 500px) {
   .footer-container {
@@ -114,7 +114,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
   .footer {
     background-color: #01BF64 !important;
@@ -124,7 +124,7 @@
 
 
   .footer-container {
-    display: block !important;
+    display: block ;
     max-width: 420px;    
     margin: 0 auto;
     text-align: left;
@@ -193,5 +193,84 @@
     color: #c8d1c8;
     font-size: 14px;
     line-height: 1.5;
+  }
+}
+
+/* -----------------------------------------
+   📱 TABLET FOOTER (iPad Mini – EXACT Riverford)
+------------------------------------------ */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  .footer {
+    padding: 60px 40px;
+  }
+
+  .footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "about order"
+      "help app";
+    column-gap: 100px;
+    row-gap: 50px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+  }
+
+  /* Assign grid areas */
+  .footer-column:nth-child(1) {
+    grid-area: about;
+  }
+
+  .footer-column:nth-child(3) {
+    grid-area: order;
+  }
+
+  .footer-column:nth-child(2) {
+    grid-area: help;
+  }
+
+  .footer-column:nth-child(4) {
+    grid-area: app;
+  }
+
+  /* Headings */
+  .footer-column h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .footer-column p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* App buttons – stacked like Riverford */
+  .store-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .store-img {
+    width: 160px;
+  }
+
+  /* Social icons – BELOW all columns */
+  .social-icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    max-width: 900px;
+    margin: 30px auto 0;
+    transform: none;
+  }
+
+  /* Terms & conditions – last */
+  .footer-bottom {
+    max-width: 900px;
+    margin: 20px auto 0;
+    text-align: left;
   }
 }
