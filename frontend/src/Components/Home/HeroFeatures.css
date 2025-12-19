@@ -181,6 +181,7 @@
 
   /* center the whole feature row and limit its visual width */
   .hero-features {
+    margin-top: -290px !important;
     box-sizing: border-box;
     width: 100%;
     max-width: 860px;        /* visual content width similar to Riverford tablet */

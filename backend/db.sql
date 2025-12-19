@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(20),
     address TEXT NOT NULL,
+    pincode VARCHAR(10),
     password VARCHAR(255) NOT NULL,
     role VARCHAR(10) DEFAULT 'user',
     reset_token VARCHAR(255) NULL,
