@@ -103,6 +103,11 @@ export default function PaymentModal({ totalAmount, items, onPay, onClose, deliv
                                     {item.name} <span className="summary-qty">x{item.quantity}</span>
                                     <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
                                         {item.frequency || "One off"}
+                                        {item.frequency !== "Once only" && item.startDate && (
+                                            <span style={{ display: 'block', fontSize: '11px', color: '#558b2f' }}>
+                                                Starting: {item.startDate}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="summary-item-price">{item.price}</div>

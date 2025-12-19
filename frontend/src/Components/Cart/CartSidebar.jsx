@@ -11,10 +11,11 @@ import ChangePostcodeModal from "./ChangePostcodeModal";
 import { useNavigate } from "react-router-dom";
 import ThankYouModal from "./ThankYouModal";
 import AddToCartModal from "./AddToCartModal";
+import SignInModal from "../Home/SignInModal";
 
-export default function CartSidebar() {
+export default function CartSidebar({ isCheckoutPage = false }) {
     const navigate = useNavigate();
-    const { cartItems, pincodeDetails, isAuthenticated, currentUser, updateCartItem, removeFromCart } = useAuth();
+    const { cartItems, pincodeDetails, isAuthenticated, currentUser, updateCartItem, removeFromCart, clearCart, login } = useAuth();
     const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
     const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function CartSidebar() {
     const [isPostcodeModalOpen, setIsPostcodeModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
+    const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
     // Store checkout data temporarily
     const [deliveryData, setDeliveryData] = useState(null);
@@ -50,11 +52,20 @@ export default function CartSidebar() {
     const cutoffDate = pincodeDetails?.cutoffDate || "";
 
     const handleCheckoutClick = () => {
-        if (cartItems.length > 0) {
-            setIsDeliveryModalOpen(true);
-        } else {
+        const total = parseFloat(calculateTotal());
+        const minOrderValue = pincodeDetails?.minOrderValue ? parseFloat(pincodeDetails.minOrderValue) : 0;
+
+        if (cartItems.length === 0) {
             alert("Your basket is empty.");
+            return;
         }
+
+        if (minOrderValue > 0 && total < minOrderValue) {
+            alert(`The minimum order value for your area (${pincodeDetails?.pincode}) is ₹${minOrderValue}. Please add more items.`);
+            return;
+        }
+
+        setIsDeliveryModalOpen(true);
     };
 
     const handleDeliveryContinue = (data) => {
@@ -83,54 +94,90 @@ export default function CartSidebar() {
         }
     };
 
-    const handleAccountContinue = (data) => {
+    const handleAccountContinue = async (data) => {
         setAccountData(data);
-        setIsAccountModalOpen(false);
-        setIsContactModalOpen(true); // Open Contact Preferences next
+
+        // If already authenticated, just proceed (e.g. they modified details manually?)
+        // Usually if auth, we skip this modal, but if they opened it manually from top...
+        if (isAuthenticated && currentUser) {
+            setIsAccountModalOpen(false);
+            setIsContactModalOpen(true);
+            return;
+        }
+
+        const userData = {
+            name: `${data.firstName} ${data.lastName}`,
+            email: data.email,
+            password: data.password,
+            address: deliveryData.address,
+            phone: data.phoneNumber,
+            pincode: pincode
+        };
+
+        try {
+            // Attempt Signup
+            const response = await fetch(`${window.ENV.BACKEND_API}/api/user/signup`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData),
+            });
+
+            const resData = await response.json();
+
+            if (response.ok) {
+                // Success
+                login(resData.user); // Log them in immediately
+                setIsAccountModalOpen(false);
+                setIsContactModalOpen(true);
+            } else {
+                // Failure
+                if (resData.message && resData.message.includes("exists")) {
+                    // Try to auto-login if password matches
+                    try {
+                        const loginRes = await fetch(`${window.ENV.BACKEND_API}/api/user/login`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email: data.email, password: data.password }),
+                        });
+
+                        if (loginRes.ok) {
+                            const loginData = await loginRes.json();
+                            login(loginData.user);
+                            alert("Account already exists. We've logged you in!");
+                            setIsAccountModalOpen(false);
+                            setIsContactModalOpen(true);
+                        } else {
+                            alert("Account already exists with this email/phone, but the password provided was incorrect. Please use 'Sign In' instead.");
+                        }
+                    } catch (loginErr) {
+                        alert("Account already exists. Please sign in.");
+                    }
+                } else {
+                    alert(resData.message || "Failed to create account.");
+                }
+            }
+        } catch (error) {
+            console.error("Account/Signup Error:", error);
+            alert("An error occurred while setting up your account.");
+        }
     };
 
     const handleContactSave = async (preferences) => {
         setIsContactModalOpen(false);
 
         try {
+            // User should be authenticated by now
             let userId;
-
-            // 1. Check if user already exists (Authenticated) or Create New
-            if (isAuthenticated && currentUser) {
+            if (currentUser) {
                 userId = currentUser.id || currentUser._id;
             } else {
-                // 1. Prepare Data
-                const userData = {
-                    name: `${accountData.firstName} ${accountData.lastName}`,
-                    email: accountData.email,
-                    password: accountData.password,
-                    address: deliveryData.address,
-                    phone: accountData.phoneNumber,
-                    pincode: pincode // Save the pincode used during checkout
-                };
-
-                // 2. Create User
-                const response = await fetch(`${window.ENV.BACKEND_API}/api/user/signup`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(userData),
-                });
-
-                const userRes = await response.json();
-
-                if (!response.ok) {
-                    alert(`Sign up failed: ${userRes.message}`);
-                    return;
-                }
-
-                if (userRes.token) {
-                    // login(userRes.user); 
-                }
-
-                userId = userRes.user.id || userRes.user._id;
+                // Fallback if context update was slow (unlikely with React state batching but possible?)
+                // We rely on handleAccountContinue ensuring login.
+                alert("User session not found. Please try again.");
+                return;
             }
 
-            // 3. Create Order
+            // Create Order
             const orderPayload = {
                 userId,
                 items: cartItems,
@@ -156,7 +203,7 @@ export default function CartSidebar() {
                     amount: calculateTotal(),
                     razorpayOrderId: orderRes.razorpayOrderId
                 });
-                // 4. Open Payment
+                // Open Payment
                 setIsPaymentModalOpen(true);
             } else {
                 alert("Failed to create order. Please try again.");
@@ -167,7 +214,6 @@ export default function CartSidebar() {
             alert("An error occurred during checkout.");
         }
     };
-
     const handleRazorpayPayment = async () => {
         // Fetch Key from Backend
         let keyId = "";
@@ -197,7 +243,7 @@ export default function CartSidebar() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         orderId: currentOrder.id,
-                        status: 'Paid',
+                        status: 'paid',
                         paymentId: response.razorpay_payment_id
                     })
                 });
@@ -205,6 +251,7 @@ export default function CartSidebar() {
                 // alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
                 console.log(response);
                 setIsPaymentModalOpen(false);
+                clearCart();
                 setIsSuccessModalOpen(true); // Open Success Modal
                 // Ideally call backend to verify signature
             },
@@ -278,11 +325,15 @@ export default function CartSidebar() {
                                     </div>
                                     <div className="item-price">{item.price}</div>
                                 </div>
-
                                 <button className="change-btn" onClick={() => {
                                     setEditingProduct(item);
                                     setIsEditModalOpen(true);
                                 }}>Change</button>
+                                {item.frequency !== "Once only" && item.startDate && (
+                                    <div style={{ fontSize: '11px', color: '#558b2f', marginTop: '4px' }}>
+                                        Start: {item.startDate}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
@@ -302,10 +353,14 @@ export default function CartSidebar() {
                         <span>₹{calculateTotal()}</span>
                     </div>
 
-                    <button className="checkout-btn" onClick={handleCheckoutClick}>Checkout</button>
+                    {!isCheckoutPage && (
+                        <button className="checkout-btn" onClick={handleCheckoutClick}>
+                            Checkout
+                        </button>
+                    )}
                 </div>
 
-            </div>
+            </div >
 
             {isDeliveryModalOpen && (
                 <DeliveryModal
@@ -314,61 +369,89 @@ export default function CartSidebar() {
                     onContinue={handleDeliveryContinue}
                     initialAddress={isAuthenticated && currentUser?.address ? currentUser.address : ""}
                 />
-            )}
+            )
+            }
 
-            {isAccountModalOpen && (
-                <AccountModal
-                    onClose={() => setIsAccountModalOpen(false)}
-                    onContinue={handleAccountContinue}
-                />
-            )}
+            {
+                isAccountModalOpen && (
+                    <AccountModal
+                        onClose={() => setIsAccountModalOpen(false)}
+                        onContinue={handleAccountContinue}
+                    />
+                )
+            }
 
-            {isContactModalOpen && (
-                <ContactPreferencesModal
-                    onClose={() => setIsContactModalOpen(false)}
-                    onSave={handleContactSave}
-                />
-            )}
+            {
+                isContactModalOpen && (
+                    <ContactPreferencesModal
+                        onClose={() => setIsContactModalOpen(false)}
+                        onSave={handleContactSave}
+                    />
+                )
+            }
 
-            {isPaymentModalOpen && (
-                <PaymentModal
-                    totalAmount={calculateTotal()} // Initial subtotal (visual only if order updated)
-                    currentOrder={currentOrder} // Pass full order object
-                    items={cartItems}
-                    onPay={handleRazorpayPayment}
-                    onClose={() => setIsPaymentModalOpen(false)}
-                    deliveryDate={`${deliveryDay} ${nextDelivery}`}
-                    deliveryAddress={deliveryData?.address}
-                    onOrderUpdate={(updated) => {
-                        // Merge key updates: amount, razorpayOrderId
-                        setCurrentOrder(prev => ({ ...prev, ...updated }));
-                    }}
-                />
-            )}
+            {
+                isPaymentModalOpen && (
+                    <PaymentModal
+                        totalAmount={calculateTotal()} // Initial subtotal (visual only if order updated)
+                        currentOrder={currentOrder} // Pass full order object
+                        items={cartItems}
+                        onPay={handleRazorpayPayment}
+                        onClose={() => setIsPaymentModalOpen(false)}
+                        deliveryDate={`${deliveryDay} ${nextDelivery}`}
+                        deliveryAddress={deliveryData?.address}
+                        onOrderUpdate={(updated) => {
+                            // Merge key updates: amount, razorpayOrderId
+                            setCurrentOrder(prev => ({ ...prev, ...updated }));
+                        }}
+                    />
+                )
+            }
 
-            {isSuccessModalOpen && (
-                <ThankYouModal
-                    onClose={() => {
-                        setIsSuccessModalOpen(false);
-                        navigate('/'); // Redirect to Home
-                    }}
-                />
-            )}
+            {
+                isSuccessModalOpen && (
+                    <ThankYouModal
+                        onClose={() => {
+                            setIsSuccessModalOpen(false);
+                            navigate('/'); // Redirect to Home
+                        }}
+                    />
+                )
+            }
 
-            {isPostcodeModalOpen && (
-                <ChangePostcodeModal onClose={() => setIsPostcodeModalOpen(false)} />
-            )}
+            {
+                isPostcodeModalOpen && (
+                    <ChangePostcodeModal
+                        onClose={() => setIsPostcodeModalOpen(false)}
+                        onSignIn={() => {
+                            setIsPostcodeModalOpen(false);
+                            setIsSignInModalOpen(true);
+                        }}
+                    />
+                )
+            }
 
-            {isEditModalOpen && editingProduct && (
-                <AddToCartModal
-                    product={editingProduct}
-                    onClose={() => setIsEditModalOpen(false)}
-                    onConfirm={(prod, qty, freq) => {
-                        updateCartItem(prod.name, qty, freq);
-                        setIsEditModalOpen(false);
-                    }}
-                />
-            )}
+            {
+                isSignInModalOpen && (
+                    <SignInModal
+                        open={isSignInModalOpen}
+                        onClose={() => setIsSignInModalOpen(false)}
+                    />
+                )
+            }
+
+            {
+                isEditModalOpen && editingProduct && (
+                    <AddToCartModal
+                        product={editingProduct}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onConfirm={(prod, qty, freq, startDate) => {
+                            updateCartItem(prod.name, qty, freq, startDate);
+                            setIsEditModalOpen(false);
+                        }}
+                    />
+                )
+            }
         </>
     );
 }

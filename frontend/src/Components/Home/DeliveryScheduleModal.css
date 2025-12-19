@@ -1,0 +1,279 @@
+/* Overlay */
+.schedule-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 3000;
+    padding-top: 50px;
+    overflow-y: auto;
+}
+
+/* Container */
+.schedule-modal-container {
+    width: 800px;
+    max-width: 95vw;
+    background: #fcfbf7;
+    /* Light beige like Riverford */
+    border-radius: 8px;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 50px;
+    min-height: 400px;
+}
+
+/* Close Button */
+.schedule-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Modal Title */
+.schedule-title-section {
+    text-align: center;
+    padding: 40px 20px 20px 20px;
+}
+
+.schedule-title {
+    font-family: "Domine", serif;
+    /* Or Caveat/Serif as per other pages */
+    font-size: 36px;
+    color: #2c2c2c;
+    margin-bottom: 10px;
+}
+
+.schedule-subtitle {
+    font-size: 14px;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Schedule List */
+.schedule-list {
+    padding: 0 40px 40px 40px;
+}
+
+/* Date Card */
+.date-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* Green Header */
+.date-card-header {
+    background-color: #0f4d2a;
+    /* Dark Green from screenshot 1 */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    /* Riverford style: Green block on left? 
+     Actually screenshot 2 shows a green box on the LEFT with the date.
+     Let's replicate that layout instead of a top header for the whole card.
+  */
+}
+
+/* Riverford Layout Implementation */
+.date-card-flex {
+    display: flex;
+    min-height: 100px;
+}
+
+.date-box {
+    background-color: #0f4d2a;
+    /* Deep Forest Green */
+    color: white;
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.date-day {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: #aedcb4;
+    /* Light green text */
+}
+
+.date-number {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.date-month {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Content Area */
+.date-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Summary Row (Always visible) */
+.summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* justify-content: space-between; */
+    padding: 25px 30px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.item-count {
+    font-size: 16px;
+    color: #333;
+}
+
+.total-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #b12025;
+    /* Reddish color for price used in screenshot */
+    margin-left: 100px;
+}
+
+.toggle-details-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Details Section (Collapsible) */
+.details-section {
+    padding: 0 30px;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.detail-name {
+    flex-grow: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: #222;
+}
+
+.detail-qty-group {
+    text-align: right;
+    margin-right: 30px;
+}
+
+.detail-qty {
+    font-size: 13px;
+    color: #666;
+}
+
+.detail-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    min-width: 60px;
+    text-align: right;
+}
+
+.detail-freq {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Bottom Actions */
+.card-actions {
+    padding: 10px 30px 20px 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Empty State */
+.empty-schedule {
+    text-align: center;
+    padding: 60px;
+    color: #666;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .date-card-flex {
+        flex-direction: column;
+    }
+
+    .date-box {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 20px;
+        height: auto;
+    }
+
+    .date-day,
+    .date-number,
+    .date-month {
+        margin: 0;
+    }
+
+    .date-number {
+        font-size: 24px;
+    }
+}

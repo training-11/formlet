@@ -2,11 +2,11 @@ import express from "express";
 import auth, { admin } from "../middleware/auth.js";
 import upload from "../middleware/upload.js";
 import {
-    getStats, getAllOrders, updateOrderStatus, getAllUsers,
+    getStats, getAllOrders, getOrderById, updateOrderStatus, getAllUsers, notifyDelivery,
     getAllPincodes, addPincode, deletePincode, getOrderItems,
     getAllCoupons, addCoupon, deleteCoupon,
     getAllCategories, addCategory, deleteCategory, // Categories
-    getAllProducts, addProduct, deleteProduct, updateProduct, getDeliveries     // Products
+    getAllProducts, addProduct, deleteProduct, updateProduct, getDeliveries, getPausedDeliveries, getDeliveryLogs     // Products
 } from "../controllers/adminController.js";
 
 const router = express.Router();
@@ -14,10 +14,14 @@ const router = express.Router();
 // ALL Routes Protected by Auth + Admin
 router.get("/stats", auth, admin, getStats);
 router.get("/orders", auth, admin, getAllOrders);
+router.get("/orders/:id", auth, admin, getOrderById); // Single Order
 router.put("/orders/:id/status", auth, admin, updateOrderStatus);
+router.post("/orders/:id/notify-delivery", auth, admin, notifyDelivery);
 router.get("/orders/:id/items", auth, admin, getOrderItems);
+router.get("/orders/:id/delivery-logs", auth, admin, getDeliveryLogs);
 router.get("/deliveries", auth, admin, getDeliveries); // Delivery Schedule
 router.get("/users", auth, admin, getAllUsers);
+router.get("/paused-deliveries", auth, admin, getPausedDeliveries); // Paused Deliveries
 
 // Pincodes
 router.get("/pincodes", auth, admin, getAllPincodes);
