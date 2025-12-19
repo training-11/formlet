@@ -43,14 +43,6 @@ services:
       - formlet-redis
     env_file:
       - ./backend/.env
-    environment:
-      - PORT=8010
-      - DB_HOST=formlet-mysql
-      - DB_USER=root
-      - DB_PASSWORD=root@123
-      - DB_NAME=myfarmlet
-      - REDIS_HOST=formlet-redis
-      - REDIS_PORT=6379
     ports:
       - "8010:8010"
     networks:
