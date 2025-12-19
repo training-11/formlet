@@ -83,6 +83,9 @@ export default function Navbar({ mobileSearchOpen, setMobileSearchOpen, signInOp
 
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
+  const [openOrderModal, setOpenOrderModal] = useState(false);
+
+  const { currentUser } = useAuth();
 
   const submenuRef = useRef({});
 
@@ -90,7 +93,7 @@ export default function Navbar({ mobileSearchOpen, setMobileSearchOpen, signInOp
     if (currentUser) {
       setOpenOrderModal(true);
     } else {
-      setOpenModal(true);
+      setSignInOpen(true);
     }
   };
 
@@ -836,50 +839,17 @@ export default function Navbar({ mobileSearchOpen, setMobileSearchOpen, signInOp
       {/* 📱 Mobile Search Popup */}
       {mobileSearchOpen && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
+          
+          <div className="search-header">
+            <div className="search-title">Search Farmlet</div>
 
-      >
-        {d}</div>
-    ))}
-  </div>
-)}</div>
-
-{activeSubmenu && window.innerWidth <= 768 && (
-  <div className="mobile-dropdown-overlay">
-    <div className="mobile-full-dropdown">
-      {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
-        <div key={i} className="mobile-dropdown-item">
-          <div className="mob-title">{item.title}</div>
-          <div className="mob-desc">{item.desc}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
-
-{/* 📱 Mobile Search Popup */}
-{mobileSearchOpen && window.innerWidth <= 768 && (
-  <div className="mobile-search-overlay">
-    
-    <div className="search-header">
-      <div className="search-title">Search Farmlet</div>
-
-      <button
-        className="mobile-close-btn"
-        onClick={() => setMobileSearchOpen(false)}
-      >
-        ✕
-      </button>
-    </div>
-
-    <div className="search-input-row">
-      <input
-        type="text"
-        placeholder="Search Farmlet"
-        className="search-input"
-      />
-      <img src={searchIcon} alt="" className="search-popup-icon" />
-    </div>
+            <button
+              className="mobile-close-btn"
+              onClick={() => setMobileSearchOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
 
           <div className="search-input-row">
             <input
