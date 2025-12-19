@@ -3,7 +3,8 @@
   padding: 110px 0;
   
   text-align: center;
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
+  letter-spacing: 0.5px;
 }
 
 .steps-container {

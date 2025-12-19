@@ -4,7 +4,7 @@ import VegBox from "../../Images/hero3.png";
 import livelife from "../../Images/livelife.png";
 
 // Mobile Sticky CTA Component - Riverford Style (JSX + CSS in one file)
-const MobileStickyBar = () => {
+const MobileStickyBar = ({ hidden }) => {
   const handleGetStarted = () => {
     console.log('Get started clicked');
     // Add your navigation/action here
@@ -50,12 +50,10 @@ const MobileStickyBar = () => {
     outline: 'none',
   };
 
-  // Only show on mobile screens
- if (typeof window !== "undefined" && window.innerWidth > 1024) {
-  return null;
-}
-
-
+  // Only show on mobile screens and when not hidden
+  if ((typeof window !== 'undefined' && window.innerWidth > 768) || hidden) {
+    return null;
+  }
 
   return (
     <div style={barStyle}>
@@ -114,7 +112,7 @@ const slides = [
   },
 ];
 
-export default function SliderWithHero() {
+export default function SliderWithHero({ mobileSearchOpen, signInOpen }) {
   const [index, setIndex] = useState(0);
 
   const prev = () => setIndex((index - 1 + slides.length) % slides.length);
@@ -153,8 +151,8 @@ export default function SliderWithHero() {
         </div>
       </div>
       
-      {/* Mobile Sticky CTA Bar */}
-      <MobileStickyBar />
+      {/* Mobile Sticky CTA Bar: hidden when mobile search or sign-in overlay is open */}
+      <MobileStickyBar hidden={Boolean(mobileSearchOpen || signInOpen)} />
     </>
   );
 }

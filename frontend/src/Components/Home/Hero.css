@@ -57,20 +57,22 @@
 }
 
 .hero-title {
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
   font-size: 50px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.1;
   margin-bottom: 30px;
   margin-top: 0px;
   color: white;
+  letter-spacing: 2px;
 }
 
 .hero-Text {
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
   font-size: 28px;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 20px;
+  letter-spacing: 0.5px;
 }
 
 .hero-Text p {
@@ -82,7 +84,7 @@
   color: black;
   font-family: 'Work Sans', sans-serif;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 450;
   padding: 14px 45px;
   margin-top: 30px;
   width: auto;
@@ -161,10 +163,10 @@
 /* ===== Tablet hero image fixes (paste at end of Hero.css) ===== */
 /* ===== Tablet: force stacked order + center image + button below image ===== */
 /* ======================================
-   📱 Tablet View (768–1024px)
+   📱 Tablet View (768–1023px)
    Riverford-style hero layout
    ====================================== */
-@media  (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
 
   .hero {
     min-height: 100vh;
@@ -384,6 +386,73 @@ justify-content: center;
     min-width: 220px !important;
   }
   
+}
+
+/* iPad Pro only: portrait 1024×1366 and landscape 1366×1024 */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+  .hero {
+    min-height: 54vh;                  /* restore tighter green band */
+    height: auto;
+    background-size: cover !important;
+    background-position: top center !important;
+    overflow: visible !important;      /* don't cut the curved edge */
+    padding: 24px 80px 0;              /* previous spacing restored */
+    align-items: flex-start;           /* anchor hero-content near top */
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: row;               /* split layout */
+    align-items: flex-start;           /* top-align text and image */
+    justify-content: space-between;
+    gap: clamp(48px, 6vw, 96px);       /* safe horizontal spacing */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px;
+  }
+
+  .hero-left {
+    text-align: left;                  /* left-aligned text */
+    margin-top: clamp(8px, 1.2vh, 16px); /* restore clamp-based nudge */
+    max-width: 650px;
+  }
+
+  .hero-button {
+    margin-left: 0;                    /* left-aligned button */
+    align-self: flex-start;
+  }
+
+  .hero-right {
+    justify-content: flex-end;         /* image on the right */
+    align-items: flex-start;           /* keep image aligned to top */
+    align-self: auto;                  /* default alignment (no forced top) */
+    max-width: 700px;
+    margin-right: 0;                   /* no negative margins */
+    position: relative;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 43vw;                   /* slightly smaller for safe separation */
+    height: auto;
+    margin-top: clamp(6px, 1.2vh, 14px); /* restore clamp-based nudge */
+    margin-left: 1.5vw;                /* move slightly right from text */
+    object-fit: contain;
+    object-position: top right;        /* align visually to top-right */
+  }
+
+  .hero-title {
+    font-size: 56px;                   /* bold desktop headline */
+    line-height: 1.15;
+  }
+
+  .hero-Text { font-size: 22px; }
+}
+
+/* Slight image nudge on tablets for visual balance */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-image { margin-left: -20px; }
 }
 
 
