@@ -68,7 +68,7 @@
 
 /* BOTTOM SECTION */
 .hero-bottom {
-  margin-top: -120px;
+  /* margin-top: -120px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,7 +91,44 @@
   max-width: 90%;
 }
 
-/* Remove hero button always (you want sticky CTA only) */
+/* -----------------------------------------
+   DESKTOP "GET STARTED" CTA – Riverford style
+------------------------------------------ */
+
+.start-btn.desktop-cta {
+  margin-top: 24px;
+  padding: 14px 42px;
+
+  background-color: #ffffff;
+  color: #111;
+
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+
+  font-family: "Inter", "Work Sans", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+
+  cursor: pointer;
+  outline: none;
+
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+/* Hover (Riverford subtle lift) */
+.start-btn.desktop-cta:hover {
+  background-color: #f7f7f7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* Active (pressed) */
+.start-btn.desktop-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
 
 
 /* -----------------------------------------
@@ -111,7 +148,7 @@
 
   .percent {
     font-size: 55px !important;
-    margin-top: 110px;
+    /* margin-top: 110px; */
   }
 
   .line {
@@ -123,8 +160,8 @@
     padding: 6px 18px;
   }
 
-  .arrow {
-    font-size: 48px !important;
+  /* .arrow {
+    font-size: 42px !important;
     top: 60px !important;
   }
 
@@ -139,7 +176,7 @@
   /* Veg image (mobile wide stretch) */
   .veg-img {
     width: 220%;
-    margin-left: -60%;
+    /* margin-left: -60%; */
     transform: scale(1.15);
   }
 
@@ -160,14 +197,12 @@
       📱 TABLET >= 780px AND <= 1024px
 ------------------------------------------ */
 /* Hide HERO Get started button on mobile + tablet */
-@media (max-width: 1024px) {
-
-  .hero-bottom .start-btn,
+/* @media (min-width: 780px) and (max-width: 1024px) { */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* .hero-bottom .start-btn,
   .hero-bottom .desktop-cta {
     display: none !important;
-  }
-
-
+  } */
   .hero-container {
     padding: 50px 0 20px;
   }
@@ -198,7 +233,8 @@
   /* Riverford-style arrow layout */
   .arrow {
     top: 120px !important;
-    font-size: 150px !important;
+    /* font-size: 150px !important; */
+      font-size: 150px !important;
     font-weight: 300;
   }
 
@@ -230,9 +266,4 @@
     width: 70%;
     margin-top: 15px;
   }
-
 }
-
-
-/* Still hide hero button on tablet */
-/* .start-btn { display: none !important; } */

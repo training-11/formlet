@@ -1,7 +1,7 @@
 .faq-section {
   background-color: #f5f0e8;
   padding: 80px 80px;
-  font-weight: 500;
+  font-weight: 375;
 font-family: "Work Sans", sans-serif;
 }
 
@@ -17,17 +17,19 @@ font-family: "Work Sans", sans-serif;
 
 .section-title {
   font-size: 44px;
-  font-weight: 400;
+  font-weight: 300;
   color: #2d2d2d;
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
+  letter-spacing: 0.5px;
 }
 
 .section-subtitle {
   font-size: 24px;
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
   color: #2e2400;
   margin: 0;
-  font-weight: 300;
+  font-weight: 225;
+  letter-spacing: 0.5px;
 }
 
 .faq-accordion {
@@ -65,7 +67,7 @@ font-family: "Work Sans", sans-serif;
 .question-text {
   font-size: 1.125rem;
   color: #2e2400;
-  font-weight: 500;
+  font-weight: 375;
 font-family: "Work Sans", sans-serif;
 }
 
@@ -96,7 +98,7 @@ font-family: "Work Sans", sans-serif;
   line-height: 1.6;
   color: #2e2400;
 font-family: "Work Sans", sans-serif;
-font-weight: 500;
+font-weight: 375;
 }
 
 @keyframes slideDown {
