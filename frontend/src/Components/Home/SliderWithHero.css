@@ -5,9 +5,10 @@
   background-color: #01BF64;
   text-align: center;
   color: white;
-  font-family: 'caveat', cursive;
-  font-weight: bold;
-  padding-bottom: 30px;  
+  font-family: 'TeX Gyre Chorus', cursive;
+  font-weight: 525;
+  padding-bottom: 30px;
+  letter-spacing: 0.5px;
 }
 
 .hero-slide {

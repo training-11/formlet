@@ -8,7 +8,8 @@ export default function Home() {
   useEffect(() => {
   function ensureHeroOrder() {
     const w = window.innerWidth;
-    if (w >= 768 && w <= 1024) {
+    // Treat 1024px as desktop: only reorder on true tablets (768–1023)
+    if (w >= 768 && w <= 1023) {
       const hero = document.querySelector('section.hero, .hero');
       if (!hero) return;
       const content = hero.querySelector('.hero-content');

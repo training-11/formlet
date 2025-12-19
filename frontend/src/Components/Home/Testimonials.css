@@ -51,9 +51,9 @@
 }
 
 .testimonials-title {
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
   font-size: 55px;
-  font-weight: 700;
+  font-weight: 525;
   letter-spacing: 1px;
   margin: 0 0 45px 0;
 }
@@ -77,11 +77,12 @@
 }
 
 .testimonial-text {
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
   font-size: 27px;
   line-height: 1.8;
   margin: 0 0 28px 0;
-  font-weight: 550;
+  font-weight: 413;
+  letter-spacing: 0.5px;
 }
 
 .highligth,
@@ -90,7 +91,7 @@
   color: #2e2400;
   padding: 6px 10px;
   border-radius: 3px;
-  font-weight: 700;
+  font-weight: 525;
   display: inline-block;
   margin: 4px 0;
   line-height: 1.4;
@@ -139,12 +140,13 @@
 
   /* the quote text uses Caveat and is larger for tablet/desktop */
   .testimonial-text {
-    font-family: 'caveat', cursive;
+    font-family: 'TeX Gyre Chorus', cursive;
     font-size: 26px;
     line-height: 1.75;
     margin: 0 auto 16px;
     max-width: 380px;               /* limit the text width for nicer wrapping */
     color: #fff;
+    letter-spacing: 0.5px;
   }
 
   .highligth, .highligh {
@@ -152,7 +154,7 @@
     color: #2e2400;
     padding: 5px 9px;
     border-radius: 3px;
-    font-weight: 700;
+    font-weight: 525;
     display: inline-block;
     margin: 3px 0;
     line-height: 1.4;
@@ -224,7 +226,8 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+/* Mobile: up to 767px (exclude iPad Mini 768px) */
+@media (max-width: 767px) {
   .testimonials {
     padding: 60px 20px 40px;
   }
@@ -310,9 +313,10 @@
   .mobile-card .testimonial-text {
     font-size: 26px !important;
     line-height: 1.45;
-    font-family: 'caveat', cursive;
-    font-weight: 550;
+    font-family: 'TeX Gyre Chorus', cursive;
+    font-weight: 413;
     color: white;
+    letter-spacing: 0.5px;
   }
 
   /* Simple arrow icons - NO circular button */
@@ -321,7 +325,7 @@
     border: none;
     color: white;
     font-size: 60px;
-    font-weight: 200;
+    font-weight: 150;
     cursor: pointer;
     padding: 0;
     margin: 0;
@@ -390,6 +394,35 @@
   .dot:hover:not(.active):not(:disabled) {
     background: rgba(255, 255, 255, 0.6);
     transform: scale(1.1);
+  }
+}
+
+/* Tablet: 768px–1024px (iPad Mini included) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Make section full-bleed on tablets (iPad Mini included) */
+  .testimonials {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  /* Ensure desktop grid is visible on tablets */
+  .testimonials-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 60px;
+    align-items: start;
+    justify-items: center;
+    width: 100%;
+  }
+
+  /* Hide mobile carousel on tablets */
+  .testimonials-mobile-wrapper,
+  .testimonials-mobile,
+  .testimonial-dots {
+    display: none !important;
   }
 }
 

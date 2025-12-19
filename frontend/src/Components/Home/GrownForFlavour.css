@@ -46,11 +46,12 @@
 
 .grown-title {
     margin-top: 120px;
-  font-family:"caveat", cursive;
+  font-family:"TeX Gyre Chorus", cursive;
   font-size: 60px;
   color: #3a2a19;
   margin-bottom: 60px;
-  font-weight: bold;
+  font-weight: 525;
+  letter-spacing: 0.5px;
 }
 .grown-intro { display: none; }
 .grown-grid {
@@ -95,7 +96,7 @@
 
 .grown-card-text {
   font-family: "Work Sans",sans-serif;
-  font-weight: 450;
+  font-weight: 338;
   margin-top: 22px;
   font-size: 16px;
   line-height: 2.3;
@@ -107,7 +108,8 @@
 }
 .tablet-override-text { display: none; }
 /* ⭐⭐⭐ EXACT RIVERFORD MOBILE VIEW ★★★ */
-@media (max-width: 768px) {
+/* Mobile: up to 767px (exclude iPad Mini 768px) */
+@media (max-width: 767px) {
 
   .grown-section {
     background: #f4f1ec !important;
@@ -128,9 +130,10 @@
 
   .grown-title {
     font-size: 32px;
-    font-family: "Caveat", cursive;
+    font-family: "TeX Gyre Chorus", cursive;
     color: #3a2a19;
     margin-bottom: 25px;
+    letter-spacing: 0.5px;
   }
 
   /* one card per screen */
