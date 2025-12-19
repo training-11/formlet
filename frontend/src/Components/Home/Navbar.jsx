@@ -93,7 +93,7 @@ export default function Navbar() {
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
 //  const [openOrderModal, setOpenOrderModal] = useState(false);
 
-  const { currentUser } = useAuth();
+//  const { currentUser } = useAuth();
 
   const submenuRef = useRef({});
 
