@@ -114,6 +114,15 @@ export default function Navbar() {
     }
   };
 
+  const handleScheduleClick = () => {
+    if (isAuthenticated && currentUser) {
+      // setOpenScheduleModal(true);
+      navigate("/delivery-schedule");
+    } else {
+      setOpenModal(true); // Open Sign In
+    }
+  };
+
 
 
   const submenus = {
