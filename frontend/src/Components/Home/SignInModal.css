@@ -12,55 +12,74 @@
 .modal-container {
   width: 760px;
   height: auto;
+  max-width: 95vw;
   background: #f6eddf;
   border-radius: 12px;
   display: flex;
-  overflow: hidden;
+  /* overflow: hidden; Removed to show the close button */
+  overflow: visible;
   position: relative;
   font-family: "Roboto", sans-serif;
 }
 
+.wide-modal {
+  width: 900px !important;
+  max-width: 95vw;
+  background-color: #f1ebd8 !important;
+  /* Light beige background */
+}
+
 /* ================== RIGHT SIDE LOGO FIX ================== */
 .side-logo {
-  width: 90px;           /* PERFECT size like Riverford */
+  width: 90px;
+  /* PERFECT size like Riverford */
   max-width: 90px;
   height: auto;
   display: block;
-  margin: 0 auto 14px auto;  /* nice space below */
-  transform: translateY(10px);  /* slight visual lowering */
+  margin: 0 auto 14px auto;
+  /* nice space below */
+  transform: translateY(10px);
+  /* slight visual lowering */
 }
 
 /* ===================== PERFECT RIVERFORD CLOSE BUTTON ===================== */
 .modal-close {
   position: absolute;
-  top: -10px;                   /* exact position like Riverford */
-  right: 8px;
+  top: 15px;
+  /* top: -10px; OLD */
+  right: 15px;
 
   width: 44px;
   height: 44px;
   padding: 0;
   box-sizing: border-box;
-  background: #111;            /* dark black circle */
+  background: #111;
+  /* dark black circle */
   border-radius: 50%;
-  border: 2px solid white;     /* ✔ white border like Riverford */
+  border: 2px solid white;
+  /* ✔ white border like Riverford */
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   font-size: 35px;
-  font-weight: 200;             /* clean X */
+  font-weight: 200;
+  /* clean X */
   line-height: 1;
   color: white;
 
   cursor: pointer;
-  transition: 0.25s ease;      /* smooth animation */
+  transition: 0.25s ease;
+  /* smooth animation */
 }
 
 /* ✔ Hover effect: border becomes black, circle becomes light */
 .modal-close:hover {
-  border-color: #01BF64;           /* ✔ border turns black */
-  transform: scale(1.07);       /* gentle zoom */
+  border-color: #01BF64;
+  /* ✔ border turns black */
+  transform: scale(1.07);
+  /* gentle zoom */
 }
 
 
@@ -85,6 +104,8 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 
 /* Title */
@@ -137,10 +158,12 @@
   outline: none;
   margin-bottom: 32px;
 }
+
 .input-box::placeholder,
 .inputs::placeholder {
   color: #888;
 }
+
 .input-box:focus,
 .inputs:focus {
   border-color: #666;
@@ -151,6 +174,7 @@
   width: 100%;
   position: relative;
 }
+
 .show-btn {
   position: absolute;
   right: 10px;
@@ -162,10 +186,10 @@
 }
 
 /* SIGN IN BUTTON (MATCHES RIVERFORD) */
- .modal-left .small-btn {
+.modal-left .small-btn {
   width: 210px;
-  height: auto;              
-  min-height: 42px;           
+  height: auto;
+  min-height: 42px;
 
   background: #01BF64;
   border: none;
@@ -175,14 +199,14 @@
   border-radius: 4px;
   cursor: pointer;
 
-  padding: 10px 12px;    
+  padding: 10px 12px;
 
-  display: flex;              
-  align-items: center;        
-  justify-content: center;    
-  text-align: center;        
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
-  line-height: 1.3;           
+  line-height: 1.3;
   word-break: keep-all;
 }
 
@@ -199,7 +223,9 @@
   cursor: pointer;
   text-align: center;
   width: 100%;
+  margin-top: 15px;
 }
+
 .forgot-link:hover {
   color: black;
 }
@@ -209,12 +235,15 @@
 .modal-right {
   width: 50%;
   padding: 55px 55px;
-  background: #f0e6d7;   /* ✔ correct Riverford color */
+  background: #f0e6d7;
+  /* ✔ correct Riverford color */
   box-sizing: border-box;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 /* Right side logo (bigger + perfect spacing) */
@@ -283,6 +312,7 @@
   outline: none;
   margin-bottom: 24px;
 }
+
 .modal-right .input-box:focus {
   border-color: #666;
 }
@@ -290,8 +320,8 @@
 /* Right side button */
 .modal-right .small-btn {
   width: 210px;
-  height: auto;               
-  min-height: 42px;           
+  height: auto;
+  min-height: 42px;
 
   background: #01BF64;
   border: none;
@@ -301,14 +331,14 @@
   border-radius: 4px;
   cursor: pointer;
 
-  padding: 10px 12px;        
+  padding: 10px 12px;
 
-  display: flex;              
-  align-items: center;       
-  justify-content: center;    
-  text-align: center;         
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
-  line-height: 1.3;           
+  line-height: 1.3;
   word-break: keep-all;
 }
 
@@ -323,27 +353,30 @@
 /* tablet / small desktops */
 @media (max-width: 760px) {
   .modal-overlay {
-    align-items: flex-start; 
-    padding: 40px 0;      
-    background: rgba(0,0,0,0.35);   
+    align-items: flex-start;
+    padding: 40px 0;
+    background: rgba(0, 0, 0, 0.35);
     display: flex;
     justify-content: center;
-    overflow-y: auto; /* scroll entire popup like Riverford */
+    overflow-y: auto;
+    /* scroll entire popup like Riverford */
     padding: 0;
     position: fixed;
     /* margin-top: 20px; */
-    
+
   }
+
   .modal-container {
-   
-     width: 100% ! important;
+
+    width: 100% ! important;
     max-width: 500px;
     min-height: 100vh;
     /* border-radius: 0px; */
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     overflow: hidden;
-   background: #fdfcf8;        /* Riverford tone */
+    background: #fdfcf8;
+    /* Riverford tone */
     /* box-shadow: 0 6px 25px rgba(0,0,0,0.15); */
   }
 
@@ -351,40 +384,45 @@
   .modal-right {
     width: 100%;
     padding: 34px 30px;
-  
+    border-radius: 0;
   }
 
   .modal-right .underline,
   .modal-left .underline {
     width: 190px;
   }
-.modal-right{
 
-   background: #f0e6d7;
-}
-.modal-right .modal-title{
-  padding-top: 20px;
-}
+  .modal-right {
+
+    background: #f0e6d7;
+  }
+
+  .modal-right .modal-title {
+    padding-top: 20px;
+  }
+
   .modal-left .input-box {
     margin-bottom: 84px;
   }
-  .modal-left .small-btn{
-    width:50px;
+
+  .modal-left .small-btn {
+    width: 50px;
     background-color: #01BF64;
   }
+
   .modal-title {
     /* font-size: 40px; */
     font-size: 42px;
     font-weight: 400;
     text-align: center;
     margin-bottom: 12px;
-  
+
     color: #3b2f2f;
   }
 
   .modal-close {
-  
-      position: absolute;
+
+    position: absolute;
     top: 16px;
     right: 18px;
     width: 34px;
@@ -398,13 +436,16 @@
     justify-content: center;
     align-items: center;
   }
+
   .modal-close:hover {
     border-color: #01BF64;
     transform: scale(1.07);
   }
+
   .side-logo {
     display: none;
   }
+
   .modal-right .label-text {
     margin-top: 10px;
   }
@@ -416,7 +457,7 @@
     width: calc(100% - 36px);
     max-width: 420px;
     border-radius: 8px;
-     background: #fdfcf8;
+    background: #fdfcf8;
   }
 
   .modal-left,
@@ -436,7 +477,7 @@
   .modal-close {
     top: -6px;
     right: 10px;
-    width: 30px;          
+    width: 30px;
     height: 30px;
     padding: 0;
     font-size: 14px;
@@ -450,13 +491,14 @@
     min-height: 44px;
     padding: 12px 14px;
   } */
-   .modal-left .small-btn {
+  .modal-left .small-btn {
     width: 160px;
     /* margin: 0 auto; */
-  min-height: 44px;
-   padding: 12px 14px;
+    min-height: 44px;
+    padding: 12px 14px;
   }
-/* +  .modal-right .small-btn {
+
+  /* +  .modal-right .small-btn {
 +    width: 100%;
 +    min-height: 44px;
 +    padding: 12px 14px;
@@ -471,7 +513,157 @@
     height: 40px;
     margin-bottom: 18px;
   }
-  .side-logo{
+
+  .side-logo {
     display: none;
+  }
+
+  .side-logo {
+    display: none;
+  }
+}
+
+/* ================== SUCCESS VIEW STYLES ================== */
+.success-view {
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #333;
+}
+
+.delivery-header {
+  font-family: 'serif';
+  /* Fallback */
+  /* If you have a specific serif font like 'Garamond' or similar, use it */
+  font-size: 32px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: #2c2c2c;
+}
+
+.delivery-date-highlight {
+  color: #00a046;
+  /* Green color for the day */
+  font-weight: bold;
+}
+
+.delivery-message {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.cutoff-message {
+  background-color: #fff;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+  line-height: 1.5;
+}
+
+.build-order-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.build-order-title {
+  font-family: "caveat", cursive;
+  font-size: 42px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #111;
+}
+
+.build-order-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+  max-width: 600px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+.category-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  /* Fixed height for uniformity */
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fcfcfc;
+}
+
+.continue-btn {
+  background-color: transparent;
+  border: 1px solid #333;
+  padding: 12px 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.continue-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .build-order-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .success-view {
+    padding: 20px;
+  }
+
+  .cutoff-message {
+    padding: 15px;
+    font-size: 13px;
   }
 }
