@@ -823,7 +823,7 @@ margin-left: 10px;
 
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
 
   .main-navbar {
        display: grid;
@@ -967,4 +967,11 @@ margin-left: 10px;
 /* Hide the mobile-only close button on desktop just in case */
 @media (min-width: 769px) {
   .mobile-close-btn { display: none !important; }
+}
+
+/* iPad Pro only: show icons only for delivery and sign-in */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+  .right-item span { display: none !important; }
+  .nav-right { gap: 16px; }
 }

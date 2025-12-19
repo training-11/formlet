@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'TeX Gyre Chorus';
+  src: url('./texgyrechorus-mediumitalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}

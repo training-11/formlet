@@ -114,6 +114,7 @@
   }
 }
 
+/* Mobile: up to 767px (exclude iPad Mini 768px) */
 @media (max-width: 767px) {
 
   .footer {
@@ -160,6 +161,31 @@
   margin-top: 10px;
 }
 
+/* Tablet: 768px–1024px (iPad Mini included) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* two-column grid with explicit placement */
+  .footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 60px;
+    row-gap: 40px;
+    max-width: none;
+    margin: 0 auto 40px;
+  }
+
+  /* Order columns: 1=About (L1), 3=Ordering (R1), 2=Help (L2), 4=App (R2) */
+  .footer-container .footer-column:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .footer-container .footer-column:nth-child(3) { grid-column: 2; grid-row: 1; }
+  .footer-container .footer-column:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .footer-container .footer-column:nth-child(4) { grid-column: 2; grid-row: 2; justify-self: end; text-align: right; }
+
+  /* App store buttons right-aligned */
+  .store-row { justify-content: flex-end; }
+
+  /* Keep footer full-width padding consistent */
+  .footer { padding: 60px 40px; }
+}
+
 .store-img {
   width: 130px;
   height: auto;
@@ -187,13 +213,15 @@
     max-width: 420px;
     margin: 25px auto 0 auto;
     text-align: left !important;
-    padding: 0 20px;
+     padding: 0 20px; 
+    
   }
 
   .footer-bottom p {
     color: #ffffff; /* high contrast for visibility on mobile */
     font-size: 14px;
     line-height: 1.5;
+    
   }
 }
 

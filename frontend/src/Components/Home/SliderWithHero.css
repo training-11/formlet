@@ -8,12 +8,16 @@
   background-color: #01BF64;
   text-align: center;
   color: white;
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
+  font-weight: 525;
   padding-bottom: 30px;
-  overflow-x: hidden;
+  letter-spacing: 0.5px;
 }
 
 
+/* -----------------------------------------
+   DEFAULT DESKTOP (≥1025px)
+------------------------------------------ */
 
 .hero-slide {
   padding: 60px 0 20px;

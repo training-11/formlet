@@ -17,17 +17,18 @@
 }
 
 .feature-box p {
-  font-family: "caveat", cursive;
+  font-family: "TeX Gyre Chorus", cursive;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 525;
   margin: 0;
+  letter-spacing: 0.5px;
 }
 
 /* Large Desktop/Monitor View */
 @media (min-width: 1400px) {
   .hero-features {
     gap: 350px;
-    padding: 80px 120px;
+    padding: 80px 120px; /* restore desktop spacing */
   }
   
   .feature-box img {
@@ -88,7 +89,7 @@
 
   .hero-features .feature-box:nth-child(2) p {
     font-size: 28px;
-    font-weight: 700;
+    font-weight: 525;
     line-height: 1.2;
   }
 
@@ -109,7 +110,7 @@
 
   .hero-features .feature-box:nth-child(1) p {
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 525;
     line-height: 1.2;
   }
 
@@ -130,20 +131,20 @@
 
   .hero-features .feature-box:nth-child(3) p {
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 525;
     line-height: 1.2;
   }
 }
 
 @media (min-width: 1200px) {
   .hero-features {
-    margin-top: -40px;
+    margin-top: -40px;          /* restore original desktop offset */
     background: #f4f1ec;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 350px;         /* a little more space on big screens */
-    padding: 80px 0;
+    gap: 350px;         /* restore original horizontal gap */
+    padding: 80px 0;    /* restore original vertical spacing */
     text-align: center;
   }
 
@@ -156,11 +157,22 @@
   }
 }
 
+/* iPad Pro only: portrait 1024×1366 and landscape 1366×1024 */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+  .hero-features {
+    margin-top: -500px !important;               /* pull icons upwards (icons only) */
+    padding-top: 0 !important;                  /* sit right under green curve */
+    padding-bottom: 30px;                       /* slightly tighter below */
+    transform: none;                            /* rely on margin for placement */
+  }
+}
+
 
 /* ---------- font (paste at top of your main CSS once) ---------- */
 
-/* ---------- TABLET: 769px - 1024px (Riverford-like) ---------- */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* ---------- TABLET: 769px - 1023px (exclude iPad Pro) ---------- */
+@media (min-width: 769px) and (max-width: 1023px) {
 
   /* ensure page can't scroll horizontally on tablet */
   html, body {
@@ -208,12 +220,13 @@
 
   /* heading font: Caveat to keep same handwritten look */
   .hero-features .feature-box p {
-    font-family: "Caveat", cursive;
+    font-family: "TeX Gyre Chorus", cursive;
     font-size: 26px;         /* large but readable on tablet */
-    font-weight: 700;
+    font-weight: 525;
     line-height: 1.05;
     margin: 0;
     color: inherit;
+    letter-spacing: 0.5px;
   }
 
   /* If you used nth-child mobile ordering, reset spacing for tablet */
@@ -221,6 +234,15 @@
   .hero-features .feature-box:nth-child(2),
   .hero-features .feature-box:nth-child(3) {
     margin-top: 0;
+  }
+}
+
+/* iPad Air: pull icon row closer to the green hero */
+@media (min-width: 820px) and (max-width: 1023px) {
+  .hero-features {
+    margin-top: -300px !important;   /* move icons upward (icons section only) */
+    padding-top: 0 !important;      /* remove extra space above icons */
+    padding-bottom: 36px;           /* slightly tighter space below */
   }
 }
 
