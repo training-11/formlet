@@ -91,7 +91,7 @@ export default function Navbar() {
 
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
-  const [openOrderModal, setOpenOrderModal] = useState(false);
+//  const [openOrderModal, setOpenOrderModal] = useState(false);
 
   const { currentUser } = useAuth();
 
