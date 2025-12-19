@@ -1,5 +1,6 @@
 import db from "../config/db.js";
 import redisClient from "../config/redis.js";
+import nodemailer from "nodemailer";
 
 // GET STATS
 export const getStats = async (req, res) => {
@@ -41,6 +42,29 @@ export const getAllOrders = async (req, res) => {
         res.status(200).json(orders);
     } catch (error) {
         console.error("Orders Error:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
+};
+
+// GET SINGLE ORDER (Admin)
+export const getOrderById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const query = `
+            SELECT o.*, u.name as user_name, u.email as user_email, u.phone as user_phone 
+            FROM orders o 
+            JOIN users u ON o.user_id = u.id 
+            WHERE o.id = ?
+        `;
+        const [orders] = await db.query(query, [id]);
+
+        if (orders.length === 0) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        res.json(orders[0]);
+    } catch (error) {
+        console.error("Get Order Error:", error);
         res.status(500).json({ error: "Server Error" });
     }
 };
@@ -97,7 +121,7 @@ export const getAllPincodes = async (req, res) => {
 // ADD PINCODE
 export const addPincode = async (req, res) => {
     try {
-        const { pincode, deliveryDay } = req.body;
+        const { pincode, deliveryDay, minOrderValue } = req.body; // Added minOrderValue
         if (!pincode || !deliveryDay) {
             return res.status(400).json({ message: "Pincode and Delivery Day are required" });
         }
@@ -108,7 +132,10 @@ export const addPincode = async (req, res) => {
             return res.status(400).json({ message: "Pincode already exists" });
         }
 
-        await db.query("INSERT INTO pincodes (pincode, delivery_day) VALUES (?, ?)", [pincode, deliveryDay]);
+        await db.query(
+            "INSERT INTO pincodes (pincode, delivery_day, min_order_value) VALUES (?, ?, ?)",
+            [pincode, deliveryDay, minOrderValue || 0]
+        );
         res.status(201).json({ message: "Pincode added successfully" });
     } catch (error) {
         console.error("Add Pincode Error:", error);
@@ -357,6 +384,17 @@ export const getDeliveries = async (req, res) => {
         `;
         const [items] = await db.query(query);
 
+        // Fetch Skipped Deliveries to filter out
+        const [skipped] = await db.query("SELECT user_id, skip_date FROM skipped_deliveries");
+        const skippedSet = new Set(skipped.map(s => {
+            // Create a unique key: "userId_YYYY-MM-DD"
+            const d = new Date(s.skip_date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${s.user_id}_${year}-${month}-${day}`;
+        }));
+
         const events = [];
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Start of today
@@ -368,10 +406,6 @@ export const getDeliveries = async (req, res) => {
             // Determine Start Date (Prefer delivery_date, fallback to created_at)
             let startDate = new Date(item.order_created_at);
             if (item.delivery_date && !isNaN(new Date(item.delivery_date).getTime())) {
-                // If delivery_date is a valid date string (YYYY-MM-DD or similar)
-                // Note: user input might be textual "Wednesday". Frontend sends specific dates mostly now? 
-                // If it is just "Wednesday", new Date("Wednesday") is invalid.
-                // Let's try to parse.
                 const possibleDate = new Date(item.delivery_date);
                 if (!isNaN(possibleDate.getTime())) {
                     startDate = possibleDate;
@@ -388,35 +422,16 @@ export const getDeliveries = async (req, res) => {
 
             const daysToAdd = freqMap[item.frequency];
 
-            if (daysToAdd) {
-                // Recurring Logic
-                while (nextDate <= futureLimit) {
-                    if (nextDate >= today) {
-                        events.push({
-                            date: nextDate.toISOString().split('T')[0],
-                            user_name: item.user_name,
-                            address: item.delivery_address,
-                            user_phone: item.user_phone,
-                            product: item.product_name,
-                            quantity: item.quantity,
-                            price: item.price,
-                            image: item.image_url,
-                            frequency: item.frequency,
-                            notes: item.delivery_notes,
-                            order_id: item.order_id
-                        });
-                    }
-                    nextDate.setDate(nextDate.getDate() + daysToAdd);
-                }
-            } else {
-                // One-off Logic
-                // If it's one-off, it happens ON the start date.
-                // We show it if it is within [today, futureLimit] OR if it is today.
-                // Actually, if a user selected a specific date, we show it on that date.
+            const addEventIfNotSkipped = (dateObj) => {
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const dateStr = `${year}-${month}-${day}`;
+                const key = `${item.user_id}_${dateStr}`;
 
-                if (nextDate >= today && nextDate <= futureLimit) {
+                if (!skippedSet.has(key)) {
                     events.push({
-                        date: nextDate.toISOString().split('T')[0],
+                        date: dateStr,
                         user_name: item.user_name,
                         address: item.delivery_address,
                         user_phone: item.user_phone,
@@ -424,10 +439,25 @@ export const getDeliveries = async (req, res) => {
                         quantity: item.quantity,
                         price: item.price,
                         image: item.image_url,
-                        frequency: "One-Time",
+                        frequency: item.frequency || "One-Time",
                         notes: item.delivery_notes,
                         order_id: item.order_id
                     });
+                }
+            };
+
+            if (daysToAdd) {
+                // Recurring Logic
+                while (nextDate <= futureLimit) {
+                    if (nextDate >= today) {
+                        addEventIfNotSkipped(nextDate);
+                    }
+                    nextDate.setDate(nextDate.getDate() + daysToAdd);
+                }
+            } else {
+                // One-off Logic
+                if (nextDate >= today && nextDate <= futureLimit) {
+                    addEventIfNotSkipped(nextDate);
                 }
             }
         });
@@ -438,6 +468,105 @@ export const getDeliveries = async (req, res) => {
         res.json(events);
     } catch (error) {
         console.error("Get Deliveries Error:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
+};
+
+// GET PAUSED DELIVERIES
+export const getPausedDeliveries = async (req, res) => {
+    try {
+        const query = `
+            SELECT sd.id, sd.skip_date, sd.created_at, u.name as user_name, u.email as user_email, u.phone as user_phone
+            FROM skipped_deliveries sd
+            JOIN users u ON sd.user_id = u.id
+            ORDER BY sd.skip_date ASC
+        `;
+        const [rows] = await db.query(query);
+        res.json(rows);
+    } catch (error) {
+        console.error("Paused Deliveries Error:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
+};
+
+// GET DELIVERY LOGS
+export const getDeliveryLogs = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [rows] = await db.query("SELECT * FROM delivery_logs WHERE order_id = ?", [id]);
+        res.json(rows);
+    } catch (error) {
+        console.error("Delivery Logs Error:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
+};
+
+// NOTIFY DELIVERY (Admin Action)
+export const notifyDelivery = async (req, res) => {
+    try {
+        const orderId = req.params.id; // Using :id from route
+        const { delivery_date } = req.body;
+
+        if (!orderId || !delivery_date) {
+            return res.status(400).json({ message: "Missing Order ID or Delivery Date" });
+        }
+
+        // 1. Fetch User Info
+        const [rows] = await db.query(
+            "SELECT u.name, u.email, u.phone FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?",
+            [orderId]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "Order/User not found" });
+        }
+
+        const user = rows[0];
+
+        // 2. Send Email
+        try {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS
+                }
+            });
+
+            const mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: user.email,
+                subject: `Order Delivery Update - ${delivery_date}`,
+                text: `
+                    Hi ${user.name},
+                    
+                    Your order is scheduled for delivery on ${delivery_date}.
+                    Our delivery agent will reach you shortly.
+                    
+                    Thank you for choosing Farmlet!
+                `
+            };
+
+            await transporter.sendMail(mailOptions);
+            console.log(`Delivery Notification Email sent to ${user.email}`);
+
+            // Insert into delivery_logs
+            await db.query(
+                "INSERT INTO delivery_logs (order_id, delivery_date) VALUES (?, ?)",
+                [orderId, delivery_date]
+            );
+
+        } catch (emailErr) {
+            console.error("Failed to send Delivery Email:", emailErr);
+        }
+
+        // 3. Send SMS (Mock)
+        console.log(`[SMS MOCK] Sending SMS to ${user.phone}: "Your Farmlet order is arriving on ${delivery_date}"`);
+
+        res.json({ message: "Notification sent successfully" });
+
+    } catch (error) {
+        console.error("Notify Delivery Error:", error);
         res.status(500).json({ error: "Server Error" });
     }
 };

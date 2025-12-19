@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import ProductPopup from "./ProductPopup";
 import { useAuth } from "../../Context/AuthContext";
 // import CalendarModal from "./CalendarModal";
+import DeliveryScheduleModal from "./DeliveryScheduleModal";
 
 
 // IMAGES
@@ -76,10 +77,11 @@ import deh1 from "../../Images/deh1.jpg";
 import OrderHistoryModal from "./OrderHistoryModal";
 
 export default function Navbar() {
-  const { currentUser, isAuthenticated } = useAuth();
+  const { currentUser, isAuthenticated, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("Shop");
   const [openModal, setOpenModal] = useState(false);
   const [openOrderModal, setOpenOrderModal] = useState(false);
+  const [openScheduleModal, setOpenScheduleModal] = useState(false);
   // const [openCalendarModal, setOpenCalendarModal] = useState(false);
 
   const [activeSubmenu, setActiveSubmenu] = useState(null);
@@ -94,9 +96,18 @@ export default function Navbar() {
 
   const handleAccountClick = () => {
     if (currentUser) {
-      setOpenOrderModal(true);
+      navigate('/account');
     } else {
       setOpenModal(true);
+    }
+  };
+
+  const handleScheduleClick = () => {
+    if (isAuthenticated && currentUser) {
+      // setOpenScheduleModal(true);
+      navigate("/delivery-schedule");
+    } else {
+      setOpenModal(true); // Open Sign In
     }
   };
 
@@ -125,8 +136,7 @@ export default function Navbar() {
       "Seasonal recipes",
     ],
     Delivery: ["Your delivery schedule "],
-    Account: ["FAQs", "Help and contact", "Sign in or create account"],
-
+    Account: isAuthenticated ? ["FAQs", "Help and contact", "Sign out"] : ["FAQs", "Help and contact", "Sign in or create account"],
   };
 
   const dropdownData = {
@@ -681,6 +691,21 @@ export default function Navbar() {
   };
 
 
+  const handleSubmenuClick = (item) => {
+    if (item === "Sign out") {
+      logout();
+      navigate("/");
+      setActiveSubmenu(null);
+    } else if (item === "Sign in or create account") {
+      setOpenModal(true);
+      setActiveSubmenu(null);
+    } else if (item === "Help and contact" || item === "FAQs") {
+      // Handle these if needed, or just let them be links
+      navigate("/account"); // Redirecting to account for now as 'Help' might be there? Or leave as is if they are just placeholders.
+      // Actually, let's just leave them alone or redirect to account if they are part of account menu
+    }
+  };
+
   const openProductPopup = (category) => {
     setSelectedCategory(category);
     setOpenPopup(true);
@@ -740,7 +765,7 @@ export default function Navbar() {
           <div
             className={`right-item ${activeTab === "Delivery" ? "active" : ""}`}
             onMouseEnter={() => handleHover("Delivery")}
-          // onClick={() => ... } // Calendar removed for now
+            onClick={handleScheduleClick}
           >
             <span>
               Your delivery<br />schedule
@@ -806,6 +831,8 @@ export default function Navbar() {
               className="submenu-item"
               ref={(el) => (submenuRef.current[item] = el)}
               onMouseEnter={() => showDropdown(item)}
+              onClick={() => handleSubmenuClick(item)}
+              style={{ cursor: "pointer" }}
             >
               {item}
             </span>
@@ -843,6 +870,11 @@ export default function Navbar() {
         </div>
       )}
 
+
+      {/* Delivery Schedule Modal */}
+      {/* {openScheduleModal && (
+        <DeliveryScheduleModal onClose={() => setOpenScheduleModal(false)} />
+      )} */}
 
       {/* 📱 Mobile Search Popup */}
       {mobileSearchOpen && window.innerWidth <= 768 && (

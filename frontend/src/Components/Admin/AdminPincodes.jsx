@@ -7,6 +7,7 @@ export default function AdminPincodes() {
     const [pincodes, setPincodes] = useState([]);
     const [newPincode, setNewPincode] = useState("");
     const [newDay, setNewDay] = useState("Monday");
+    const [minOrderValue, setMinOrderValue] = useState(""); // State for Min Order Value
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -35,11 +36,16 @@ export default function AdminPincodes() {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${currentUser.token}`
                 },
-                body: JSON.stringify({ pincode: newPincode, deliveryDay: newDay })
+                body: JSON.stringify({
+                    pincode: newPincode,
+                    deliveryDay: newDay,
+                    minOrderValue: minOrderValue || 0 // Send Min Value
+                })
             });
 
             if (response.ok) {
                 setNewPincode("");
+                setMinOrderValue(""); // Reset
                 fetchPincodes();
             } else {
                 const err = await response.json();
@@ -86,6 +92,13 @@ export default function AdminPincodes() {
                     <option value="Saturday">Saturday</option>
                     <option value="Sunday">Sunday</option>
                 </select>
+                <input
+                    type="number"
+                    placeholder="Min Order Value (Optional)"
+                    value={minOrderValue}
+                    onChange={(e) => setMinOrderValue(e.target.value)}
+                    style={{ width: '150px' }}
+                />
                 <button type="submit" disabled={loading}>
                     {loading ? "Adding..." : "Add Pincode"}
                 </button>
@@ -96,6 +109,7 @@ export default function AdminPincodes() {
                     <tr>
                         <th>Pincode</th>
                         <th>Delivery Day</th>
+                        <th>Min Order Value</th> {/* New Column */}
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -104,6 +118,7 @@ export default function AdminPincodes() {
                         <tr key={pin.id}>
                             <td>{pin.pincode}</td>
                             <td>{pin.delivery_day}</td>
+                            <td>{pin.min_order_value ? "₹" + pin.min_order_value : "None"}</td>
                             <td>
                                 <button className="delete-btn" onClick={() => handleDelete(pin.id)}>Delete</button>
                             </td>

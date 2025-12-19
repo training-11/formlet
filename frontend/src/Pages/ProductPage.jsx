@@ -5,6 +5,7 @@ import "./ProductPage.css";
 // import { FaChevronDown } from "react-icons/fa";
 // import Navbar from "../components/Navbar/Navbar";
 import Navbar from "../Components/Home/Navbar";
+import Footer from "../Components/Home/Footer";
 
 // IMAGES
 import { useAuth } from "../Context/AuthContext";
@@ -57,8 +58,8 @@ export default function ProductPage() {
     setModalOpen(true);
   };
 
-  const handleConfirmAddToCart = (product, quantity, frequency) => {
-    addToCart(product, quantity, frequency);
+  const handleConfirmAddToCart = (product, quantity, frequency, startDate) => {
+    addToCart(product, quantity, frequency, startDate);
     setModalOpen(false);
     setSelectedProduct(null);
   };
@@ -175,6 +176,7 @@ export default function ProductPage() {
 
       {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
       {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
+      <Footer />
     </div>
   );
 }

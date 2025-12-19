@@ -30,14 +30,23 @@ export const createOrder = async (req, res) => {
         const orderId = orderResult.insertId;
 
         // 2. Insert Order Items
-        const itemValues = items.map(item => [
-            orderId,
-            item.name,
-            item.quantity,
-            parseFloat(item.price.replace(/[^\d.]/g, '')),
-            item.frequency || "One off",
-            item.image
-        ]);
+        const itemValues = items.map(item => {
+            let imageUrl = item.image || item.image_url; // Handle both property names
+
+            // Ensure uploads start with /uploads if missing
+            if (imageUrl && !imageUrl.startsWith("http") && !imageUrl.startsWith("/uploads") && imageUrl.includes("uploads/")) {
+                imageUrl = "/" + imageUrl;
+            }
+
+            return [
+                orderId,
+                item.name,
+                item.quantity,
+                parseFloat(item.price.replace(/[^\d.]/g, '')),
+                item.frequency || "One off",
+                imageUrl
+            ];
+        });
 
         if (itemValues.length > 0) {
             await db.query(
@@ -108,31 +117,95 @@ export const getCalendarEvents = async (req, res) => {
         const userId = req.params.userId;
 
         const query = `
-            SELECT oi.*, o.created_at as order_created_at, o.delivery_date
-            FROM order_items oi
-            JOIN orders o ON oi.order_id = o.id
-            WHERE o.user_id = ? AND oi.frequency != 'Once only' AND oi.frequency != 'One off'
-            ORDER BY o.created_at DESC
-        `;
+                SELECT oi.*, o.created_at as order_created_at, o.delivery_date
+                FROM order_items oi
+                JOIN orders o ON oi.order_id = o.id
+                WHERE o.user_id = ? 
+                AND o.status != 'pending' AND o.status != 'cancelled'
+                -- AND oi.frequency != 'Once only' AND oi.frequency != 'One off'  <-- User wants One offs too
+                ORDER BY o.created_at DESC
+            `;
 
         const [items] = await db.query(query, [userId]);
 
-        // Deduplicate: If I ordered Carrots (Every week) last week, and Carrots (Every week) this week,
-        // likely the "subscription" is just the latest one.
-        const activeSubscriptions = {};
-        items.forEach(item => {
-            if (!activeSubscriptions[item.product_name]) { // Take latest because sorted DESC
-                activeSubscriptions[item.product_name] = item;
-            }
-        });
+        // Fetch Skipped Deliveries
+        const [skipped] = await db.query("SELECT skip_date FROM skipped_deliveries WHERE user_id = ?", [userId]);
+        const skippedDates = new Set(skipped.map(s => {
+            const d = new Date(s.skip_date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }));
 
         const events = [];
         const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalize today
+
         const futureLimit = new Date();
         futureLimit.setDate(today.getDate() + 60); // Show next 60 days
 
+        items.forEach(item => {
+            const freq = item.frequency;
+            let startDate = new Date(item.order_created_at);
+
+            // "One off" or "Once only"
+            if (!freq || freq === 'One off' || freq === 'Once only') {
+                const deliveryString = item.delivery_date || ""; // "Monday 22nd Dec"
+                const parts = deliveryString.split(" ");
+                if (parts.length > 0) {
+                    const dayName = parts[0]; // "Monday"
+
+                    // Find date
+                    let d = new Date(startDate);
+                    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    const targetIndex = days.indexOf(dayName);
+
+                    if (targetIndex !== -1) {
+                        let currentDayIndex = d.getDay();
+                        let daysUntil = targetIndex - currentDayIndex;
+                        if (daysUntil <= 0) daysUntil += 7; // It's always forward 
+
+                        d.setDate(d.getDate() + daysUntil);
+
+                        if (d >= today && d < futureLimit) {
+                            const year = d.getFullYear();
+                            const month = String(d.getMonth() + 1).padStart(2, '0');
+                            const day = String(d.getDate()).padStart(2, '0');
+                            const dateStr = `${year}-${month}-${day}`;
+
+                            const isPaused = skippedDates.has(dateStr);
+
+                            events.push({
+                                date: dateStr,
+                                product: item.product_name,
+                                image: item.image_url,
+                                frequency: "One off",
+                                price: item.price,
+                                quantity: item.quantity,
+                                isPaused: isPaused
+                            });
+                        }
+                    }
+                }
+
+            }
+        });
+
+        // RECURRING PROCESSING (Deduped)
+        const activeSubscriptions = {};
+        items.forEach(item => {
+            const freq = item.frequency;
+            if (freq && freq !== 'One off' && freq !== 'Once only') {
+                // Latest prevails
+                if (!activeSubscriptions[item.product_name]) {
+                    activeSubscriptions[item.product_name] = item;
+                }
+            }
+        });
+
         Object.values(activeSubscriptions).forEach(sub => {
-            let nextDate = new Date(sub.order_created_at); // Start from last order
+            let nextDate = new Date(sub.order_created_at);
             const freqMap = {
                 "Every week": 7,
                 "Every 2 weeks": 14,
@@ -142,26 +215,71 @@ export const getCalendarEvents = async (req, res) => {
             const daysToAdd = freqMap[sub.frequency];
 
             if (daysToAdd) {
-                // Project dates until limit
+                // Project: Find the first occurrence of the target day (from delivery_date)
+                // If delivery_date is "Monday 22nd Dec", we want "Monday"
+                let alignedStartDate = new Date(nextDate);
+                const deliveryString = sub.delivery_date || "";
+                const parts = deliveryString.split(" ");
+                if (parts.length > 0) {
+                    const dayName = parts[0]; // "Monday"
+                    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    const targetIndex = days.indexOf(dayName);
+
+                    if (targetIndex !== -1) {
+                        let currentDayIndex = alignedStartDate.getDay();
+                        let daysUntil = targetIndex - currentDayIndex;
+                        if (daysUntil < 0) daysUntil += 7; // Only move forward or stay on same day
+                        // ERROR CORRECTION: If daysUntil is 0, it means we are ON the day. 
+                        // But if order_created_at matches the day, we should probably stick to it.
+
+                        alignedStartDate.setDate(alignedStartDate.getDate() + daysUntil);
+                    }
+                }
+
+                nextDate = alignedStartDate; // Use the aligned date as the starting point
+
                 while (nextDate < futureLimit) {
-                    nextDate.setDate(nextDate.getDate() + daysToAdd);
+                    // We intentionally include the first date (alignedStartDate) if it's in the future/today
+                    // But we must loop carefully. The original loop did `nextDate.setDate(...)` BEFORE pushing?
+                    // No, original loop: while(nextDate < futureLimit) { nextDate.setDate(...) ... }
+                    // Wait, original logic:
+                    /*
+                    while (nextDate < futureLimit) {
+                        nextDate.setDate(nextDate.getDate() + daysToAdd);
+                        if (nextDate >= today) ... push
+                    }
+                    */
+                    // This means the FIRST delivery is (Start + freq). That might be wrong?
+                    // If I order on Monday for "Every Monday", do I get it TODAY? Or Next Monday?
+                    // Typically subscription is "Next delivery". 
+                    // But if I aligned it, the "alignedStartDate" IS the first valid delivery day.
+                    // If alignedStartDate >= today (and maybe >= order_created_at), it should be a delivery.
+
+                    // Let's adopt a standard: First delivery is AT LEAST alignedStartDate.
+                    // If we want to include the first one:
                     if (nextDate >= today) {
+                        const year = nextDate.getFullYear();
+                        const month = String(nextDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(nextDate.getDate()).padStart(2, '0');
+                        const dateStr = `${year}-${month}-${day}`;
+                        const isPaused = skippedDates.has(dateStr);
+
                         events.push({
-                            date: nextDate.toISOString().split('T')[0], // YYYY-MM-DD
+                            date: dateStr,
                             product: sub.product_name,
                             image: sub.image_url,
-                            frequency: sub.frequency
+                            frequency: sub.frequency,
+                            price: sub.price,
+                            quantity: sub.quantity,
+                            isPaused: isPaused
                         });
                     }
+
+                    // Move to next cycle
+                    nextDate.setDate(nextDate.getDate() + daysToAdd);
                 }
             }
         });
-
-        // Add "One off" deliveries that are literally in the future based on order date
-        // Simple logic: if delivery_date string contains a date that is in future... 
-        // Parsing "Wednesday 12th Dec" is hard without year.
-        // For MVP, filter based on created_at within last 7 days + frequency='One off' ?
-        // Let's stick to recurring for the "Calendar" feature as requested ("products user receives for every week").
 
         // Sort by date
         events.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -170,6 +288,63 @@ export const getCalendarEvents = async (req, res) => {
 
     } catch (error) {
         console.error("Calendar Error:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
+};
+
+// PAUSE DELIVERY
+export const pauseDelivery = async (req, res) => {
+    try {
+        const { userId, date } = req.body; // Expect YYYY-MM-DD
+
+        if (!userId || !date) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+
+        // Insert into skipped_deliveries
+        // Use INSERT IGNORE or ON DUPLICATE KEY UPDATE to handle double clicks
+        await db.query(
+            "INSERT IGNORE INTO skipped_deliveries (user_id, skip_date) VALUES (?, ?)",
+            [userId, date]
+        );
+
+        // Notify Admin
+        try {
+            // Fetch user info
+            const [users] = await db.query("SELECT name, email, phone FROM users WHERE id = ?", [userId]);
+            const user = users[0];
+
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS
+                }
+            });
+
+            const mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: process.env.ADMIN_EMAIL,
+                subject: `Delivery Paused - ${user.name}`,
+                text: `
+                     User ${user.name} (${user.email}) has paused their delivery for ${date}.
+                     
+                     Please do not deliver on this date.
+                 `
+            };
+
+            await transporter.sendMail(mailOptions);
+            console.log(`Admin Paused Notification sent for ${user.name} on ${date}`);
+
+        } catch (e) {
+            console.error("Failed to send Admin Pause Email:", e);
+            // Don't fail the request, just log
+        }
+
+        res.json({ message: "Delivery paused successfully" });
+
+    } catch (error) {
+        console.error("Pause Delivery Error:", error);
         res.status(500).json({ error: "Server Error" });
     }
 };
@@ -275,6 +450,46 @@ export const applyCoupon = async (req, res) => {
     }
 };
 
+// UPDATE ORDER STATUS (Manual from Frontend)
+export const updateOrderStatus = async (req, res) => {
+    try {
+        const { orderId, status, paymentId } = req.body;
+
+        if (!orderId || !status) {
+            return res.status(400).json({ message: "Order ID and Status are required." });
+        }
+
+        // Update DB
+        // If paymentId is provided, store it too (assuming you have a column or just in notes? 
+        // For now, let's just update status. If you want payment_id column, we might need schema update.
+        // But the webhook uses `notes` for internal_id. 
+        // Let's assume for now we just mark as Paid. 
+        // Actually, let's check if 'payment_id' exists in orders table? No, it doesn't seem so in db.sql snippet I saw earlier.
+        // So just update status.
+
+        await db.query("UPDATE orders SET status = ? WHERE id = ?", [status, orderId]);
+
+        // Clear Admin Stats Cache
+        if (redisClient && redisClient.isOpen) {
+            try {
+                await redisClient.del('admin_stats');
+            } catch (e) {
+                console.error("Redis Cache Clear Error", e);
+            }
+        }
+
+        // Notify Admin (optional, duplicate of webhook but good backup)
+        // ... (skipped for brevity to avoid double emails if webhook works later, but simple log is fine)
+        console.log(`Order #${orderId} status updated to ${status} (Manual)`);
+
+        res.json({ message: "Order status updated successfully" });
+
+    } catch (error) {
+        console.error("Update Order Status Error:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
+};
+
 // Webhook Handler
 export const verifyPaymentWebhook = async (req, res) => {
     try {
@@ -361,6 +576,7 @@ export const verifyPaymentWebhook = async (req, res) => {
             // Razorpay expects 200 even on failure to prevent retries, but 400 helps debugging
             res.status(400).json({ status: "invalid signature" });
         }
+
     } catch (error) {
         console.error("Webhook Error:", error);
         res.status(500).json({ error: "Internal server error" });

@@ -8,10 +8,12 @@
   background-color: #01BF64;
   text-align: center;
   color: white;
-  font-family: 'caveat', cursive;
+  font-family: 'TeX Gyre Chorus', cursive;
+  font-weight: 525;
   padding-bottom: 30px;
-  overflow-x: hidden;
+  letter-spacing: 0.5px;
 }
+
 
 /* -----------------------------------------
    DEFAULT DESKTOP (≥1025px)
@@ -40,7 +42,7 @@
   font-size: 30px;
   padding: 4px 24px;
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 8px;
   border-radius: 5px;
 }
 
@@ -56,8 +58,13 @@
   z-index: 10;
 }
 
-.left { left: 40px; }
-.right { right: 40px; }
+.left {
+  left: 40px;
+}
+
+.right {
+  right: 40px;
+}
 
 /* BOTTOM SECTION */
 .hero-bottom {
@@ -71,6 +78,7 @@
 .veg-img {
   width: 30%;
   max-width: 100%;
+  margin-top: 60px;
 }
 
 .join {
@@ -90,7 +98,7 @@
       📱 MOBILE (≤ 779px)
 ------------------------------------------ */
 @media (max-width: 779px) {
-  
+
 
   .hero-container {
     padding: 40px 0;
@@ -120,8 +128,13 @@
     top: 60px !important;
   }
 
-  .left { left: 10px; }
-  .right { right: 10px; }
+  .left {
+    left: 10px;
+  }
+
+  .right {
+    right: 10px;
+  }
 
   /* Veg image (mobile wide stretch) */
   .veg-img {
@@ -130,7 +143,9 @@
     transform: scale(1.15);
   }
 
-  .hero-bottom { margin-top: -20px; }
+  .hero-bottom {
+    margin-top: -20px;
+  }
 
   .join {
     font-size: 16px !important;
@@ -146,6 +161,7 @@
 ------------------------------------------ */
 /* Hide HERO Get started button on mobile + tablet */
 @media (max-width: 1024px) {
+
   .hero-bottom .start-btn,
   .hero-bottom .desktop-cta {
     display: none !important;
@@ -186,8 +202,13 @@
     font-weight: 300;
   }
 
-  .left { left: -120px !important; }
-  .right { right: -120px !important; }
+  .left {
+    left: -120px !important;
+  }
+
+  .right {
+    right: -120px !important;
+  }
 
   /* Veg image */
   .veg-img {
@@ -213,6 +234,5 @@
 }
 
 
-  /* Still hide hero button on tablet */
-  /* .start-btn { display: none !important; } */
-
+/* Still hide hero button on tablet */
+/* .start-btn { display: none !important; } */
