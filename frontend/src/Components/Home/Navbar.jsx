@@ -87,13 +87,10 @@ export default function Navbar() {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ left: 0 });
   // const [searchOpen, setSearchOpen] = useState(false);
-  // mobileSearchOpen state is now controlled by parent (MainHome)
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
-//  const [openOrderModal, setOpenOrderModal] = useState(false);
-
-//  const { currentUser } = useAuth();
 
   const submenuRef = useRef({});
 
@@ -101,10 +98,9 @@ export default function Navbar() {
     if (currentUser) {
       navigate('/account');
     } else {
-      setSignInOpen(true);
+      setOpenModal(true);
     }
   };
-
 
   const handleScheduleClick = () => {
     if (isAuthenticated && currentUser) {
@@ -750,49 +746,54 @@ export default function Navbar() {
 
         <div className="nav-right">
           {/* MOBILE SEARCH ICON (always visible on mobile) */}
-  <img 
-    src={searchIcon} 
-    alt="Search" 
-    className="mobile-search-icon"
-    // onClick={() => {
-    // if (window.innerWidth <= 768) setSearchOpen(true);
-      onClick={() => setMobileSearchOpen(true)}
-  
-  />
-  
-<div className="search-box">
-  <input type="text" placeholder="Search Farmlet" />
-  {/* <FiSearch size={20} /> */}
-  <img src={searchIcon} alt="Search" style={{ width: 23, height: 23 }} />
+          <img
+            src={searchIcon}
+            alt="Search"
+            className="mobile-search-icon"
+            // onClick={() => {
+            // if (window.innerWidth <= 768) setSearchOpen(true);
+            onClick={() => setMobileSearchOpen(true)}
 
-</div>
+          />
 
-  <div
-    className={`right-item ${activeTab === "Delivery" ? "active" : ""}`}
-    onMouseEnter={() => handleHover("Delivery")}
-  >
-    <span>
-      Your delivery<br />schedule
-    </span>
-    {/* <BsCalendarEvent size={25}/> */}
-    <img src={CalendarIcon} alt="Calendar" style={{ width: 30, height: 30 }} />
- </div>
+          <div className="search-box">
+            <input type="text" placeholder="Search Farmlet" />
+            {/* <FiSearch size={20} /> */}
+            <img src={searchIcon} alt="Search" style={{ width: 23, height: 23 }} />
 
+          </div>
+          <div
+            className={`right-item ${activeTab === "Delivery" ? "active" : ""}`}
+            onMouseEnter={() => handleHover("Delivery")}
+            onClick={handleScheduleClick}
+          >
+            <span>
+              Your delivery<br />schedule
+            </span>
+            {/* <BsCalendarEvent size={25}/> */}
+            <img src={CalendarIcon} alt="Calendar" style={{ width: 30, height: 30 }} />
+          </div>
 
-<div
-  className={`right-item ${activeTab === "Account" ? "active" : ""}`}
-  onMouseEnter={() => handleHover("Account")}
-  onClick={() => setSignInOpen(true)}
->
-  <span className="underline-link">
-    Sign in or<br /><span >create account</span>
-  </span>
-  <img src={accountIcon} alt="Account" style={{ width: 30, height: 30 }} />
+          <div
+            className={`right-item ${activeTab === "Account" ? "active" : ""}`}
+            onMouseEnter={() => handleHover("Account")}
+            onClick={handleAccountClick}   // Updated Handler
+          >
+            <span className="underline-link">
+              {isAuthenticated && currentUser ? (
+                <>
+                  Hi, {currentUser.name ? currentUser.name.split(' ')[0] : 'User'}<br /><span>My Account</span>
+                </>
+              ) : (
+                <>
+                  Sign in or<br /><span >create account</span>
+                </>
+              )}
+            </span>
+            <img src={accountIcon} alt="Account" style={{ width: 30, height: 30 }} />
+          </div>
 
-</div>
-
-</div>
-     
+        </div>
 
       </nav>
       {/* MOBILE SUBMENU */}
@@ -876,14 +877,14 @@ export default function Navbar() {
       )} */}
 
       {/* 📱 Mobile Search Popup */}
-      {/* {mobileSearchOpen && window.innerWidth <= 768 && (
+      {mobileSearchOpen && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
-          
+
           <div className="search-header">
             <div className="search-title">Search Farmlet</div>
 
             <button
-              className="mobile-close-btn"
+              className="close-btn"
               onClick={() => setMobileSearchOpen(false)}
             >
               ✕
@@ -935,7 +936,9 @@ export default function Navbar() {
 
 
 
-            <SignInModal open={signInOpen} onClose={() => setSignInOpen(false)} />
+      <SignInModal open={openModal} onClose={() => setOpenModal(false)} />
+      <OrderHistoryModal open={openOrderModal} onClose={() => setOpenOrderModal(false)} />
+      {/* <CalendarModal open={openCalendarModal} onClose={() => setOpenCalendarModal(false)} /> */}
     </>
   );
 }
