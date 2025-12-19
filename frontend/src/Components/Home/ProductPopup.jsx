@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import "./ProductPopup.css";
 import { FaTimes } from "react-icons/fa";
+import { useAuth } from "../../Context/AuthContext";
+import AddToCartModal from "../Cart/AddToCartModal";
 
 export default function ProductPopup({
   open,
@@ -11,6 +13,9 @@ export default function ProductPopup({
   selectedCategory,
   setSelectedCategory
 }) {
+  const { isAuthenticated, addToCart } = useAuth();
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
 
   // ❗ Fix: useEffect must be inside the component
   useEffect(() => {
@@ -25,13 +30,26 @@ export default function ProductPopup({
     };
   }, [open]);
 
+  const handleAddToCartClick = (prod) => {
+    if (isAuthenticated) {
+      setSelectedProduct(prod);
+      setModalOpen(true);
+    } else {
+      alert("Please sign in or check your pincode first!");
+    }
+  };
+
+  const handleConfirmAddToCart = (product, quantity, frequency, startDate) => {
+    addToCart(product, quantity, frequency, startDate);
+    setModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   if (!open) return null;
 
   return (
-    <div className="popup-overlay1">
-      <div className="popup-box">
-
-        <FaTimes className="popup-close" onClick={onClose} />
+    <div className="popup-overlay1" onClick={onClose}>
+      <div className="popup-box" onClick={(e) => e.stopPropagation()}>
 
         <div className="popup-content">
 
@@ -51,35 +69,61 @@ export default function ProductPopup({
 
           {/* RIGHT PRODUCT AREA */}
           <div className="popup-right">
-            <h2 className="popup-title"></h2>
+            <h2 className="popup-title">{title || selectedCategory}</h2>
 
             <div className="popup-grid">
-              {products.map((prod, index) => (
-                <div className="popup-card" key={index}>
-                  <img src={prod.image_url && prod.image_url.startsWith("/uploads") ? `${window.ENV.BACKEND_API}${prod.image_url}` : prod.image_url} alt="" className="popup-prod-img" />
+              {products.map((prod, index) => {
+                const imgSource = prod.image_url || prod.image;
+                const finalImg = imgSource && imgSource.startsWith("/uploads")
+                  ? `${window.ENV.BACKEND_API}${imgSource}`
+                  : imgSource;
 
-                  <div className="popup-location">{prod.location}</div>
+                return (
+                  <div className="popup-card" key={index}>
+                    <img src={finalImg} alt={prod.name} className="popup-prod-img" />
 
-                  <div className="popup-name">{prod.name}</div>
+                    <div className="popup-location">{prod.location}</div>
 
-                  <input
-                    className="popup-weight"
-                    value={prod.weight}
-                    readOnly
-                  />
+                    <div className="popup-name">{prod.name}</div>
 
-                  <div className="popup-price">{prod.price}</div>
+                    <input
+                      className="popup-weight"
+                      value={prod.weight}
+                      readOnly
+                    />
 
-                  <button className="popup-order-btn">Login To Order</button>
-                </div>
-              ))}
+                    <div className="popup-price">{prod.price}</div>
+
+                    {isAuthenticated ? (
+                      <button className="popup-order-btn" onClick={() => handleAddToCartClick(prod)}>
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <button className="popup-order-btn" onClick={() => alert("Please sign in or check your pincode first!")}>
+                        Login to Order
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
         </div>
 
-        <div className="popup-bottom-login">Login To Order</div>
+        {!isAuthenticated && <div className="popup-bottom-login">Login To Order</div>}
+
+        <FaTimes className="popup-close" onClick={onClose} />
       </div>
+
+      {/* NESTED ADD TO CART MODAL */}
+      {modalOpen && (
+        <AddToCartModal
+          product={selectedProduct}
+          onClose={() => setModalOpen(false)}
+          onConfirm={handleConfirmAddToCart}
+        />
+      )}
     </div>
   );
 }

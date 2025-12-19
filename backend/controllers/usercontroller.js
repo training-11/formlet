@@ -132,8 +132,8 @@ export const create = async (req, res) => {
 
     res.status(201).json({ user: newUser, token });
   } catch (error) {
-    console.error("Create user error:", error);
-    res.status(500).json({ error: "Internal server error." });
+    console.error("Create user error DETAILED:", error.message, error.sqlMessage ? error.sqlMessage : "");
+    res.status(500).json({ error: "Internal server error.", details: error.message });
   }
 };
 
@@ -403,6 +403,10 @@ export const update = async (req, res) => {
       fields.push("password = ?");
       values.push(hashedPassword);
     }
+    if (updates.delivery_notes) {
+      fields.push("delivery_notes = ?");
+      values.push(updates.delivery_notes);
+    }
 
     if (fields.length === 0) {
       return res.status(400).json({ message: "No fields to update." });
@@ -414,7 +418,7 @@ export const update = async (req, res) => {
     await db.query(sql, values);
 
     // Return updated user
-    const [updatedUser] = await db.query("SELECT id, name, email, address, created_at, updated_at FROM users WHERE id = ?", [id]);
+    const [updatedUser] = await db.query("SELECT id, name, email, address, delivery_notes, created_at, updated_at FROM users WHERE id = ?", [id]);
 
     res.status(200).json(updatedUser[0]);
   } catch (error) {

@@ -1,5 +1,6 @@
 
 import mysql from 'mysql2/promise';
+import redisClient from './config/redis.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -153,14 +154,33 @@ const seed = async () => {
                 const price = prod.price;
                 const location = prod.location || "";
 
-                await connection.query(`
-                    INSERT INTO products (category_id, name, weight, price, location, image_url, stock)
-                    VALUES (?, ?, ?, ?, ?, ?, 50)
-                `, [categoryId, prod.name, weight, price, location, prodImage]);
+                // Check if product exists
+                const [existing] = await connection.query("SELECT id FROM products WHERE name = ?", [prod.name]);
+
+                if (existing.length === 0) {
+                    await connection.query(`
+                        INSERT INTO products (category_id, name, weight, price, location, image_url, stock)
+                        VALUES (?, ?, ?, ?, ?, ?, 50)
+                    `, [categoryId, prod.name, weight, price, location, prodImage]);
+                } else {
+                    console.log(`Skipping existing product: ${prod.name}`);
+                }
             }
         }
 
+
+
         console.log("Seeding Complete!");
+
+        // Clear Redis Cache
+        try {
+            await redisClient.del('products_public');
+            await redisClient.del('categories_public');
+            console.log("Redis Cache Cleared.");
+        } catch (err) {
+            console.error("Error clearing Redis cache:", err);
+        }
+
         process.exit(0);
 
     } catch (error) {
@@ -168,6 +188,7 @@ const seed = async () => {
         process.exit(1);
     } finally {
         if (connection) await connection.end();
+        if (redisClient) await redisClient.quit();
     }
 };
 

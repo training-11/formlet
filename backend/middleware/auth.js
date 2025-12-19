@@ -27,6 +27,9 @@ const auth = async (req, res, next) => {
     req.user = rows[0];
     next();
   } catch (error) {
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: "Invalid or expired token." });
+    }
     console.error("Auth middleware error:", error);
     return res.status(401).json({ message: "Token is not valid." });
   }

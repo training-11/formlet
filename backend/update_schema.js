@@ -66,6 +66,20 @@ const updateSchema = async () => {
         `);
         console.log("Product Tags table checked/created.");
 
+        // Create Skipped Deliveries Table
+        await connection.query(`
+            CREATE TABLE IF NOT EXISTS skipped_deliveries (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                skip_date DATE NOT NULL,
+                reason VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                UNIQUE KEY unique_user_date (user_id, skip_date)
+            )
+        `);
+        console.log("Skipped Deliveries table checked/created.");
+
         // Check/Add 'pincode' column to 'users' table
         try {
             // Check if column exists

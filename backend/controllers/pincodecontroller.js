@@ -22,11 +22,12 @@ export const checkPincode = async (req, res) => {
         }
 
         // Return delivery day if found
-        const { delivery_day } = rows[0];
+        const { delivery_day, min_order_value } = rows[0]; // Destructure min_order_value
         res.status(200).json({
             available: true,
             pincode,
             deliveryDay: delivery_day,
+            minOrderValue: min_order_value, // Return to frontend
             message: `Great! We deliver to ${pincode} on ${delivery_day}s.`
         });
 

@@ -23,6 +23,8 @@
     font-family: "Roboto", sans-serif;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .delivery-close-btn {

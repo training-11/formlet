@@ -14,11 +14,11 @@
 }
 
 
- .popup-box {
+.popup-box {
   margin-top: 80px;
   width: 95%;
-  height: 92%;       
-  max-height: 95vh;  
+  height: 92%;
+  max-height: 95vh;
   /* background: #fff; */
   border-radius: 12px;
   position: relative;
@@ -35,7 +35,8 @@
   right: 25px;
   font-size: 28px;
   cursor: pointer;
-  color:black;
+  color: black;
+  z-index: 1000;
 }
 
 /* MAIN CONTENT AREA */
@@ -51,8 +52,10 @@
   padding-top: 20px;
   border-right: 1px solid #ddd;
   overflow-y: auto;
-   background: rgba(255, 255, 255, 0.18);   /* transparent liquid */
-  backdrop-filter: blur(12px);            /* glass / liquid blur */
+  background: rgba(255, 255, 255, 0.18);
+  /* transparent liquid */
+  backdrop-filter: blur(12px);
+  /* glass / liquid blur */
   -webkit-backdrop-filter: blur(12px);
 }
 
@@ -74,10 +77,10 @@
   padding: 30px;
   overflow-y: auto;
   /* background-color: #f0e6d7; */
-     background: rgba(255, 255, 255, 0.18);   
-  /* backdrop-filter: blur(12px);        */
-  -webkit-backdrop-filter: blur(12px); 
-  
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
 }
 
 .popup-title {
@@ -168,6 +171,8 @@
 
 .popup-right,
 .popup-sidebar {
-  -ms-overflow-style: none;  /* IE, Edge */
-  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;
+  /* IE, Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

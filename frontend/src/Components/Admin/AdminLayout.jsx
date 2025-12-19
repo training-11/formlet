@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Admin.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import AdminOrders from "./AdminOrders";
 import AdminCoupons from "./AdminCoupons";
@@ -8,13 +8,15 @@ import AdminDeliveries from "./AdminDeliveries";
 import AdminInventory from "./AdminInventory";
 import AdminUsers from "./AdminUsers";
 import AdminPincodes from "./AdminPincodes";
+import AdminPausedDeliveries from "./AdminPausedDeliveries";
 // import AdminCategories from "./AdminCategories"; // Consolidating into Inventory
 // import AdminProducts from "./AdminProducts";
 import { useAuth } from "../../Context/AuthContext";
 
-export default function AdminLayout() {
+export default function AdminLayout({ children }) {
     const { currentUser, logout } = useAuth();
-    const [activeTab, setActiveTab] = useState("dashboard");
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState(location.state?.activeTab || "dashboard");
     const navigate = useNavigate();
 
     // Check Admin Role
@@ -29,6 +31,8 @@ export default function AdminLayout() {
     }
 
     const renderContent = () => {
+        if (children) return children; // Prioritize children (nested routes)
+
         switch (activeTab) {
             case "dashboard": return <AdminDashboard />;
             case "orders": return <AdminOrders />;
@@ -39,6 +43,7 @@ export default function AdminLayout() {
             // case "products": return <AdminProducts />;
             case "pincodes": return <AdminPincodes />;
             case "coupons": return <AdminCoupons />;
+            case "paused": return <AdminPausedDeliveries />;
             default: return <AdminDashboard />;
         }
     };
@@ -50,45 +55,51 @@ export default function AdminLayout() {
                 <nav className="admin-nav">
                     <div
                         className={`admin-nav-item ${activeTab === "dashboard" ? "active" : ""}`}
-                        onClick={() => setActiveTab("dashboard")}
+                        onClick={() => { setActiveTab("dashboard"); navigate('/admin'); }}
                     >
                         Dashboard
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "orders" ? "active" : ""}`}
-                        onClick={() => setActiveTab("orders")}
+                        onClick={() => { setActiveTab("orders"); navigate('/admin'); }}
                     >
                         Orders
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "deliveries" ? "active" : ""}`}
-                        onClick={() => setActiveTab("deliveries")}
+                        onClick={() => { setActiveTab("deliveries"); navigate('/admin'); }}
                     >
                         Deliveries
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "inventory" ? "active" : ""}`}
-                        onClick={() => setActiveTab("inventory")}
+                        onClick={() => { setActiveTab("inventory"); navigate('/admin'); }}
                     >
                         Inventory
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "users" ? "active" : ""}`}
-                        onClick={() => setActiveTab("users")}
+                        onClick={() => { setActiveTab("users"); navigate('/admin'); }}
                     >
                         Users
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "pincodes" ? "active" : ""}`}
-                        onClick={() => setActiveTab("pincodes")}
+                        onClick={() => { setActiveTab("pincodes"); navigate('/admin'); }}
                     >
                         Pincodes
                     </div>
                     <div
                         className={`admin-nav-item ${activeTab === "coupons" ? "active" : ""}`}
-                        onClick={() => setActiveTab("coupons")}
+                        onClick={() => { setActiveTab("coupons"); navigate('/admin'); }}
                     >
                         Coupons
+                    </div>
+                    <div
+                        className={`admin-nav-item ${activeTab === "paused" ? "active" : ""}`}
+                        onClick={() => { setActiveTab("paused"); navigate('/admin'); }}
+                    >
+                        Paused Deliveries
                     </div>
                     <div
                         className="admin-nav-item"
@@ -103,7 +114,7 @@ export default function AdminLayout() {
             <main className="admin-content">
                 <header className="admin-header">
                     <div className="admin-title">
-                        {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                        {children ? "Order Details" : (activeTab.charAt(0).toUpperCase() + activeTab.slice(1))}
                     </div>
                     <div>Hello, {currentUser.name}</div>
                 </header>

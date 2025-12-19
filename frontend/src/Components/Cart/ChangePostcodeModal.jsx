@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./ChangePostcodeModal.css";
 import { useAuth } from "../../Context/AuthContext";
 
-export default function ChangePostcodeModal({ onClose }) {
-    const { verifyPincode } = useAuth();
+export default function ChangePostcodeModal({ onClose, onSignIn }) {
+    const { verifyPincode, isAuthenticated } = useAuth();
     const [pincode, setPincode] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -107,9 +107,11 @@ export default function ChangePostcodeModal({ onClose }) {
                         {loading ? "Checking..." : "Enter"}
                     </button>
 
-                    <div className="postcode-footer">
-                        Already have an account? <span className="signin-link">Sign in</span>
-                    </div>
+                    {!isAuthenticated && (
+                        <div className="postcode-footer">
+                            Already have an account? <span className="signin-link" onClick={onSignIn}>Sign in</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

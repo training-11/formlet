@@ -1,0 +1,238 @@
+/* Page Container */
+.schedule-page-container {
+    width: 100%;
+    /* Remove max-width constraint to fill the content area */
+    padding: 0 40px 50px 40px;
+    background: transparent;
+    /* Remove background to blend with page */
+    min-height: 400px;
+}
+
+/* Page Title */
+.schedule-title-section {
+    text-align: center;
+    padding: 40px 0 30px 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.schedule-title {
+    font-family: "Domine", serif;
+    font-size: 38px;
+    color: #2c2c2c;
+    margin-bottom: 20px;
+    font-style: italic;
+    display: inline-block;
+    border-bottom: 2px solid #333;
+    /* Riverford style underline */
+    padding-bottom: 10px;
+}
+
+/* Schedule List */
+.schedule-list {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    max-height: 75vh;
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-bottom: 200px;
+    /* Avoid scrollbar covering content */
+    scrollbar-width: thin;
+}
+
+/* Custom scrollbar for Webkit */
+.schedule-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.schedule-list::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+
+
+/* Date Card */
+.date-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Riverford Layout Implementation */
+.date-card-flex {
+    display: flex;
+    min-height: 100px;
+}
+
+.date-box {
+    background-color: #0f4d2a;
+    /* Deep Forest Green */
+    color: white;
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.date-day {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: #aedcb4;
+    /* Light green text */
+}
+
+.date-number {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.date-month {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Content Area */
+.date-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Summary Row (Always visible) */
+.summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 25px 30px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.item-count {
+    font-size: 16px;
+    color: #333;
+}
+
+.total-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #b12025;
+    margin-left: 100px;
+}
+
+.toggle-details-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Details Section (Collapsible) */
+.details-section {
+    padding: 0 30px;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.detail-name {
+    flex-grow: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: #222;
+}
+
+.detail-qty-group {
+    text-align: right;
+    margin-right: 30px;
+}
+
+.detail-qty {
+    font-size: 13px;
+    color: #666;
+}
+
+.detail-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    min-width: 60px;
+    text-align: right;
+}
+
+/* Empty State */
+.empty-schedule {
+    text-align: center;
+    padding: 60px;
+    color: #666;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .date-card-flex {
+        flex-direction: column;
+    }
+
+    .date-box {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 20px;
+        height: auto;
+    }
+
+    .date-day,
+    .date-number,
+    .date-month {
+        margin: 0;
+    }
+
+    .date-number {
+        font-size: 24px;
+    }
+
+    .summary-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .total-price {
+        margin-left: 0;
+    }
+}

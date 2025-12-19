@@ -42,7 +42,7 @@
   font-size: 30px;
   padding: 4px 24px;
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 8px;
   border-radius: 5px;
 }
 
@@ -58,8 +58,13 @@
   z-index: 10;
 }
 
-.left { left: 40px; }
-.right { right: 40px; }
+.left {
+  left: 40px;
+}
+
+.right {
+  right: 40px;
+}
 
 /* BOTTOM SECTION */
 .hero-bottom {
@@ -73,6 +78,7 @@
 .veg-img {
   width: 30%;
   max-width: 100%;
+  margin-top: 60px;
 }
 
 .join {
@@ -129,7 +135,7 @@
       📱 MOBILE (≤ 779px)
 ------------------------------------------ */
 @media (max-width: 779px) {
-  
+
 
   .hero-container {
     padding: 40px 0;
@@ -159,21 +165,12 @@
     top: 60px !important;
   }
 
-  .left { left: 10px ; }
-  .right { right: 10px; } */
-   .arrow {
-    font-size: 34px !important;      /* smaller, elegant */
-    top: 140 !important;             /* vertically centered */
-    transform: translateY(-50%);
-    opacity: 0.9;
-  }
-
   .left {
-    left: 12px !important;
+    left: 10px;
   }
 
   .right {
-    right: 12px !important;
+    right: 10px;
   }
 
   /* Veg image (mobile wide stretch) */
@@ -183,7 +180,9 @@
     transform: scale(1.15);
   }
 
-  .hero-bottom { margin-top: -20px; }
+  .hero-bottom {
+    margin-top: -20px;
+  }
 
   .join {
     font-size: 16px !important;
@@ -239,8 +238,13 @@
     font-weight: 300;
   }
 
-  .left { left: -50px !important; }
-  .right { right: -50px !important; }
+  .left {
+    left: -120px !important;
+  }
+
+  .right {
+    right: -120px !important;
+  }
 
   /* Veg image */
   .veg-img {
