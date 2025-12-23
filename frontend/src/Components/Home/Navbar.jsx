@@ -837,7 +837,7 @@ export default function Navbar({ mobileSearchOpen, setMobileSearchOpen, signInOp
 
 
       {/* 📱 Mobile Search Popup */}
-      {mobileSearchOpen && window.innerWidth <= 768 && (
+      {/* {mobileSearchOpen && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
           
           <div className="search-header">
