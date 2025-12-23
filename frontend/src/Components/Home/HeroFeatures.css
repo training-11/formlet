@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 300px;
+  gap: 200px;
   padding: 50px 80px;
   text-align: center;
   padding-top: 40px !important;
@@ -17,9 +17,10 @@
 }
 
 .feature-box p {
-  font-family: "TeX Gyre Chorus", cursive;
-  font-size: 28px;
-  font-weight: 525;
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 6px;
   margin: 0;
   letter-spacing: 0.5px;
 }
@@ -27,7 +28,7 @@
 /* Large Desktop/Monitor View */
 @media (min-width: 1400px) {
   .hero-features {
-    gap: 350px;
+    gap: 250px;
     padding: 80px 120px; /* restore desktop spacing */
   }
   
@@ -36,7 +37,7 @@
   }
   
   .feature-box p {
-    font-size: 30px;
+    font-size: 24px;
   }
 }
 
@@ -88,7 +89,7 @@
   }
 
   .hero-features .feature-box:nth-child(2) p {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 525;
     line-height: 1.2;
   }
@@ -109,7 +110,7 @@
   }
 
   .hero-features .feature-box:nth-child(1) p {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 525;
     line-height: 1.2;
   }
@@ -130,7 +131,7 @@
   }
 
   .hero-features .feature-box:nth-child(3) p {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 525;
     line-height: 1.2;
   }
@@ -143,7 +144,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 350px;         /* restore original horizontal gap */
+    gap: 250px;         /* restore original horizontal gap */
     padding: 80px 0;    /* restore original vertical spacing */
     text-align: center;
   }
@@ -153,7 +154,7 @@
   }
 
   .feature-box p {
-    font-size: 30px;
+    font-size: 24px;
   }
 }
 
@@ -191,7 +192,7 @@
     display: flex;
     justify-content: center; /* center the 3 items */
     align-items: flex-start; /* keeps icons aligned to top of each box */
-    gap: 50px;              /* spacing between boxes (tweak +/- 10px if needed) */
+    gap: 30px;              /* spacing between boxes (tweak +/- 10px if needed) */
     text-align: center;
     overflow: hidden;        /* stop any child overflow */
   }
@@ -220,9 +221,10 @@
 
   /* heading font: Caveat to keep same handwritten look */
   .hero-features .feature-box p {
-    font-family: "TeX Gyre Chorus", cursive;
-    font-size: 26px;         /* large but readable on tablet */
-    font-weight: 525;
+    font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
+    font-size: 20px;         /* large but readable on tablet */
     line-height: 1.05;
     margin: 0;
     color: inherit;

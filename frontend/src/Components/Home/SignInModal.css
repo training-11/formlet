@@ -110,9 +110,10 @@
 
 /* Title */
 .modal-title {
-  font-family: "TeX Gyre Chorus", cursive;
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
   font-size: 52px;
-  font-weight: 450;
   margin-bottom: 10px;
   text-align: center;
   letter-spacing: 0.5px;
