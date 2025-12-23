@@ -42,7 +42,7 @@
   font-size: 30px;
   padding: 4px 24px;
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 8px;
   border-radius: 5px;
 }
 
@@ -73,6 +73,7 @@
 .veg-img {
   width: 30%;
   max-width: 100%;
+  margin-top: 60px;
 }
 
 .join {

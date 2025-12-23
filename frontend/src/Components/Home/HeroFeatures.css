@@ -25,7 +25,7 @@
 }
 
 /* Large Desktop/Monitor View */
-@media (min-width: 1400px) {
+@media (min-width: 1400px) and (max-width: 1799px) {
   .hero-features {
     gap: 350px;
     padding: 80px 120px; /* restore desktop spacing */
@@ -158,13 +158,14 @@
 }
 
 /* iPad Pro only: portrait 1024×1366 and landscape 1366×1024 */
-@media (width: 1024px) and (orientation: portrait),
-       (width: 1366px) and (orientation: landscape) {
+@media (min-width: 1024px) and (max-width: 1389px) {
   .hero-features {
-    margin-top: -500px !important;               /* pull icons upwards (icons only) */
-    padding-top: 0 !important;                  /* sit right under green curve */
-    padding-bottom: 30px;                       /* slightly tighter below */
-    transform: none;                            /* rely on margin for placement */
+    margin-top: -360px !important;               /* pull icons upwards without covering curve */
+    padding-top: 0 !important;                   /* sit right under green curve */
+    padding-bottom: 30px;                        /* slightly tighter below */
+    transform: none;                             /* rely on margin for placement */
+    background: transparent !important;          /* ensure hero curve remains visible underneath */
+    overflow: visible !important;                /* avoid clipping curved edge */
   }
 }
 
