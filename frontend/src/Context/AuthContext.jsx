@@ -110,7 +110,8 @@ export const AuthProvider = ({ children }) => {
         // Auto-fetch pincode details if present
         if (userData.pincode) {
             try {
-                const response = await fetch(`${window.ENV.BACKEND_API}/api/pincode/check`, {
+                const baseUrl = window.ENV?.BACKEND_API || 'http://localhost:8000';
+                const response = await fetch(`${baseUrl}/api/pincode/check`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ pincode: userData.pincode }),
