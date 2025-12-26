@@ -1,88 +1,10 @@
-// import React, { useState } from "react";
-// import "./SignInModal.css";
-// import farmletLogo from "../../Images/Logo 1.png";
-
-// export default function SignInModal({ open, onClose }) {
-//   const [showPassword, setShowPassword] = useState(false);
-
-//   if (!open) return null;
-
-//   return (
-//     <div className="modal-overlay" onClick={onClose}>
-//       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-
-//         {/* Close Button */}
-//         <button className="modal-close" onClick={onClose}>×</button>
-
-//         {/* LEFT SIDE */}
-//         <div className="modal-left">
-//           <h2 className="modal-title">Sign in</h2>
-//           <div className="underline"></div>
-//           <p className="modal-subtext-center">
-//             Enter your details below to sign in to your Farmlet account
-//           </p>
-
-//           <label className="label-text">Email</label>
-//           <input className="input-box" type="email" placeholder="Enter Email" />
-
-//           <label className="label-text">Password</label>
-
-//           <div className="password-box">
-//   <input
-//     className="inputs"
-//     type={showPassword ? "text" : "password"}
-//     placeholder="Enter Password"
-//   />
-//   <span className="show-btn" onClick={() => setShowPassword(!showPassword)}>
-//     {showPassword ? "Hide" : "Show"}
-//   </span>
-// </div>
-
-
-//           <button className="small-btn">Sign in</button>
-
-//           <p className="forgot-link">Forgotten password?</p>
-//         </div>
-
-//         {/* RIGHT SIDE */}
-//         <div className="modal-right">
-//           <img src={farmletLogo} alt="Farmlet" className="side-logo" />
-
-//           <h3 className="modal-title">New to Farmlet?</h3>
-//           <div className="underline"></div>
-
-//           <p className="modal-subtext-center">
-//             Find out your delivery day to start shopping...
-//           </p>
-
-//           <label className="label-text">Enter postcode</label>
-//           <input className="input-box" type="text" placeholder="ex: 560001" />
-
-//           <button className="small-btn">Show my delivery day</button>
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 import "./SignInModal.css";
 import farmletLogo from "../../Images/Logo 1.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 
-export default function SignInModal({ open, onClose }) {
+export default function SignInModal({ open, onClose, onShopCategorySelect }) {
   const navigate = useNavigate();
   const { verifyPincode, login } = useAuth(); // Import from context
   const [showPassword, setShowPassword] = useState(false);
@@ -92,6 +14,13 @@ export default function SignInModal({ open, onClose }) {
   const [loading, setLoading] = useState(false);
   const [available, setAvailable] = useState(null); // null, true, false
   const [deliveryData, setDeliveryData] = useState(null);
+
+  // Login State (Unified)
+  const [loginInput, setLoginInput] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginOtp, setLoginOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [inputType, setInputType] = useState(null); // 'email' or 'phone' or null
 
   // Reset state when modal closes
   React.useEffect(() => {
@@ -178,16 +107,15 @@ export default function SignInModal({ open, onClose }) {
     }
   };
 
-  const handleCategoryClick = (categoryPath) => {
-    onClose(); // Close modal
-    navigate(categoryPath); // Navigate
+  const handleCategoryClick = (categoryName) => {
+    if (onShopCategorySelect) {
+      onShopCategorySelect(categoryName);
+    } else {
+      onClose();
+      // Fallback navigation if needed
+      navigate(`/products/${categoryName.toLowerCase().replace(/ /g, '-')}`);
+    }
   };
-  // Login State (Unified)
-  const [loginInput, setLoginInput] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [loginOtp, setLoginOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [inputType, setInputType] = useState(null); // 'email' or 'phone' or null
 
   // Determine input type on change
   const handleInputChange = (e) => {
@@ -338,7 +266,7 @@ export default function SignInModal({ open, onClose }) {
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal-container wide-modal" onClick={(e) => e.stopPropagation()}>
           {/* Close Button */}
-          <button className="modal-close" onClick={onClose} style={{ color: '#333', borderColor: '#333' }}>×</button>
+          <button className="modal-close" onClick={onClose}>×</button>
 
           <div className="success-view">
             <h2 className="delivery-header">
@@ -363,12 +291,12 @@ export default function SignInModal({ open, onClose }) {
               </p>
 
               <div className="category-grid">
-                <div onClick={() => handleCategoryClick("/products/fresh-fruits")} className="category-card">Fresh Fruits</div>
-                <div onClick={() => handleCategoryClick("/products/fresh-vegetables")} className="category-card">Fresh Vegetables</div>
-                <div onClick={() => handleCategoryClick("/products/leafy-seasonings")} className="category-card">Leafy & others</div>
-                <div onClick={() => handleCategoryClick("/products/whats-new")} className="category-card">What's new</div>
-                <div onClick={() => handleCategoryClick("/products/essentials")} className="category-card">Essentials</div>
-                <div onClick={() => handleCategoryClick("/products/dairy-eggs")} className="category-card">Dairy & eggs</div>
+                <div onClick={() => handleCategoryClick("Fresh Fruits")} className="category-card">Fresh Fruits</div>
+                <div onClick={() => handleCategoryClick("Fresh Vegetables")} className="category-card">Fresh Vegetables</div>
+                <div onClick={() => handleCategoryClick("Leafy & others")} className="category-card">Leafy & others</div>
+                <div onClick={() => handleCategoryClick("What's new")} className="category-card">What's new</div>
+                <div onClick={() => handleCategoryClick("Essentials")} className="category-card">Essentials</div>
+                <div onClick={() => handleCategoryClick("Dairy & eggs")} className="category-card">Dairy & eggs</div>
               </div>
 
               <button className="continue-btn" onClick={onClose}>Explore Farmlet</button>
@@ -384,7 +312,6 @@ export default function SignInModal({ open, onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-
         {/* Close Button */}
         <button className="modal-close" onClick={onClose}>×</button>
 

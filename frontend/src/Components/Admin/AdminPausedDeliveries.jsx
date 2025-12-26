@@ -29,7 +29,7 @@ export default function AdminPausedDeliveries() {
             } else {
                 const errData = await response.json();
                 console.error("Failed to fetch paused deliveries", errData);
-                setError(errData.message || "Failed to fetch paused deliveries");
+                setError(errData.details || errData.message || "Failed to fetch paused deliveries");
             }
         } catch (error) {
             console.error("Error:", error);

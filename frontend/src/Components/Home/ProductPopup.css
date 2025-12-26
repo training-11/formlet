@@ -47,28 +47,54 @@
 
 /* LEFT SIDE MENU */
 .popup-sidebar {
-  width: 260px;
-  /* background: transparent; */
+  width: 220px;
   padding-top: 20px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
   overflow-y: auto;
-  background: rgba(255, 255, 255, 0.18);
-  /* transparent liquid */
-  backdrop-filter: blur(12px);
-  /* glass / liquid blur */
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.2);
+  /* Slightly more opaque for sidebar */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  /* Liquid transparent */
+  display: flex;
+  flex-direction: column;
 }
 
 .popup-sidebar-item {
-  padding: 18px 20px;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
-  border-bottom: 1px solid #e5e5e5;
+  padding: 18px 25px;
+  /* Taller items */
+  width: 100%;
+  transition: all 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.popup-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .popup-sidebar-item.active {
-  background: #e2f3e8;
-  font-weight: bold;
+  background: rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+  color: #000;
+  border-left: 4px solid #01BF64;
+  /* Active indicator */
+}
+
+/* DELETED ICON STYLES AS REQUESTED */
+
+.popup-sidebar-text {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  /* inherit from parent */
+  text-align: left;
 }
 
 /* RIGHT SIDE PRODUCTS */
@@ -76,77 +102,104 @@
   flex: 1;
   padding: 30px;
   overflow-y: auto;
-  /* background-color: #f0e6d7; */
-  background: rgba(255, 255, 255, 0.18);
+  background: transparent;
+  /* Transparent to show main background */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
 }
 
 .popup-title {
-  font-size: 28px;
-  margin-bottom: 20px;
-  font-weight: bold;
+  font-size: 26px;
+  margin-bottom: 25px;
+  font-weight: 800;
+  color: #1a1a1a;
+  font-family: 'Inter', sans-serif;
 }
 
 /* PRODUCTS GRID */
 .popup-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  /* Responsive Cards */
   gap: 25px;
 }
 
 .popup-card {
+  position: relative;
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
   text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.popup-card:hover {
+  transform: translateY(-2px);
 }
 
 .popup-prod-img {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: contain;
+  margin-bottom: 10px;
 }
 
 .popup-location {
   background: #444;
   color: #fff;
-  padding: 6px 10px;
-  margin: 10px 0;
-  font-size: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
+  font-size: 12px;
+  align-self: flex-start;
+  border-radius: 2px;
 }
 
 .popup-name {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #222;
+  line-height: 1.3;
 }
 
 .popup-weight {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #bbb;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
   border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .popup-price {
-  margin-top: 12px;
+  margin-top: auto;
+  /* Push to bottom if flex column */
+  margin-bottom: 12px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 800;
+  color: #1a1a1a;
 }
 
 .popup-order-btn {
-  margin-top: 15px;
   width: 100%;
   padding: 12px;
   background: #01BF64;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
   border-radius: 6px;
   border: none;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.popup-order-btn:hover {
+  background: #019f52;
 }
 
 /* BOTTOM FIXED LOGIN BAR */
@@ -175,4 +228,19 @@
   /* IE, Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+/* RIBBON */
+.product-ribbon {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  background-color: #01BF64;
+  color: white;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 5;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
