@@ -78,9 +78,10 @@ export default function Navbar() {
 
   const handleScheduleClick = () => {
     if (isAuthenticated && currentUser) {
+      // setOpenScheduleModal(true);
       navigate("/delivery-schedule");
     } else {
-      setOpenModal(true);
+      setOpenModal(true); // Open Sign In
     }
   };
 
@@ -360,8 +361,8 @@ export default function Navbar() {
             </span>
             <img src={accountIcon} alt="Account" style={{ width: 30, height: 30 }} />
           </div>
-
         </div>
+
 
       </nav>
       {/* MOBILE SUBMENU */}
@@ -429,14 +430,14 @@ export default function Navbar() {
       )}
 
       {/* 📱 Mobile Search Popup */}
-      {mobileSearchOpen && window.innerWidth <= 768 && (
+      {/* {mobileSearchOpen && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
-
+          
           <div className="search-header">
             <div className="search-title">Search Farmlet</div>
 
             <button
-              className="close-btn"
+              className="mobile-close-btn"
               onClick={() => setMobileSearchOpen(false)}
             >
               ✕
@@ -453,7 +454,7 @@ export default function Navbar() {
           </div>
 
         </div>
-      )}
+      )} */ }
 
       <ProductPopup
         open={openPopup}

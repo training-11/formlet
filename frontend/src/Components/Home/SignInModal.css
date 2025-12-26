@@ -110,11 +110,12 @@
 
 /* Title */
 .modal-title {
-  font-family: "caveat", cursive;
+  font-family: "TeX Gyre Chorus", cursive;
   font-size: 52px;
-  font-weight: 600;
+  font-weight: 450;
   margin-bottom: 10px;
   text-align: center;
+  letter-spacing: 0.5px;
 }
 
 /* Underline */

@@ -344,23 +344,23 @@
    ================================= */
 .mobile-search-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #fdfcf8;
-  z-index: 3000;
-  padding: 22px;
+  inset: 0;                    /* full-screen */
+  background: #fffdf8;         /* light background */
+  z-index: 4000;               /* above page */
+  padding: 12px 12px 16px;     /* compact padding */
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .search-header {
   display: flex;
-  justify-content: space-between;   /* Space between title & X button */
-  align-items: center;              /* Align X button vertically center */
-  padding: 5px 0;
-  margin-top: -50px;
+  align-items: center;              /* vertically center */
+  justify-content: space-between;   /* title left, X right */
+  padding: 8px 0;
+  margin: 0;                        /* no negative offset */
 }
 
 .search-title {
@@ -368,36 +368,32 @@
   font-weight: 600;
   color: #222;
   letter-spacing: 0.2px;
-  width: 300px;
+  flex: 1;
+  min-width: 0;                   /* prevent pushing button */
 }
 
-.close-btn {
-
-  font-size: 24px;           /* Same size as screenshot */
-  color: #222;
-  padding: 0;
-
-  margin-right: -5px;
-    width: 34px;
-  height: 34px;
-  padding: 0;
-  box-sizing: border-box;
-  background: #111;            /* dark black circle */
-  border-radius: 50%;
-  border: 3px solid white;     /* ✔ white border like Riverford */
-
+.mobile-close-btn {
+  width: 28px;                   /* 28x28 */
+  height: 28px;
+  border-radius: 50%;            /* circle */
+  background: #111;              /* solid black */
+  color: #fff;                   /* white X */
+  border: none;                  /* no border */
+  outline: none;                 /* no outline */
+  box-shadow: none;              /* no shadow */
+  padding: 0;                    /* prevent ellipse from padding */
+  box-sizing: border-box;        /* keep size exact */
+  aspect-ratio: 1 / 1;           /* enforce perfect circle */
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-  font-weight: 200;             /* clean X */
+  justify-content: center;       /* center the X */
+  font-size: 15px;               /* X size 14–15 */
   line-height: 1;
-  color: white;
-
   cursor: pointer;
-  transition: 0.25s ease;  
+  z-index: 4100;                 /* above overlay content */
+  flex-shrink: 0;
 }
+.mobile-close-btn:active { transform: scale(0.96); }
 
 .close-btn:hover {
   border-color: #01BF64;           /* ✔ border turns black */
@@ -782,32 +778,23 @@ margin-left: 10px;
    ================================= */
 .mobile-search-overlay {
   position: fixed;
-  /* top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh; */
-  background: #fdfcf8;
-  z-index: 3000;
-  /* padding: 22px; */
-    padding: 18px 16px 24px;
+  inset: 0;                         /* full-screen */
+  background: #fffdf8;              /* light background */
+  z-index: 4000;                    /* ensure above everything */
+  padding: 16px 14px 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; 
-    inset: 0;  
-    position: fixed;
-    overflow-y: auto;
-    overflow-x: hidden;            /* ✅ STOP horizontal scroll */
-    box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .search-header {
   display: flex;
-  justify-content: space-between;   
+  justify-content: space-between;   /* title left, X right */
   align-items: center;              
-  padding: 5px 0;
-  /* margin-top: -30px; */
-  padding-bottom: 10px;
-  padding-top: 50px;
+  padding: 8px 0;
+  margin: 0;                        /* no negative offset */
 }
 
 .search-title {
@@ -815,52 +802,11 @@ margin-left: 10px;
   font-weight: 600;
   color: #222;
   letter-spacing: 0.2px;
-  width: 300px;
+  flex: 1;                          /* don't push X */
+  min-width: 0;
 }
 
-.close-btn {
-/* margin-top: -200px; */
-position: relative ;
-  font-size: 24px;           /* Same size as screenshot */
-  color: #222;
-  /* padding: 0; */
-
-  /* margin-right: -5px; */
-    width: 34px;
-  height: 34px;
-  box-sizing: border-box;
-  background: #111;            /* dark black circle */
-  border-radius: 50%;
-  border: 3px solid white;     /* ✔ white border like Riverford */
-
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-   justify-content: space-between;
-
-  font-size: 20px;
-  font-weight: 200;             /* clean X */
-  line-height: 1;
-  color: white;
-
-  cursor: pointer;
-  transition: 0.25s ease;  
-}
-
-.close-btn:hover {
-  border-color: #01BF64;           /* ✔ border turns black */
-  transform: scale(1.07);       /* gentle zoom */
-}
-
-.search-input-row {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  border: 1px solid #d6c7a1;
-  border-radius: 6px;
-  padding: 8px 12px;
-  background: #fff;
-}
+/* remove old .close-btn rules (not used) */
 
 .search-input {
   flex: 1;
@@ -877,7 +823,7 @@ position: relative ;
 
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
 
   .main-navbar {
        display: grid;
@@ -1016,4 +962,16 @@ position: relative ;
     font-size: 13px;
     color: #444;
   }
+}
+
+/* Hide the mobile-only close button on desktop just in case */
+@media (min-width: 769px) {
+  .mobile-close-btn { display: none !important; }
+}
+
+/* iPad Pro only: show icons only for delivery and sign-in */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+  .right-item span { display: none !important; }
+  .nav-right { gap: 16px; }
 }
