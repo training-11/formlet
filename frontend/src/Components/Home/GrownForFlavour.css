@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+/* @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap'); */
+
 
 .grown-section {
   position: relative;
@@ -46,11 +48,12 @@
 
 .grown-title {
     margin-top: 120px;
-  font-family:"TeX Gyre Chorus", cursive;
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
   font-size: 60px;
   color: #3a2a19;
   margin-bottom: 60px;
-  font-weight: 525;
   letter-spacing: 0.5px;
 }
 .grown-intro { display: none; }
@@ -71,6 +74,8 @@
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   margin: 0 auto;
+  margin-left: -40px;
+
 }
 /* .grown-img {
   width: 100%;
@@ -83,11 +88,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: left center;
   display: block;
 }
 
-/* ✅ FIX for 3rd card — show full head clearly */
+/* .grown-card:nth-child(1) {
+  justify-self: start;
+} */
+ /* ✅ FIX for 3rd card — show full head clearly */
 .grown-card:nth-child(3) .grown-img {
   height: auto;              /* ✅ VERY IMPORTANT */
   object-fit: contain;       /* ✅ prevents cropping */
@@ -96,7 +104,7 @@
 
 .grown-card-text {
   font-family: "Work Sans",sans-serif;
-  font-weight: 338;
+  font-weight:400;
   margin-top: 22px;
   font-size: 16px;
   line-height: 2.3;
@@ -104,6 +112,7 @@
    flex: 1;
   max-width: 320px;
   text-align: center;
+  margin-left: -30px;
   
 }
 .tablet-override-text { display: none; }
@@ -130,7 +139,9 @@
 
   .grown-title {
     font-size: 32px;
-    font-family: "TeX Gyre Chorus", cursive;
+    font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
     color: #3a2a19;
     margin-bottom: 25px;
     letter-spacing: 0.5px;
@@ -199,7 +210,7 @@
   .grown-card:nth-child(2) .grown-image-wrap { display: none !important; }
   .grown-card:nth-child(2) .grown-card-text { grid-column: 1 / -1; display:block; margin: 0 auto 30px; }
   */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 999px) {
   /* .grown-section { background: #f4f1ec !important; } */
   /* .grown-angled-top { display: none !important; } */
 
@@ -277,5 +288,63 @@
   
   .grown-grid {
     gap: 80px;
+  }
+}
+
+/* Desktop-perfect: 3-up row between 1000px and 1318px */
+@media (min-width: 999px) and (max-width: 1318px) {
+  .grown-inner {
+    max-width: 1280px;
+    padding-left: 48px;
+    padding-right: 48px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .grown-title {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .grown-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px !important;
+    justify-items: center;
+    align-items: start;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .grown-card {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .grown-image-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    max-width: 360px;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin: 0 auto;
+  }
+
+  .grown-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .grown-card-text {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
 }

@@ -25,6 +25,7 @@ export default function Navbar() {
 
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ left: 0 });
+  // const [searchOpen, setSearchOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const [openPopup, setOpenPopup] = useState(false);
@@ -320,12 +321,15 @@ export default function Navbar() {
         </ul>
 
         <div className="nav-right">
-          {/* MOBILE SEARCH ICON */}
+          {/* MOBILE SEARCH ICON (always visible on mobile) */}
           <img
             src={searchIcon}
             alt="Search"
             className="mobile-search-icon"
+            // onClick={() => {
+            // if (window.innerWidth <= 768) setSearchOpen(true);
             onClick={() => setMobileSearchOpen(true)}
+
           />
 
           <div className="search-box">
@@ -361,8 +365,8 @@ export default function Navbar() {
             </span>
             <img src={accountIcon} alt="Account" style={{ width: 30, height: 30 }} />
           </div>
-        </div>
 
+        </div>
 
       </nav>
       {/* MOBILE SUBMENU */}
@@ -430,14 +434,14 @@ export default function Navbar() {
       )}
 
       {/* 📱 Mobile Search Popup */}
-      {/* {mobileSearchOpen && window.innerWidth <= 768 && (
+      {mobileSearchOpen && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
-          
+
           <div className="search-header">
             <div className="search-title">Search Farmlet</div>
 
             <button
-              className="mobile-close-btn"
+              className="close-btn"
               onClick={() => setMobileSearchOpen(false)}
             >
               ✕

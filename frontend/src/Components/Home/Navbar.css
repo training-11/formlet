@@ -826,16 +826,16 @@ margin-left: 10px;
 @media (min-width: 768px) and (max-width: 1023px) {
 
   .main-navbar {
-       display: grid;
-    grid-template-columns: auto 1fr auto;
-    column-gap: 20px;
-    /* display: flex; */
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    flex-wrap: nowrap;
+    padding: 10px 15px;
     height: auto;
+    min-height: 72px;
     background: #F8F3EA !important;
     border-bottom: none !important;
+    overflow: visible;
   }
 
   .nav-left {
@@ -849,29 +849,22 @@ margin-left: 10px;
   }
 
   .search-box {
-     justify-self: center;
-    width: 380px;          /* fixed width like Riverford */
-    max-width: 380px;
-    margin: 0 !important;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 15px !important;
     display: flex !important;
-    /* display: flex !important; */
-    /* width: 100%;
-    max-width: 420px;
-    margin: 0 20px !important; */
+    flex-shrink: 1;
   }
 
 
   .nav-right {
     display: flex !important;
     flex-direction: row;
-    gap: 20px;
+    gap: 15px;
     margin-right: 0 !important;
     align-items: center;
-
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    gap: 22px;
+    flex-shrink: 0;
+    min-width: fit-content;
   }
 
   .mobile-search-icon {
@@ -964,6 +957,81 @@ margin-left: 10px;
   }
 }
 
+/* Desktop parity: force desktop header between 1000px and 1024px */
+@media (min-width: 1000px) and (max-width: 1024px) {
+  /* Match 1024px desktop navbar sizing and alignment */
+  .main-navbar {
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 0 25px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important; /* prevent wrapping/stacking */
+    background: #F8F3EA !important;
+    overflow: visible !important;
+  }
+  /* Restore desktop logo size */
+  .nav-logo {
+    height: 155px !important;
+    width: 200px !important;
+    margin: 0 !important;
+  }
+
+  /* Show desktop center menu */
+  .nav-center {
+    display: flex !important;
+    align-items: center !important;
+    gap: 30px !important;
+  }
+
+  /* Show secondary category strip (submenu) */
+  .submenu-container {
+    display: block !important;
+    width: 100% !important;
+  }
+  .submenu {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 100px !important;
+    padding: 12px 0 !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid #eee !important;
+    height: 48px !important;
+  }
+
+  /* Hide tablet/mobile submenu UI */
+  .mobile-submenu,
+  .mobile-full-dropdown {
+    display: none !important;
+  }
+
+  /* Right side: show ONLY icons (same as 1024px) */
+  .right-item span {
+    display: none !important;
+  }
+  .nav-right {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important; /* match 1024 icon spacing */
+    margin-right: 50px !important;
+    flex-wrap: nowrap !important;
+  }
+  .mobile-search-icon {
+    display: none !important;
+  }
+
+  /* Keep dropdown available (desktop behavior) */
+  .dropdown-menu {
+    display: block !important;
+    position: absolute !important;
+    top: 48px !important;
+    transform: translateX(-50%) !important;
+    z-index: 500 !important;
+  }
+}
+
 /* Hide the mobile-only close button on desktop just in case */
 @media (min-width: 769px) {
   .mobile-close-btn { display: none !important; }
@@ -974,4 +1042,15 @@ margin-left: 10px;
        (width: 1366px) and (orientation: landscape) {
   .right-item span { display: none !important; }
   .nav-right { gap: 16px; }
+}
+
+/* Hide right-side text UI for 1025px–1389px range - keep only icons */
+@media (min-width: 1025px) and (max-width: 1389px) {
+  .right-item span {
+    display: none !important;
+  }
+  
+  .nav-right {
+    gap: 14px;
+  }
 }

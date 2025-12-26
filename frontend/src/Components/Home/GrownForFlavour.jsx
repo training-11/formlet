@@ -24,6 +24,8 @@ export default function GrownForFlavour() {
     },
   ];
 
+
+
   // Tablet-only developer override: show alternate text under a chosen image
   // Set cardIndex to the image you want to pair with the alternate text.
   const tabletTextOverride = {
