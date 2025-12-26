@@ -139,7 +139,7 @@ export const addPincode = async (req, res) => {
         res.status(201).json({ message: "Pincode added successfully" });
     } catch (error) {
         console.error("Add Pincode Error:", error);
-        res.status(500).json({ error: "Server Error" });
+        res.status(500).json({ error: "Server Error", details: error.message, sql: error.sqlMessage });
     }
 };
 
@@ -267,7 +267,14 @@ export const getAllProducts = async (req, res) => {
         }
 
         const query = `
-            SELECT p.*, c.name as category_name
+            SELECT p.*, c.name as category_name,
+                   (SELECT JSON_ARRAYAGG(t.name) 
+                    FROM product_tags pt 
+                    JOIN tags t ON pt.tag_id = t.id 
+                    WHERE pt.product_id = p.id) as tags,
+                   (SELECT JSON_ARRAYAGG(pt.tag_id)
+                    FROM product_tags pt
+                    WHERE pt.product_id = p.id) as tag_ids
             FROM products p
             JOIN categories c ON p.category_id = c.id
             ORDER BY p.created_at DESC
@@ -285,6 +292,7 @@ export const getAllProducts = async (req, res) => {
 
 // ADD PRODUCT
 export const addProduct = async (req, res) => {
+    console.log("Adding Product Body:", req.body); // DEBUG LOG
     const connection = await db.getConnection();
     try {
         await connection.beginTransaction();
@@ -308,9 +316,45 @@ export const addProduct = async (req, res) => {
 
         const productId = result.insertId;
 
+        // Add Tags
+        let tagIds = req.body.tag_ids;
+        console.log(`[DEBUG] Adding Tags for Product ${productId}:`, tagIds);
+
+        if (tagIds) {
+            // Ensure array
+            if (!Array.isArray(tagIds)) {
+                try {
+                    const parsed = JSON.parse(tagIds);
+                    if (Array.isArray(parsed)) {
+                        tagIds = parsed;
+                    } else {
+                        // Single value (number/string)
+                        tagIds = [parsed];
+                    }
+                } catch (e) {
+                    // Not JSON, treat as single string value
+                    tagIds = [tagIds];
+                }
+            }
+
+            // Ensure numbers
+            tagIds = tagIds.map(t => parseInt(t)).filter(t => !isNaN(t));
+
+            if (tagIds.length > 0) {
+                const tagValues = tagIds.map(tagId => [productId, tagId]);
+                await connection.query("INSERT INTO product_tags (product_id, tag_id) VALUES ?", [tagValues]);
+            }
+        }
+
         await connection.commit();
-        await redisClient.del('products_all'); // Clear Admin Cache
-        await redisClient.del('products_public'); // Clear Public Cache
+        try {
+            await redisClient.del('products_all'); // Clear Admin Cache
+            await redisClient.del('products_public'); // Clear Public Cache
+            console.log("[DEBUG] Redis Cache Cleared");
+        } catch (redisErr) {
+            console.error("[WARN] Redis Clear Failed:", redisErr);
+        }
+
         res.status(201).json({ message: "Product added successfully", productId });
     } catch (error) {
         await connection.rollback();
@@ -324,6 +368,8 @@ export const addProduct = async (req, res) => {
 // UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
+    console.log(`[DEBUG] Updating Product ${id} Body:`, req.body);
+
     let { category_id, name, weight, price, location, stock, image_url } = req.body;
 
     // Handle Image Upload
@@ -342,9 +388,45 @@ export const updateProduct = async (req, res) => {
         `;
         await connection.query(query, [category_id, name, weight, price, location, stock, image_url, id]);
 
+        // Update Tags (Delete and Re-insert)
+        await connection.query("DELETE FROM product_tags WHERE product_id = ?", [id]);
+
+        let tagIds = req.body.tag_ids;
+        console.log(`[DEBUG] Updating Tags for Product ${id}:`, tagIds);
+
+        if (tagIds) {
+            // Ensure array
+            if (!Array.isArray(tagIds)) {
+                try {
+                    const parsed = JSON.parse(tagIds);
+                    if (Array.isArray(parsed)) {
+                        tagIds = parsed;
+                    } else {
+                        tagIds = [parsed];
+                    }
+                } catch (e) {
+                    tagIds = [tagIds];
+                }
+            }
+
+            // Ensure numbers
+            tagIds = tagIds.map(t => parseInt(t)).filter(t => !isNaN(t));
+
+            if (tagIds.length > 0) {
+                const tagValues = tagIds.map(tagId => [id, tagId]);
+                await connection.query("INSERT INTO product_tags (product_id, tag_id) VALUES ?", [tagValues]);
+            }
+        }
+
         await connection.commit();
-        await redisClient.del('products_all'); // Clear Admin Cache
-        await redisClient.del('products_public'); // Clear Public Cache
+        try {
+            await redisClient.del('products_all'); // Clear Admin Cache
+            await redisClient.del('products_public'); // Clear Public Cache
+            console.log("[DEBUG] Redis Cache Cleared");
+        } catch (redisErr) {
+            console.error("[WARN] Redis Clear Failed:", redisErr);
+        }
+
         res.json({ message: "Product updated successfully" });
     } catch (error) {
         await connection.rollback();
@@ -468,7 +550,7 @@ export const getDeliveries = async (req, res) => {
         res.json(events);
     } catch (error) {
         console.error("Get Deliveries Error:", error);
-        res.status(500).json({ error: "Server Error" });
+        res.status(500).json({ error: "Server Error", details: error.message, sql: error.sqlMessage });
     }
 };
 
@@ -485,6 +567,17 @@ export const getPausedDeliveries = async (req, res) => {
         res.json(rows);
     } catch (error) {
         console.error("Paused Deliveries Error:", error);
+        res.status(500).json({ error: "Server Error", details: error.message, sql: error.sqlMessage });
+    }
+};
+
+// GET ALL TAGS
+export const getAllTags = async (req, res) => {
+    try {
+        const [tags] = await db.query("SELECT * FROM tags ORDER BY name ASC");
+        res.json(tags);
+    } catch (error) {
+        console.error("Get Tags Error:", error);
         res.status(500).json({ error: "Server Error" });
     }
 };

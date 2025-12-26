@@ -116,6 +116,15 @@ CREATE TABLE IF NOT EXISTS skipped_deliveries (
     UNIQUE KEY unique_user_date (user_id, skip_date)
 );
 
+CREATE TABLE IF NOT EXISTS delivery_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    delivery_date DATE,
+    status VARCHAR(50) DEFAULT 'delivered',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+);
+
 INSERT INTO users (name, email, password, address, role) 
 VALUES ('Admin', 'admin@farmlet.com', '$2b$10$vW6QGzhSFTD5gBovPRuiW.jr4XMKMz45psatIXoOs5py6R6BsKHE.', 'HQ', 'admin')
 ON DUPLICATE KEY UPDATE role='admin';

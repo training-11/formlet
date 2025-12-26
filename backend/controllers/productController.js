@@ -26,7 +26,11 @@ export const getPublicProducts = async (req, res) => {
         // We join with categories to help frontend grouping if needed, 
         // but simple select is enough if we transform in frontend.
         const query = `
-            SELECT p.*, c.name as category_name 
+            SELECT p.*, c.name as category_name,
+                   (SELECT JSON_ARRAYAGG(t.name) 
+                    FROM product_tags pt 
+                    JOIN tags t ON pt.tag_id = t.id 
+                    WHERE pt.product_id = p.id) as tags 
             FROM products p
             JOIN categories c ON p.category_id = c.id
             ORDER BY p.category_id ASC, p.id ASC

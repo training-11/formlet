@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./AddToCartModal.css";
 import { useAuth } from "../../Context/AuthContext";
 
+import { getProductImage } from "../../utils/urlHelper";
+
 export default function AddToCartModal({ product, onClose, onConfirm }) {
     const { pincodeDetails } = useAuth();
 
@@ -119,7 +121,7 @@ export default function AddToCartModal({ product, onClose, onConfirm }) {
             <div className="add-modal-container" onClick={(e) => e.stopPropagation()}>
 
                 {/* HEADER WITH IMAGE BACKGROUND */}
-                <div className="add-modal-header" style={{ backgroundImage: `url(${product.image_url && product.image_url.startsWith("/uploads") ? `${window.ENV.BACKEND_API}${product.image_url}` : product.image_url})` }}>
+                <div className="add-modal-header" style={{ backgroundImage: `url(${getProductImage(product)})` }}>
                     <div className="header-overlay">
                         <h2 className="modal-product-name">{product.name}</h2>
                         <button className="modal-close-icon" onClick={onClose}>×</button>

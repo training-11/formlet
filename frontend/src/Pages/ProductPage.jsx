@@ -127,6 +127,12 @@ export default function ProductPage() {
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((prod) => (
                   <div className="product-card" key={prod.id}>
+                    {/* Render Ribbon if tags exist */}
+                    {prod.tags && prod.tags.length > 0 && (
+                      <div className="product-ribbon">
+                        {Array.isArray(prod.tags) ? prod.tags[0] : (typeof prod.tags === 'string' && prod.tags.startsWith('[') ? JSON.parse(prod.tags)[0] : prod.tags)}
+                      </div>
+                    )}
                     <img
                       src={getImageUrl(prod.image_url)}
                       className="product-image"

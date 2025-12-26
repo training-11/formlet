@@ -6,7 +6,7 @@ import {
     getAllPincodes, addPincode, deletePincode, getOrderItems,
     getAllCoupons, addCoupon, deleteCoupon,
     getAllCategories, addCategory, deleteCategory, // Categories
-    getAllProducts, addProduct, deleteProduct, updateProduct, getDeliveries, getPausedDeliveries, getDeliveryLogs     // Products
+    getAllProducts, addProduct, deleteProduct, updateProduct, getDeliveries, getPausedDeliveries, getDeliveryLogs, getAllTags     // Products
 } from "../controllers/adminController.js";
 
 const router = express.Router();
@@ -43,5 +43,8 @@ router.get("/products", auth, admin, getAllProducts);
 router.post("/products", auth, admin, upload.single('image'), addProduct); // Image Upload
 router.put("/products/:id", auth, admin, upload.single('image'), updateProduct); // Image Upload
 router.delete("/products/:id", auth, admin, deleteProduct);
+
+// Tags
+router.get("/tags", auth, admin, getAllTags);
 
 export default router;

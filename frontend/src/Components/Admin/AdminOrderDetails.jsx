@@ -111,11 +111,36 @@ export default function AdminOrderDetails() {
     const getDeliverySchedule = () => {
         if (!order || items.length === 0) return [];
 
-        const startDate = parseDateString(order.delivery_date);
-        if (!startDate) return [{ date: order.delivery_date, items: items, isFuture: false, isDelivered: false }];
+        // Try to parse start date
+        let startDate = null;
+        // Case A: ISO Date from DB (YYYY-MM-DD or full timestamp)
+        if (order.delivery_date && !isNaN(new Date(order.delivery_date).getTime())) {
+            startDate = new Date(order.delivery_date);
+        }
+        // Case B: String format like "22nd Dec" (Legacy fallback)
+        if (!startDate) {
+            startDate = parseDateString(order.delivery_date);
+        }
+        // Case C: Fallback to Order Creation Date
+        if (!startDate) {
+            startDate = new Date(order.created_at || new Date());
+        }
 
         const schedule = [];
         const numWeeks = 12; // Extended schedule (3 months)
+
+        // Frequency Map (Matches Backend)
+        const freqMap = {
+            "Every week": 1,
+            "Every 2 weeks": 2,
+            "Every 3 weeks": 3,
+            "Every 4 weeks": 4,
+            "Weekly": 1,
+            "Bi-Weekly": 2,
+            "Monthly": 4,
+            "Once only": 0,
+            "One-Time": 0
+        };
 
         for (let i = 0; i < numWeeks; i++) {
             const currentDate = new Date(startDate);
@@ -128,34 +153,29 @@ export default function AdminOrderDetails() {
             else if (day % 10 === 2 && day !== 12) suffix = "nd";
             else if (day % 10 === 3 && day !== 13) suffix = "rd";
             const dateStrDisplay = `${day}${suffix} ${month}`;
-
-            // Check if this specific date is in logs (compare using YYYY-MM-DD or fuzzy match ?)
-            // The notifyDelivery sends `dateStr` which IS "2nd Jan". 
-            // Wait, notifyDelivery in Controller receives `delivery_date`. 
-            // If we send "2nd Jan", it tries to insert that into DATE column? 
-            // MySQL DATE column requires 'YYYY-MM-DD'. Inserting "2nd Jan" might behave weirdly or fail (truncated).
-            // Let's fix handleMarkDelivered to send YYYY-MM-DD as well, or update backend to parse.
-            // EASIER: Send YYYY-MM-DD from frontend.
-
             const dateYMD = toYMD(currentDate);
-            // Check logs. Logs store YYYY-MM-DD (from previous step's insertion... wait, previous step just inserted `delivery_date` passed from body)
-            // If body had "2nd Jan", it might fail.
-            // I should ensure I send YYYY-MM-DD in handleMarkDelivered.
 
             // Check if delivered
             const isDelivered = deliveryLogs.some(log => {
-                // log.delivery_date is likely a string "YYYY-MM-DD..." from JSON
-                return log.delivery_date.startsWith(dateYMD);
+                // Ensure robust comparison (YYYY-MM-DD)
+                if (!log.delivery_date) return false;
+                const logDate = new Date(log.delivery_date);
+                if (isNaN(logDate.getTime())) return false; // Invalid date in log
+                return toYMD(logDate) === dateYMD;
             });
 
             const dueItems = items.filter(item => {
-                if (i === 0) return true;
-                if (item.frequency === "Once only") return false;
-                if (item.frequency === "Every week") return true;
-                if (item.frequency === "Every 2 weeks") return i % 2 === 0;
-                if (item.frequency === "Every 3 weeks") return i % 3 === 0;
-                if (item.frequency === "Every 4 weeks") return i % 4 === 0;
-                return false;
+                const freqKey = item.frequency ? item.frequency.trim() : "One-Time";
+                const interval = freqMap[freqKey]; // Weeks interval
+
+                // Single Delivery (Week 0 only)
+                if (interval === 0 || interval === undefined) {
+                    return i === 0;
+                }
+
+                // Recurring Delivery
+                // Check if current week index (i) is a multiple of interval
+                return (i % interval) === 0;
             });
 
             if (dueItems.length > 0) {

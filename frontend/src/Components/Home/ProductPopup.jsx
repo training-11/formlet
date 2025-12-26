@@ -3,6 +3,7 @@ import "./ProductPopup.css";
 import { FaTimes } from "react-icons/fa";
 import { useAuth } from "../../Context/AuthContext";
 import AddToCartModal from "../Cart/AddToCartModal";
+import { getProductImage } from "../../utils/urlHelper";
 
 export default function ProductPopup({
   open,
@@ -47,6 +48,14 @@ export default function ProductPopup({
 
   if (!open) return null;
 
+  // Helper to resolve image path
+  const getImageUrl = (url) => {
+    if (url && url.startsWith("/uploads")) {
+      return `${window.ENV.BACKEND_API}${url}`;
+    }
+    return url;
+  };
+
   return (
     <div className="popup-overlay1" onClick={onClose}>
       <div className="popup-box" onClick={(e) => e.stopPropagation()}>
@@ -58,11 +67,11 @@ export default function ProductPopup({
             {categories.map((cat, i) => (
               <div
                 key={i}
-                className={`popup-sidebar-item ${selectedCategory === cat ? "active" : ""
+                className={`popup-sidebar-item ${selectedCategory === cat.name ? "active" : ""
                   }`}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => setSelectedCategory(cat.name)}
               >
-                {cat}
+                <span className="popup-sidebar-text" style={{ fontSize: '16px', fontWeight: 'bold' }}>{cat.name}</span>
               </div>
             ))}
           </div>
@@ -73,13 +82,19 @@ export default function ProductPopup({
 
             <div className="popup-grid">
               {products.map((prod, index) => {
-                const imgSource = prod.image_url || prod.image;
-                const finalImg = imgSource && imgSource.startsWith("/uploads")
-                  ? `${window.ENV.BACKEND_API}${imgSource}`
-                  : imgSource;
+                const finalImg = getProductImage(prod);
+                console.log(`Popup Product ${prod.id} tags:`, prod.tags, typeof prod.tags); // DEBUG LOG
 
                 return (
                   <div className="popup-card" key={index}>
+                    {/* Render Ribbon if tags exist */}
+                    {prod.tags && prod.tags.length > 0 && (
+                      <div className="product-ribbon">
+                        {/* If tags is string (from older DB/code), try parse, else use 0 index if array */}
+                        {Array.isArray(prod.tags) ? prod.tags[0] : (typeof prod.tags === 'string' && prod.tags.startsWith('[') ? JSON.parse(prod.tags)[0] : prod.tags)}
+                      </div>
+                    )}
+
                     <img src={finalImg} alt={prod.name} className="popup-prod-img" />
 
                     <div className="popup-location">{prod.location}</div>

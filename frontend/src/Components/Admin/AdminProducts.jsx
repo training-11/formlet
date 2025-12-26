@@ -9,8 +9,12 @@ export default function AdminProducts() {
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // Edit Mode State
+    const [editMode, setEditMode] = useState(false);
+    const [editId, setEditId] = useState(null);
+
     // Form State
-    const [newItem, setNewItem] = useState({
+    const initialFormState = {
         name: "",
         category_id: "",
         weight: "",
@@ -19,7 +23,8 @@ export default function AdminProducts() {
         stock: 0,
         image_url: "",
         tag_ids: []
-    });
+    };
+    const [newItem, setNewItem] = useState(initialFormState);
 
     useEffect(() => {
         fetchData();
@@ -58,13 +63,51 @@ export default function AdminProducts() {
         setNewItem(prev => ({ ...prev, tag_ids: selectedTags }));
     };
 
+    const handleEdit = (prod) => {
+        setEditMode(true);
+        setEditId(prod.id);
+
+        // Parse tag_ids if they come as string/JSON from DB, or use raw if array
+        let currentTagIds = [];
+        if (prod.tag_ids) {
+            // It might come as "[1, 2]" string or [1, 2] array
+            currentTagIds = Array.isArray(prod.tag_ids) ? prod.tag_ids : JSON.parse(prod.tag_ids);
+        }
+
+        setNewItem({
+            name: prod.name,
+            category_id: prod.category_id,
+            weight: prod.weight || "",
+            price: prod.price,
+            location: prod.location || "",
+            stock: prod.stock || 0,
+            image_url: prod.image_url || "",
+            tag_ids: currentTagIds || []
+        });
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+    };
+
+    const handleCancel = () => {
+        setEditMode(false);
+        setEditId(null);
+        setNewItem(initialFormState);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const response = await fetch(`${window.ENV.BACKEND_API}/api/admin/products`, {
-                method: "POST",
+            const url = editMode
+                ? `${window.ENV.BACKEND_API}/api/admin/products/${editId}`
+                : `${window.ENV.BACKEND_API}/api/admin/products`;
+
+            const method = editMode ? "PUT" : "POST";
+
+            const response = await fetch(url, {
+                method: method,
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${currentUser.token}`
@@ -73,23 +116,14 @@ export default function AdminProducts() {
             });
 
             if (response.ok) {
-                setNewItem({
-                    name: "",
-                    category_id: "",
-                    weight: "",
-                    price: "",
-                    location: "",
-                    stock: 0,
-                    image_url: "",
-                    tag_ids: []
-                });
-                fetchData(); // Refresh list
+                handleCancel(); // Reset form
+                fetchData();    // Refresh list
             } else {
                 const err = await response.json();
-                alert(err.message || "Failed to add product");
+                alert(err.message || "Failed to save product");
             }
         } catch (error) {
-            console.error("Product Add Error:", error);
+            console.error("Product Save Error:", error);
         } finally {
             setLoading(false);
         }
@@ -110,7 +144,7 @@ export default function AdminProducts() {
 
     return (
         <div className="admin-pincodes-container">
-            <h2>Manage Products</h2>
+            <h2>{editMode ? "Edit Product" : "Manage Products"}</h2>
 
             <form className="add-item-form" onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "30px" }}>
                 <select name="category_id" value={newItem.category_id} onChange={handleInputChange} required style={{ gridColumn: "span 2", padding: "10px" }}>
@@ -134,9 +168,16 @@ export default function AdminProducts() {
                     </select>
                 </div>
 
-                <button type="submit" disabled={loading} style={{ gridColumn: "span 2", padding: "10px", background: "black", color: "white", cursor: "pointer" }}>
-                    {loading ? "Adding..." : "Add Product"}
-                </button>
+                <div style={{ gridColumn: "span 2", display: "flex", gap: "10px" }}>
+                    <button type="submit" disabled={loading} style={{ flex: 1, padding: "10px", background: editMode ? "#007bff" : "black", color: "white", cursor: "pointer" }}>
+                        {loading ? "Saving..." : (editMode ? "Update Product" : "Add Product")}
+                    </button>
+                    {editMode && (
+                        <button type="button" onClick={handleCancel} style={{ flex: 0.3, padding: "10px", background: "#666", color: "white", cursor: "pointer" }}>
+                            Cancel
+                        </button>
+                    )}
+                </div>
             </form>
 
             <table className="pincode-table">
@@ -164,13 +205,28 @@ export default function AdminProducts() {
                             <td>{prod.category_name}</td>
                             <td>₹{prod.price}</td>
                             <td>
-                                {prod.tags && JSON.parse(prod.tags).map(t => (
-                                    <span key={t} style={{ background: "#eee", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", marginRight: "4px" }}>
-                                        {t}
-                                    </span>
-                                ))}
+                                {(() => {
+                                    let displayTags = [];
+                                    if (prod.tags) {
+                                        try {
+                                            if (Array.isArray(prod.tags)) {
+                                                displayTags = prod.tags;
+                                            } else {
+                                                displayTags = JSON.parse(prod.tags);
+                                            }
+                                        } catch (e) {
+                                            displayTags = [prod.tags]; // Fallback
+                                        }
+                                    }
+                                    return displayTags.map(t => (
+                                        <span key={t} style={{ background: "#eee", padding: "2px 6px", borderRadius: "4px", fontSize: "12px", marginRight: "4px" }}>
+                                            {t}
+                                        </span>
+                                    ));
+                                })()}
                             </td>
                             <td>
+                                <button className="edit-btn" onClick={() => handleEdit(prod)} style={{ marginRight: "5px", padding: "5px 10px", background: "#007bff", color: "white", border: "none", cursor: "pointer" }}>Edit</button>
                                 <button className="delete-btn" onClick={() => handleDelete(prod.id)}>Delete</button>
                             </td>
                         </tr>

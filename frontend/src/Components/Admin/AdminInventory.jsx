@@ -8,6 +8,7 @@ export default function AdminInventory() {
     // Data
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const [tags, setTags] = useState([]); // Tags State
 
     // Selection
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -22,7 +23,7 @@ export default function AdminInventory() {
     const [newCategoryFile, setNewCategoryFile] = useState(null);
 
     const [newProduct, setNewProduct] = useState({
-        name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null
+        name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null, tag_ids: []
     });
 
 
@@ -35,9 +36,10 @@ export default function AdminInventory() {
 
     const fetchEverything = async () => {
         try {
-            const [catRes, prodRes] = await Promise.all([
+            const [catRes, prodRes, tagRes] = await Promise.all([
                 fetch(`${window.ENV.BACKEND_API}/api/admin/categories`, { headers: { Authorization: `Bearer ${currentUser.token}` } }),
                 fetch(`${window.ENV.BACKEND_API}/api/admin/products`, { headers: { Authorization: `Bearer ${currentUser.token}` } }),
+                fetch(`${window.ENV.BACKEND_API}/api/admin/tags`, { headers: { Authorization: `Bearer ${currentUser.token}` } })
             ]);
 
             if (catRes.ok) {
@@ -47,6 +49,7 @@ export default function AdminInventory() {
                 if (!selectedCategory && cats.length > 0) setSelectedCategory(cats[0]);
             }
             if (prodRes.ok) setProducts(await prodRes.json());
+            if (tagRes.ok) setTags(await tagRes.json());
 
         } catch (error) {
             console.error("Fetch Error:", error);
@@ -107,12 +110,18 @@ export default function AdminInventory() {
 
     const handleOpenAddModal = () => {
         setEditingProduct(null);
-        setNewProduct({ name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null });
+        setNewProduct({ name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null, tag_ids: [] });
         setShowProductModal(true);
     };
 
     const handleOpenEditModal = (prod) => {
         setEditingProduct(prod);
+
+        // Parse existing tags
+        let currentTagIds = [];
+        if (prod.tag_ids) {
+            currentTagIds = Array.isArray(prod.tag_ids) ? prod.tag_ids : JSON.parse(prod.tag_ids);
+        }
 
         setNewProduct({
             name: prod.name,
@@ -121,7 +130,8 @@ export default function AdminInventory() {
             location: prod.location,
             stock: prod.stock,
             image_url: prod.image_url,
-            imageFile: null
+            imageFile: null,
+            tag_ids: currentTagIds || []
         });
         setShowProductModal(true);
     };
@@ -145,6 +155,11 @@ export default function AdminInventory() {
                 formData.append("image", newProduct.imageFile);
             } else {
                 formData.append("image_url", newProduct.image_url);
+            }
+
+            // Append Tags
+            if (newProduct.tag_ids && newProduct.tag_ids.length > 0) {
+                newProduct.tag_ids.forEach(tagId => formData.append("tag_ids", tagId));
             }
 
             let url = `${window.ENV.BACKEND_API}/api/admin/products`;
@@ -290,6 +305,23 @@ export default function AdminInventory() {
                             <div className="form-group">
                                 <label>Location</label>
                                 <input value={newProduct.location} onChange={e => setNewProduct({ ...newProduct, location: e.target.value })} />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Tags (Hold Ctrl/Cmd to select multiple)</label>
+                                <select
+                                    multiple
+                                    style={{ height: '80px', width: '100%', padding: '5px' }}
+                                    value={newProduct.tag_ids}
+                                    onChange={(e) => {
+                                        const selected = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+                                        setNewProduct({ ...newProduct, tag_ids: selected });
+                                    }}
+                                >
+                                    {tags.map(tag => (
+                                        <option key={tag.id} value={tag.id}>{tag.name}</option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div className="modal-actions">

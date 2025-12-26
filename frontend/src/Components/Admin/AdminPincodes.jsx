@@ -49,7 +49,8 @@ export default function AdminPincodes() {
                 fetchPincodes();
             } else {
                 const err = await response.json();
-                alert(err.message || "Failed to add");
+                console.error("Add Pincode Failed:", err);
+                alert(err.details || err.message || "Failed to add");
             }
         } catch (error) {
             console.error("Add Pincode Error:", error);

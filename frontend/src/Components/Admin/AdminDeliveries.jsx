@@ -5,12 +5,14 @@ export default function AdminDeliveries() {
     const { currentUser } = useAuth();
     const [deliveries, setDeliveries] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [error, setError] = useState(null);
     useEffect(() => {
         fetchDeliveries();
     }, []);
 
     const fetchDeliveries = async () => {
+        setLoading(true);
+        setError(null);
         try {
             const res = await fetch(`${window.ENV.BACKEND_API}/api/admin/deliveries`, {
                 headers: { Authorization: `Bearer ${currentUser.token}` }
@@ -18,9 +20,13 @@ export default function AdminDeliveries() {
             if (res.ok) {
                 const data = await res.json();
                 setDeliveries(data);
+            } else {
+                const errData = await res.json();
+                setError(errData.details || errData.message || "Failed to fetch deliveries");
             }
         } catch (e) {
             console.error(e);
+            setError("Network Error");
         } finally {
             setLoading(false);
         }
@@ -35,6 +41,8 @@ export default function AdminDeliveries() {
     }, {});
 
     if (loading) return <div>Loading Schedule...</div>;
+
+    if (error) return <div style={{ color: 'red', fontWeight: 'bold', padding: '20px' }}>Error: {error}</div>;
 
     return (
         <div style={{ paddingBottom: '50px' }}>
