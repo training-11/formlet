@@ -458,7 +458,7 @@ export default function Navbar() {
           </div>
 
         </div>
-      )} */ }
+      )}
 
       <ProductPopup
         open={openPopup}
