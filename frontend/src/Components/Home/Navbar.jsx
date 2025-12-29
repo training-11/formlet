@@ -42,7 +42,7 @@ export default function Navbar() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const baseUrl = window.ENV?.BACKEND_API || 'http://localhost:8000';
+        // const baseUrl = window.ENV?.BACKEND_API || 'http://localhost:8000';
         const res = await fetch(`${baseUrl}/api/public/products`);
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
