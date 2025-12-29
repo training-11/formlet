@@ -169,6 +169,13 @@ export default function Navbar() {
     ]
   };
 
+const mobileRouteMap = {
+  "Fresh Fruit & Vegetables boxes": "/products/fresh-fruits",
+  "What's new": "/products/whats-new",
+  "Leafy & others": "/products/leafy-others",
+  "Essentials": "/products/essentials",
+  "Dairy & eggs": "/products/dairy-eggs",
+};
 
 
   // Group Mapping: Display Name -> Array of DB Category Names
@@ -423,12 +430,30 @@ export default function Navbar() {
       {activeSubmenu && window.innerWidth <= 768 && (
         <div className="mobile-dropdown-overlay">
           <div className="mobile-full-dropdown">
-            {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
+            {/* {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
               <div key={i} className="mobile-dropdown-item">
                 <div className="mob-title">{item.title}</div>
                 <div className="mob-desc">{item.desc}</div>
               </div>
-            ))}
+            ))} */}
+            {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
+  <div
+    key={i}
+    className="mobile-dropdown-item"
+    onClick={() => {
+      const path = mobileRouteMap[item.title];
+      if (path) {
+        navigate(path);       // go to page (Screenshot-2)
+        setActiveSubmenu(null); // close dropdown
+        setActiveTab(null);     // reset tab
+      }
+    }}
+  >
+    <div className="mob-title">{item.title}</div>
+    <div className="mob-desc">{item.desc}</div>
+  </div>
+))}
+
           </div>
         </div>
       )}

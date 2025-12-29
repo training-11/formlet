@@ -745,7 +745,15 @@ margin-left: 10px;
   background: #faf6f0;
   padding: 15px 0;
 }
+
+
+.mobile-dropdown-item:active {
+  background: #f3f3f3;
+}
+
+
 .mobile-dropdown-item {
+   cursor: pointer;
   padding: 14px 10px;
   text-align: center;
   border-bottom: 1px solid #eee;
@@ -820,6 +828,10 @@ margin-left: 10px;
   height: 20px;
   opacity: 0.8;
 }
+.mobile-dropdown-item:active {
+  background: #f3f3f3;
+}
+
 
 }
 

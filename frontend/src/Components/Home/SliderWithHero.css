@@ -161,7 +161,7 @@
     padding: 6px 18px;
   }
 
-  /* .arrow {
+  .arrow {
     font-size: 42px !important;
     top: 60px !important;
   }
@@ -240,11 +240,11 @@
   }
 
   .left {
-    left: -120px !important;
+    left: -50px !important;
   }
 
   .right {
-    right: -120px !important;
+    right: -50px !important;
   }
 
   /* Veg image */
