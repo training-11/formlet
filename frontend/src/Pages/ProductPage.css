@@ -1,6 +1,22 @@
+/* body::-webkit-scrollbar,
+.products-container::-webkit-scrollbar,
+.sidebar-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body {
+  scrollbar-width: none; 
+}
+
+.products-container,
+.sidebar-container {
+  scrollbar-width: none;
+} */
+
 .product-page {
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   background: #f4f5f0;
 }
 
@@ -32,10 +48,10 @@
 } */
 .content-area {
   display: flex;
-  height: calc(100vh - 180px);
-  /* updated */
-  overflow: hidden;
+  flex: 1;
+  overflow: visible;
 }
+
 
 
 /* LEFT SIDEBAR */
@@ -48,11 +64,15 @@
   flex-direction: column;
   gap: 12px;
 
-  /* 🔽 NEW LINES FOR SCROLLING */
-  max-height: calc(100vh - 180px);
-  /* viewport height minus header/footer */
+  position: sticky !important;
+  top: 0px; /* below navbar */
+
+  max-height: calc(100vh - 80px);
   overflow-y: auto;
+
+  box-sizing: border-box;
 }
+
 
 
 .sidebar-container::-webkit-scrollbar {
@@ -118,9 +138,14 @@
 /* PRODUCTS GRID */
 .products-container {
   flex: 1;
-  padding: 20px 30px;
-  overflow-y: scroll;
+  padding-left: 32px;   /* keeps your correct gap */
+  padding-right: 16px;
+  padding-bottom: 40px;
+
+  overflow: visible;   /* ❗ IMPORTANT */
+  box-sizing: border-box;
 }
+
 
 .page-title {
   font-size: 28px;
