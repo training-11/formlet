@@ -414,7 +414,7 @@ justify-content: center;
 /* Desktop Range: 1000px–1389px (same as old 1024px layout) */
 @media (min-width: 1000px) and (max-width: 1389px) {
   .hero {
-    min-height: 54vh;
+    min-height: 100vh;
     height: auto;
     background-size: cover !important;
     background-position: bottom center !important;
@@ -439,11 +439,16 @@ justify-content: center;
     text-align: left;
     margin-top: clamp(8px, 1.2vh, 16px);
     max-width: 650px;
+    transform: translateY(50px);
+
   }
 
   .hero-button {
     margin-left: 0;
     align-self: flex-start;
+    margin-bottom: -60px;
+    transform: translateX(-30px);
+
   }
 
   .hero-right {
@@ -456,6 +461,7 @@ justify-content: center;
   }
 
   .hero-image {
+    transform: translate(-90px) !important;
     width: 100%;
     max-width: 43vw;
     height: auto;
@@ -466,7 +472,7 @@ justify-content: center;
   }
 
   .hero-title {
-    font-size: 56px;
+    font-size: 46px;
     line-height: 1.15;
     max-width: 480px;
     white-space: normal;

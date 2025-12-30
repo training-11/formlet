@@ -10,6 +10,10 @@
   text-align: center;
   padding-top: 40px !important;
 }
+body {
+  background:#f4f1ec;
+}
+
 
 .feature-box img {
   width: 105px;
@@ -159,16 +163,55 @@
 }
 
 /* iPad Pro only: portrait 1024×1366 and landscape 1366×1024 */
-@media (min-width: 1024px) and (max-width: 1389px) {
+/* ===============================
+   FIX: HERO FEATURES (1000–1389px)
+   =============================== */
+
+/* ===============================
+   FIX: HERO FEATURES (1000–1389px)
+   =============================== */
+
+@media (min-width: 1000px) and (max-width: 1389px) {
+
   .hero-features {
-    margin-top: -360px !important;               /* pull icons upwards without covering curve */
-    padding-top: 0 !important;                   /* sit right under green curve */
-    padding-bottom: 30px;                        /* slightly tighter below */
-    transform: none;                             /* rely on margin for placement */
-    background: transparent !important;          /* ensure hero curve remains visible underneath */
-    overflow: visible !important;                /* avoid clipping curved edge */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 300px;                 /* spacing between icons */
+    padding: 80px 0 100px;
+    background: #f4f1ec;
+    text-align: center;
+  }
+
+  .hero-features .feature-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 180px;
+  }
+
+  .hero-features .feature-box img {
+    width: 130px;
+    height: auto;
+    margin-bottom: 14px;
+  }
+
+  .hero-features .feature-box p {
+    font-family: "Special Elite", system-ui;
+    font-size: 24px;
+    line-height: 1.25;
+    margin: 0;
+    text-align: center;
+    white-space: normal;
   }
 }
+
+
+
+
+
+
+
 
 
 /* ---------- font (paste at top of your main CSS once) ---------- */
