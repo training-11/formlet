@@ -96,8 +96,8 @@ export default function ProductPage() {
         <div className="location">
           Bengaluru <FaChevronDown size={14} />
       {/* BODY LAYOUT: Flex container for Sidebar - Content - Cart */}
-      <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}>
-
+      {/* <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}> */}
+ <div className="main-layout" style={{ display: "flex" }}>
         {/* LEFT SIDEBAR & PRODUCTS GRID */}
         <div className="content-area" style={{ flexGrow: 1, display: "flex" }}>
           {/* LEFT SIDEBAR (Categories) */}

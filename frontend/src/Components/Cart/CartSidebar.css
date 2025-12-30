@@ -9,9 +9,12 @@
     max-height: 100vh;
     position: sticky;
     top: 0;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 50;
+    padding-bottom: 140px; /* keep checkout button clear of page footer */
     font-family: "Roboto", sans-serif;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+    /* margin-bottom: 50px; */
 }
 
 .cart-header {
@@ -77,12 +80,18 @@
     min-height: 150px;
     overflow-y: auto;
 }
+/* .cart-items-list {
+    flex-grow: 0;          
+    max-height: 50vh;         
+    margin-bottom: 16px;
+    overflow-y: auto;
+} */
+
 
 .empty-cart-msg {
     text-align: center;
     color: #888;
     font-style: italic;
-    margin-top: 40px;
 }
 
 .cart-item {
@@ -97,6 +106,8 @@
     height: 70px;
     object-fit: cover;
     margin-right: 15px;
+    position: relative;
+    z-index: 60; /* ensure button appears above footer */
     border-radius: 4px;
 }
 
@@ -175,14 +186,14 @@
 /* SUMMARY SECTION */
 .cart-summary {
     border-top: 1px solid #ddd;
-    padding-top: 20px;
+    margin-top: -15px;
 }
 
 .summary-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
     /* Reduced vertical space as requested */
     font-size: 14px;
     color: #444;
@@ -220,7 +231,8 @@
     border-radius: 3px;
     font-size: 16px;
     font-weight: 600;
-    cursor: pointer;
+    position: relative;
+    z-index: 60; /* ensure button appears above footer */
 }
 
 .checkout-btn:hover {
