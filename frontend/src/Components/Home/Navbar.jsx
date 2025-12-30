@@ -466,7 +466,7 @@ const mobileRouteMap = {
             <div className="search-title">Search Farmlet</div>
 
             <button
-              className="close-btn"
+              className="mobile-close-btn"
               onClick={() => setMobileSearchOpen(false)}
             >
               ✕
