@@ -289,7 +289,7 @@ export default function CartSidebar({ isCheckoutPage = false }) {
 
     return (
         <>
-            <div className="cart-sidebar">
+            <div className="cart-sidebar">            
                 <div className="cart-header">
                     <h2 className="your-order-title">Your order</h2>
                     <div className="pincode-info">

@@ -241,10 +241,17 @@ body {
   font-weight: bold;
 }
 
+.mobile-view-cart-bar {
+  display: none;
+}
 /* ========================= */
 /* 📱 MOBILE FIX (≤768px)   */
 /* ========================= */
 @media (max-width: 768px) {
+
+   .desktop-cart {
+    display: none;
+  }
 
   html,
   body {
@@ -346,4 +353,50 @@ body {
     box-sizing: border-box;
   }
 
+   .mobile-cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: #fdfcf8;
+    z-index: 9999;
+    overflow-y: auto;
+  }
+
+  .close-cart-btn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+ .mobile-view-cart-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #01BF64;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-weight: 600;
+    z-index: 9000;
+  }
+
+    .mobile-view-cart-bar button {
+    background: #fff;
+    color: #01BF64;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
 }
