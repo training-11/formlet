@@ -15,7 +15,8 @@ import { useAuth } from "../../Context/AuthContext";
 
 import OrderHistoryModal from "./OrderHistoryModal";
 
-export default function Navbar() {
+export default function Navbar({signInOpen,
+  setSignInOpen,}) {
   const { currentUser, isAuthenticated, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("Shop");
   const [openModal, setOpenModal] = useState(false);
@@ -74,6 +75,7 @@ export default function Navbar() {
       navigate('/account');
     } else {
       setOpenModal(true);
+      if (typeof setSignInOpen === "function") setSignInOpen(true);
     }
   };
 
@@ -497,9 +499,10 @@ const mobileRouteMap = {
 
       <SignInModal
         open={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={() => { setOpenModal(false); if (typeof setSignInOpen === "function") setSignInOpen(false); } }
         onShopCategorySelect={(cat) => {
           setOpenModal(false);
+          if (typeof setSignInOpen === "function") setSignInOpen(false);
           openProductPopup(cat);
         }}
       />
