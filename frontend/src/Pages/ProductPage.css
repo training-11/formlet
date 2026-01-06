@@ -253,7 +253,7 @@ body {
 /* ========================= */
 /* 📱 MOBILE FIX (≤768px)   */
 /* ========================= */
-@media (max-width: 768px) {
+@media (max-width: 873px) {
 
    .desktop-cart {
     display: none;
@@ -404,5 +404,29 @@ body {
     padding: 6px 14px;
     border-radius: 6px;
     font-weight: 600;
+  }
+}
+/* =============================== */
+/* 📱📲 iPAD / TABLET FIX (ONLY)   */
+/* =============================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Right cart sidebar */
+  .desktop-cart {
+    width: 260px;          
+    flex-shrink: 0;
+    position: sticky;
+    top: 90px;            
+  }
+
+  /* Products grid spacing */
+  .products-container {
+    padding-right: 12px;   
+  }
+
+  /* Grid columns better for tablet */
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
   }
 }

@@ -23,18 +23,36 @@ export default function SignInModal({ open, onClose, onShopCategorySelect }) {
   const [inputType, setInputType] = useState(null); // 'email' or 'phone' or null
 
   // Reset state when modal closes
+  // React.useEffect(() => {
+  //   if (!open) {
+  //     setAvailable(null);
+  //     setDeliveryData(null);
+  //     setPincode("");
+  //     setLoginInput("");
+  //     setLoginPassword("");
+  //     setLoginOtp("");
+  //     setIsOtpSent(false);
+  //     setInputType(null);
+  //   }
+  // }, [open]);
   React.useEffect(() => {
-    if (!open) {
-      setAvailable(null);
-      setDeliveryData(null);
-      setPincode("");
-      setLoginInput("");
-      setLoginPassword("");
-      setLoginOtp("");
-      setIsOtpSent(false);
-      setInputType(null);
-    }
-  }, [open]);
+  if (open) {
+    setForgotView(false);      
+    setIsOtpSent(false);
+    setInputType(null);
+  } else {
+    setAvailable(null);
+    setDeliveryData(null);
+    setPincode("");
+    setLoginInput("");
+    setLoginPassword("");
+    setLoginOtp("");
+    setIsOtpSent(false);
+    setInputType(null);
+    setForgotView(false);
+  }
+}, [open]);
+
 
   // Helper to get dates
   const calculateDates = (dayName) => {
@@ -427,5 +445,6 @@ export default function SignInModal({ open, onClose, onShopCategorySelect }) {
 
       </div>
     </div>
+    
   );
 }
