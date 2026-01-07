@@ -139,7 +139,7 @@ export default function ProductPage() {
                       alt={prod.name}
                     />
 
-                    <div className="product-location">{prod.location}</div>
+                    {prod.location && <div className="product-location">{prod.location}</div>}
                     <div className="product-name">{prod.name}</div>
                     <input className="weight-input" value={prod.weight} readOnly />
                     <div className="product-price">₹{prod.price}</div>

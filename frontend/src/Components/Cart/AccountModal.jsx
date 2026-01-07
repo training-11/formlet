@@ -100,8 +100,39 @@ export default function AccountModal({ onClose, onContinue }) {
         }
     };
 
-    // Make isPhoneVerified optional for now
-    const isFormValid = formData.firstName && formData.lastName && formData.email && formData.password.length >= 8; // && isPhoneVerified;
+    // Validation Helpers
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validatePhone = (phone) => {
+        const re = /^\d{10}$/; // Simple 10 digit check
+        return re.test(String(phone).trim());
+    };
+
+    const handleContinueClick = () => {
+        if (!formData.firstName.trim() || !formData.lastName.trim()) {
+            alert("Please enter your full name.");
+            return;
+        }
+        if (!validateEmail(formData.email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+        if (formData.password.length < 6) {
+            alert("Password must be at least 6 characters long.");
+            return;
+        }
+        if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
+            alert("Please enter a valid 10-digit phone number.");
+            return;
+        }
+
+        onContinue(formData);
+    };
+
+    const isFormValid = formData.firstName && formData.lastName && formData.email && formData.password.length >= 8;
 
     return (
         <div className="account-modal-overlay">
@@ -196,8 +227,7 @@ export default function AccountModal({ onClose, onContinue }) {
 
                     <button
                         className="continue-account-btn"
-                        onClick={() => onContinue(formData)}
-                        disabled={!isFormValid}
+                        onClick={handleContinueClick}
                     >
                         Continue
                     </button>

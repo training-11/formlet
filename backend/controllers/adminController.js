@@ -350,7 +350,6 @@ export const addProduct = async (req, res) => {
         try {
             await redisClient.del('products_all'); // Clear Admin Cache
             await redisClient.del('products_public'); // Clear Public Cache
-            console.log("[DEBUG] Redis Cache Cleared");
         } catch (redisErr) {
             console.error("[WARN] Redis Clear Failed:", redisErr);
         }
@@ -368,7 +367,6 @@ export const addProduct = async (req, res) => {
 // UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
-    console.log(`[DEBUG] Updating Product ${id} Body:`, req.body);
 
     let { category_id, name, weight, price, location, stock, image_url } = req.body;
 
@@ -382,17 +380,16 @@ export const updateProduct = async (req, res) => {
         await connection.beginTransaction();
 
         const query = `
-            UPDATE products 
-            SET category_id=?, name=?, weight=?, price=?, location=?, stock=?, image_url=?
-            WHERE id=?
-        `;
+        UPDATE products 
+        SET category_id=?, name=?, weight=?, price=?, location=?, stock=?, image_url=?
+        WHERE id=?
+    `;
         await connection.query(query, [category_id, name, weight, price, location, stock, image_url, id]);
 
         // Update Tags (Delete and Re-insert)
         await connection.query("DELETE FROM product_tags WHERE product_id = ?", [id]);
 
         let tagIds = req.body.tag_ids;
-        console.log(`[DEBUG] Updating Tags for Product ${id}:`, tagIds);
 
         if (tagIds) {
             // Ensure array
@@ -422,7 +419,6 @@ export const updateProduct = async (req, res) => {
         try {
             await redisClient.del('products_all'); // Clear Admin Cache
             await redisClient.del('products_public'); // Clear Public Cache
-            console.log("[DEBUG] Redis Cache Cleared");
         } catch (redisErr) {
             console.error("[WARN] Redis Clear Failed:", redisErr);
         }

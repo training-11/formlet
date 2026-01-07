@@ -110,7 +110,7 @@ export default function AdminPincodes() {
                     <tr>
                         <th>Pincode</th>
                         <th>Delivery Day</th>
-                        <th>Min Order Value</th> {/* New Column */}
+                        <th>Min Order Value</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
