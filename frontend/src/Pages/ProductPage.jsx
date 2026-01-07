@@ -25,6 +25,8 @@ export default function ProductPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const [showMobileCart, setShowMobileCart] = useState(false);
+
   // Use Effect to Fetch Data
   useEffect(() => {
     const fetchData = async () => {
@@ -96,8 +98,8 @@ export default function ProductPage() {
         <div className="location">
           Bengaluru <FaChevronDown size={14} />
       {/* BODY LAYOUT: Flex container for Sidebar - Content - Cart */}
-      <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}>
-
+      {/* <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}> */}
+ <div className="main-layout" style={{ display: "flex" }}>
         {/* LEFT SIDEBAR & PRODUCTS GRID */}
         <div className="content-area" style={{ flexGrow: 1, display: "flex" }}>
           {/* LEFT SIDEBAR (Categories) */}
@@ -172,16 +174,45 @@ export default function ProductPage() {
         )}
 
         {/* RIGHT CART SIDEBAR (Only if authenticated) */}
-        {isAuthenticated && (
+        {/* {isAuthenticated && (
           <div style={{ width: "320px", flexShrink: 0 }}>
             <CartSidebar />
           </div>
-        )}
+        )} */}
+        {/* DESKTOP CART */}
+{isAuthenticated && (
+  <div className="desktop-cart">
+    <CartSidebar />
+  </div>
+)}
+
+{/* MOBILE CART OVERLAY */}
+{isAuthenticated && showMobileCart && (
+  <div className="mobile-cart-overlay">
+    <CartSidebar />
+    <button
+      className="close-cart-btn"
+      onClick={() => setShowMobileCart(false)}
+    >
+      ✕
+    </button>
+  </div>
+)}
+
 
       </div>
 
       {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
       {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
+      {isAuthenticated && (
+  <div className="mobile-view-cart-bar">
+    <span>View Cart</span>
+    <button onClick={() => setShowMobileCart(true)}>
+      Open
+    </button>
+  </div>
+)}
+
       <Footer />
     </div>
   );

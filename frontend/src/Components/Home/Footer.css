@@ -228,53 +228,45 @@
 /* -----------------------------------------
    📱 TABLET FOOTER (iPad Mini – EXACT Riverford)
 ------------------------------------------ */
+/* ===============================
+   TABLET (768px–1024px)
+   4 COLUMN LAYOUT LIKE DESKTOP
+================================ */
+
 @media (min-width: 768px) and (max-width: 1024px) {
 
   .footer {
-    padding: 60px 40px;
+    background-color: #01BF64;
+    padding: 60px 60px;
   }
 
   .footer-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "about order"
-      "help app";
-    column-gap: 100px;
-    row-gap: 50px;
-    max-width: 900px;
-    margin: 0 auto 40px;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr); /* ✅ 4 columns */
+    column-gap: 60px;
+    row-gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  /* Assign grid areas */
-  .footer-column:nth-child(1) {
-    grid-area: about;
+  /* Ensure each column stays vertical */
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .footer-column:nth-child(3) {
-    grid-area: order;
-  }
-
-  .footer-column:nth-child(2) {
-    grid-area: help;
-  }
-
-  .footer-column:nth-child(4) {
-    grid-area: app;
-  }
-
-  /* Headings */
   .footer-column h3 {
     font-size: 18px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .footer-column p {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    margin: 6px 0;
   }
 
-  /* App buttons – stacked like Riverford */
+  /* App store buttons */
   .store-row {
     display: flex;
     flex-direction: column;
@@ -283,23 +275,27 @@
   }
 
   .store-img {
-    width: 160px;
+    width: 150px;
   }
 
-  /* Social icons – BELOW all columns */
+  /* Social icons aligned left */
   .social-icons {
     display: flex;
     justify-content: flex-start;
-    gap: 10px;
-    max-width: 900px;
-    margin: 30px auto 0;
+    gap: 12px;
+    margin-top: 30px;
     transform: none;
   }
 
-  /* Terms & conditions – last */
+  .social-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Footer bottom text */
   .footer-bottom {
-    max-width: 900px;
-    margin: 20px auto 0;
+    margin-top: 30px;
     text-align: left;
   }
 }
+

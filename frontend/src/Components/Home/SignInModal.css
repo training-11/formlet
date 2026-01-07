@@ -367,11 +367,13 @@
   .modal-container {
     width: 100% !important;
     max-width: 600px;
-    min-height: 100vh;
+    /* min-height: 100vh; */
+     max-height: 100vh;
     border-radius: 0;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    /* overflow: hidden; */
+      overflow-y: auto; 
     background: #fdfcf8;
   }
 
@@ -474,7 +476,7 @@
   }
 
   .modal-close {
-    top: -6px;
+    top: 12px;
     right: 10px;
     width: 30px;
     height: 30px;
@@ -665,4 +667,50 @@
     padding: 15px;
     font-size: 13px;
   }
+}
+
+/* ================= FULLSCREEN SIGN-IN (MOBILE ONLY) ================= */
+@media (max-width: 768px) {
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    padding: 0;                 /* ❌ remove modal padding */
+    margin: 0;
+    align-items: stretch;       /* ❌ no centering */
+    justify-content: stretch;
+    background: #fdfcf8;        /* ✔ match modal bg */
+    overflow: hidden;
+  }
+
+   .modal-container {
+    width: 100vw !important;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    margin: 0;                  /* ❌ remove gap */
+    border-radius: 0;           /* ✔ flat edges like Riverford */
+    overflow-y: auto;
+    background: #f0e6d7;
+    min-height: unset !important;
+  }
+  
+   .modal-close {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    font-size: 26px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    border: 2px solid #fff;
+    z-index: 1000;
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+
 }
