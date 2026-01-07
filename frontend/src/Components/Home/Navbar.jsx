@@ -322,6 +322,7 @@ const mobileRouteMap = {
           <li
             className={activeTab === "About" ? "active" : ""}
             onMouseEnter={() => handleHover("About")}
+            onClick={() => navigate("/about")}
           >
             About Farmlet
           </li>
@@ -387,7 +388,7 @@ const mobileRouteMap = {
 
         <div
           className={`mobile-submenu-item ${activeTab === "About" ? "active" : ""}`}
-          onClick={() => handleMobileClick("About")}
+          onClick={() => navigate("/about")}
         >
           About Farmlet
         </div>
