@@ -6,15 +6,16 @@ export default function IntroPopup() {
   const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-    const hasSeenPopup = localStorage.getItem("farmletIntroSeen");
-
+    // const hasSeenPopup = localStorage.getItem("farmletIntroSeen");
+ const hasSeenPopup = sessionStorage.getItem("farmletIntroSeen");
     if (!hasSeenPopup) {
       setShowPopup(true);  // Show only first time
     }
   }, []);
 
     const handleClose = () => {
-    localStorage.setItem("farmletIntroSeen", "true"); // ⭐ Save the state
+    // localStorage.setItem("farmletIntroSeen", "true"); 
+     sessionStorage.setItem("farmletIntroSeen", "true");
     setShowPopup(false);
   };
 //   const handleClose = () => {

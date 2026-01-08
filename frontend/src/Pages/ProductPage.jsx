@@ -26,6 +26,8 @@ export default function ProductPage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showMobileCart, setShowMobileCart] = useState(false);
+  const [signInModalOpen, setSignInModalOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   // Use Effect to Fetch Data
   useEffect(() => {
@@ -90,7 +92,12 @@ export default function ProductPage() {
 
   return (
     <div className="product-page">
-      <Navbar />
+      <Navbar 
+        signInOpen={signInModalOpen} 
+        setSignInOpen={setSignInModalOpen}
+        mobileSearchOpen={mobileSearchOpen}
+        setMobileSearchOpen={setMobileSearchOpen}
+      />
 
       {/* HEADER BAR */}
       {/* <div className="top-bar">
@@ -204,7 +211,7 @@ export default function ProductPage() {
 
       {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
       {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
-      {isAuthenticated && (
+      {isAuthenticated && !signInModalOpen && !mobileSearchOpen && (
   <div className="mobile-view-cart-bar">
     <span>View Cart</span>
     <button onClick={() => setShowMobileCart(true)}>
