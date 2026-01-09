@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
 import "./ProductPage.css";
 // import { HiMenu } from "react-icons/hi";
 // import { FaChevronDown } from "react-icons/fa";
@@ -14,7 +15,12 @@ import AddToCartModal from "../Components/Cart/AddToCartModal";
 import ProductCard from "../Components/ProductCard";
 
 export default function ProductPage() {
-  // const { category } = useParams(); // Unused for now
+  const { category } = useParams();
+  const { search } = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(search);
+  const searchQuery = queryParams.get("q") || "";
+
   const { isAuthenticated, addToCart } = useAuth();
 
   // Dynamic Data State
@@ -27,6 +33,17 @@ export default function ProductPage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showMobileCart, setShowMobileCart] = useState(false);
+
+  // Sync selectedCategory with URL param
+  useEffect(() => {
+    if (category) {
+      if (category === "search") {
+        setSelectedCategory("Search Results");
+      } else {
+        setSelectedCategory(category);
+      }
+    }
+  }, [category, searchQuery]);
 
   // Use Effect to Fetch Data
   useEffect(() => {
@@ -43,9 +60,7 @@ export default function ProductPage() {
           setProducts(await prodRes.json());
 
           // Set initial category from URL or First available
-          if (catData.length > 0) {
-            // If URL param 'category' matches one, use it, else first
-            // For simplicity, sticking to logic
+          if (catData.length > 0 && !category) {
             setSelectedCategory(catData[0].name);
           }
         }
@@ -54,7 +69,7 @@ export default function ProductPage() {
       }
     };
     fetchData();
-  }, []);
+  }, [category]);
 
   const handleOpenModal = (product) => {
     setSelectedProduct(product);
@@ -67,12 +82,28 @@ export default function ProductPage() {
     setSelectedProduct(null);
   };
 
-  // Filter products by selected category
-  const currentCategoryObj = categories.find(c => c.name === selectedCategory);
+  // Filter products Logic
+  let filteredProducts = [];
+  let displayTitle = selectedCategory;
 
-  const filteredProducts = currentCategoryObj
-    ? products.filter(p => p.category_id === currentCategoryObj.id)
-    : [];
+  if (category === "search") {
+    filteredProducts = products.filter(p =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    displayTitle = `Search Results for "${searchQuery}"`;
+  } else {
+    // Normal Category Logic
+    const currentCategoryObj = categories.find(c =>
+      c.name === selectedCategory ||
+      c.name.toLowerCase().replace(/ /g, '-') === String(selectedCategory).toLowerCase() ||
+      c.name.toLowerCase() === String(selectedCategory).toLowerCase().replace(/-/g, ' ')
+    );
+
+    if (currentCategoryObj) {
+      filteredProducts = products.filter(p => p.category_id === currentCategoryObj.id);
+      displayTitle = currentCategoryObj.name;
+    }
+  }
 
   // Sidebar list
   const sidebarCategories = categories.map(c => ({
@@ -83,23 +114,20 @@ export default function ProductPage() {
 
   // Helper to resolve image path
   const getImageUrl = (url) => {
-    if (url && url.startsWith("/uploads")) {
+    if (!url) return "";
+    if (url.startsWith("http") || url.startsWith("https") || url.startsWith("data:")) {
+      return url;
+    }
+    if (url.startsWith("/uploads")) {
       return `${window.ENV.BACKEND_API}${url}`;
     }
-    return url;
+    return url.startsWith("/") ? url : `/${url}`;
   };
 
   return (
     <div className="product-page">
       <Navbar />
 
-      {/* HEADER BAR */}
-      {/* <div className="top-bar">
-        <HiMenu size={26} className="menu-icon" />
-        <div className="location">
-          Bengaluru <FaChevronDown size={14} />
-      {/* BODY LAYOUT: Flex container for Sidebar - Content - Cart */}
-      {/* <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}> */}
       <div className="main-layout" style={{ display: "flex" }}>
         {/* LEFT SIDEBAR & PRODUCTS GRID */}
         <div className="content-area" style={{ flexGrow: 1, display: "flex" }}>
@@ -124,7 +152,21 @@ export default function ProductPage() {
 
           {/* PRODUCT GRID */}
           <div className="products-container" style={{ flexGrow: 1 }}>
-            <h2 className="page-title">{selectedCategory}</h2>
+            <h2
+              className="page-title"
+              style={category === "search" ? { display: 'block', fontSize: '1.2rem' } : {}}
+            >
+              {displayTitle}
+              {category === "search" && (
+                <span
+                  title="Clear Search"
+                  style={{ marginLeft: '10px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}
+                  onClick={() => navigate('/products/fresh-fruits')}
+                >
+                  <FaTimes color="#d32f2f" size={20} />
+                </span>
+              )}
+            </h2>
 
             <div className="products">
               {filteredProducts.length > 0 ? (
@@ -155,12 +197,6 @@ export default function ProductPage() {
           />
         )}
 
-        {/* RIGHT CART SIDEBAR (Only if authenticated) */}
-        {/* {isAuthenticated && (
-          <div style={{ width: "320px", flexShrink: 0 }}>
-            <CartSidebar />
-          </div>
-        )} */}
         {/* DESKTOP CART */}
         {isAuthenticated && (
           <div className="desktop-cart">
@@ -180,11 +216,9 @@ export default function ProductPage() {
             </button>
           </div>
         )}
-
-
       </div>
 
-      {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
+      {/* BOTTOM BAR */}
       {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
       {isAuthenticated && (
         <div className="mobile-view-cart-bar">
