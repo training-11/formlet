@@ -133,7 +133,6 @@ export default function Navbar({
       "Certified B Corp",
       "Employee Ownership",
       "Founder's wishes",
-      "Who is Guy Singh-Watson?",
       "Charity partnerships"
     ],
     "Leafy & others": [
