@@ -33,6 +33,8 @@ export default function ProductPage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showMobileCart, setShowMobileCart] = useState(false);
+  const [signInModalOpen, setSignInModalOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   // Sync selectedCategory with URL param
   useEffect(() => {
@@ -126,7 +128,12 @@ export default function ProductPage() {
 
   return (
     <div className="product-page">
-      <Navbar />
+      <Navbar 
+        signInOpen={signInModalOpen} 
+        setSignInOpen={setSignInModalOpen}
+        mobileSearchOpen={mobileSearchOpen}
+        setMobileSearchOpen={setMobileSearchOpen}
+      />
 
       <div className="main-layout" style={{ display: "flex" }}>
         {/* LEFT SIDEBAR & PRODUCTS GRID */}
