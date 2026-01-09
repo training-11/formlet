@@ -1,0 +1,71 @@
+.variant-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 40px;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    position: relative;
+    /* For dropdown positioning */
+}
+
+.weight-wrapper {
+    position: relative;
+}
+
+.weight-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.weight-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.weight-option:hover {
+    background: #f0f0f0;
+}
+
+.add-variant-btn {
+    display: block;
+    background: transparent;
+    border: 1px dashed #ccc;
+    color: #555;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.add-variant-btn:hover {
+    background: #fafafa;
+    border-color: #999;
+}
+
+.remove-variant-btn {
+    background: #ffdbdb;
+    color: #d32f2f;
+    border: none;
+    border-radius: 4px;
+    height: 38px;
+    /* Match input height roughly */
+    width: 38px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

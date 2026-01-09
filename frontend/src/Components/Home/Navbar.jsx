@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 
 import logo from "../../Images/New logo updated.png";
 import searchIcon from '../../Images/Search icon.png';
+import supportIcon from "../../Images/support-icon.png";
 import CalendarIcon from "../../Images/Calendar icon.png";
 import accountIcon from "../../Images/Account icon.png";
+import { FaHeadset } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ProductPopup from "./ProductPopup";
 import { useAuth } from "../../Context/AuthContext";
@@ -15,6 +17,8 @@ import { useAuth } from "../../Context/AuthContext";
 
 import OrderHistoryModal from "./OrderHistoryModal";
 
+export default function Navbar({ signInOpen,
+  setSignInOpen, }) {
 export default function Navbar({
   signInOpen,
   setSignInOpen,
@@ -175,13 +179,13 @@ export default function Navbar({
     ]
   };
 
-const mobileRouteMap = {
-  "Fresh Fruit & Vegetables boxes": "/products/fresh-fruits",
-  "What's new": "/products/whats-new",
-  "Leafy & others": "/products/leafy-others",
-  "Essentials": "/products/essentials",
-  "Dairy & eggs": "/products/dairy-eggs",
-};
+  const mobileRouteMap = {
+    "Fresh Fruit & Vegetables boxes": "/products/fresh-fruits",
+    "What's new": "/products/whats-new",
+    "Leafy & others": "/products/leafy-others",
+    "Essentials": "/products/essentials",
+    "Dairy & eggs": "/products/dairy-eggs",
+  };
 
 
   // Group Mapping: Display Name -> Array of DB Category Names
@@ -335,6 +339,18 @@ const mobileRouteMap = {
         </ul>
 
         <div className="nav-right">
+          {/* Contact Info (Desktop) */}
+          <a href="tel:+917386120893" className="nav-contact">
+            <div
+              className="nav-headset-icon"
+              style={{
+                maskImage: `url(${supportIcon})`,
+                WebkitMaskImage: `url(${supportIcon})`
+              }}
+            />
+            <span>+91 7386120893</span>
+          </a>
+
           {/* MOBILE SEARCH ICON (always visible on mobile) */}
           <img
             src={searchIcon}
@@ -450,22 +466,22 @@ const mobileRouteMap = {
               </div>
             ))} */}
             {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
-  <div
-    key={i}
-    className="mobile-dropdown-item"
-    onClick={() => {
-      const path = mobileRouteMap[item.title];
-      if (path) {
-        navigate(path);       // go to page (Screenshot-2)
-        setActiveSubmenu(null); // close dropdown
-        setActiveTab(null);     // reset tab
-      }
-    }}
-  >
-    <div className="mob-title">{item.title}</div>
-    <div className="mob-desc">{item.desc}</div>
-  </div>
-))}
+              <div
+                key={i}
+                className="mobile-dropdown-item"
+                onClick={() => {
+                  const path = mobileRouteMap[item.title];
+                  if (path) {
+                    navigate(path);       // go to page (Screenshot-2)
+                    setActiveSubmenu(null); // close dropdown
+                    setActiveTab(null);     // reset tab
+                  }
+                }}
+              >
+                <div className="mob-title">{item.title}</div>
+                <div className="mob-desc">{item.desc}</div>
+              </div>
+            ))}
 
           </div>
         </div>
@@ -516,7 +532,7 @@ const mobileRouteMap = {
 
       <SignInModal
         open={openModal}
-        onClose={() => { setOpenModal(false); if (typeof setSignInOpen === "function") setSignInOpen(false); } }
+        onClose={() => { setOpenModal(false); if (typeof setSignInOpen === "function") setSignInOpen(false); }}
         onShopCategorySelect={(cat) => {
           setOpenModal(false);
           if (typeof setSignInOpen === "function") setSignInOpen(false);
