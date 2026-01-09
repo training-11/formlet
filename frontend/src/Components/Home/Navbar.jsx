@@ -8,8 +8,8 @@ import searchIcon from '../../Images/Search icon.png';
 import supportIcon from "../../Images/support-icon.png";
 import CalendarIcon from "../../Images/Calendar icon.png";
 import accountIcon from "../../Images/Account icon.png";
-import { FaHeadset } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FaHeadset, FaTimes } from "react-icons/fa";
+import { useNavigate, useLocation } from "react-router-dom";
 import ProductPopup from "./ProductPopup";
 import { useAuth } from "../../Context/AuthContext";
 // import CalendarModal from "./CalendarModal";
@@ -17,8 +17,6 @@ import { useAuth } from "../../Context/AuthContext";
 
 import OrderHistoryModal from "./OrderHistoryModal";
 
-export default function Navbar({ signInOpen,
-  setSignInOpen, }) {
 export default function Navbar({
   signInOpen,
   setSignInOpen,
@@ -34,11 +32,13 @@ export default function Navbar({
 
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ left: 0 });
-  // const [searchOpen, setSearchOpen] = useState(false);
   const [internalMobileSearchOpen, setInternalMobileSearchOpen] = useState(false);
 
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   // --- NEW: Dynamic Data State ---
   const [productsData, setProductsData] = useState({});
@@ -46,8 +46,40 @@ export default function Navbar({
 
   const submenuRef = useRef({});
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchRef = useRef(null);
 
-  // --- NEW: Fetch Products from API ---
+  const closeMobileSearch = () => {
+    if (typeof setMobileSearchOpen === "function") {
+      setMobileSearchOpen(false);
+    } else {
+      setInternalMobileSearchOpen(false);
+    }
+  };
+
+  // --- Click Outside to Close Search ---
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        // Close desktop suggestions
+        setSearchResults([]);
+
+        // Close mobile search overlay if open
+        if (mobileSearchOpen || internalMobileSearchOpen) {
+          closeMobileSearch();
+          setSearchQuery("");
+          setSearchResults([]);
+        }
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileSearchOpen, internalMobileSearchOpen]);
+
+  // --- Fetch Products from API ---
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -67,8 +99,6 @@ export default function Navbar({
         });
 
         setProductsData(grouped);
-
-        // Use the Keys from the fetched data as the valid categories for the popup
         setCategories(Object.keys(grouped));
       } catch (err) {
         console.error("Error fetching public products:", err);
@@ -77,6 +107,29 @@ export default function Navbar({
 
     fetchProducts();
   }, []);
+
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setSearchResults([]);
+    if (location.pathname.includes("/products/search")) {
+      navigate("/products/fresh-fruits");
+    }
+  };
+
+  // Sync search state with URL query param
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q");
+    if (q) {
+      setSearchQuery(q);
+    } else {
+      // If we are NOT on a search page, ensure search bar is clear
+      if (!location.pathname.includes("/products/search")) {
+        setSearchQuery("");
+      }
+    }
+  }, [location.search, location.pathname]);
 
   const handleAccountClick = () => {
     if (currentUser) {
@@ -311,10 +364,54 @@ export default function Navbar({
     });
   };
 
+  // Flatten logic to get all products for easy searching
+  // productsData is { "Category": [prod1, prod2], ... }
+  const getAllProducts = () => {
+    return Object.values(productsData).flat();
+  };
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.trim().length > 0) {
+      const allProds = getAllProducts();
+      // Simple case-insensitive match on name
+      const filtered = allProds.filter(p =>
+        p.name.toLowerCase().includes(query.toLowerCase())
+      );
+      // Limit to 5-10 results
+      setSearchResults(filtered.slice(0, 8));
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleSearch = () => {
+    if (!searchQuery.trim()) return;
+    closeMobileSearch();
+    setSearchResults([]); // Clear dropdown
+    navigate(`/products/search?q=${encodeURIComponent(searchQuery)}`);
+  };
+
+  const handleSuggestionClick = (productName) => {
+    setSearchQuery(productName);
+    setSearchResults([]);
+    closeMobileSearch();
+    navigate(`/products/search?q=${encodeURIComponent(productName)}`);
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <>
       {/* Top Navbar */}
       <nav className="main-navbar" >
+        {/* ... (Left logo) ... */}
         <div className="nav-left">
           <Link to="/">
             <img src={logo} alt="logo" className="nav-logo" />
@@ -322,6 +419,7 @@ export default function Navbar({
         </div>
 
         <ul className="nav-center">
+          {/* ... (Center tabs) ... */}
           <li
             className={`menu-item ${activeTab === "Shop" ? "active" : ""}`}
             onMouseEnter={() => handleHover("Shop")}
@@ -356,8 +454,6 @@ export default function Navbar({
             src={searchIcon}
             alt="Search"
             className="mobile-search-icon"
-            // onClick={() => {
-            // if (window.innerWidth <= 768) setSearchOpen(true);
             onClick={() => {
               if (typeof setMobileSearchOpen === "function") {
                 setMobileSearchOpen(true);
@@ -365,13 +461,59 @@ export default function Navbar({
                 setInternalMobileSearchOpen(true);
               }
             }}
-
           />
 
-          <div className="search-box">
-            <input type="text" placeholder="Search Farmlet" />
-            <img src={searchIcon} alt="Search" style={{ width: 23, height: 23 }} />
+          <div className="search-box" style={{ position: 'relative' }}>
+            <input
+              type="text"
+              placeholder="Search Farmlet"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onKeyDown={handleKeyDown}
+            />
+            {searchQuery ? (
+              <FaTimes
+                size={18}
+                color="#666"
+                style={{ cursor: 'pointer', marginLeft: 8 }}
+                onClick={handleClearSearch}
+              />
+            ) : (
+              <img
+                src={searchIcon}
+                alt="Search"
+                style={{ width: 23, height: 23, cursor: 'pointer' }}
+                onClick={handleSearch}
+              />
+            )}
+
+            {/* LIVE SEARCH RESULTS DROPDOWN (Desktop) */}
+            {searchResults.length > 0 && searchQuery && (
+              <div className="search-suggestions-dropdown">
+                {searchResults.map((prod) => (
+                  <div
+                    key={prod.id}
+                    className="suggestion-item"
+                    onClick={() => handleSuggestionClick(prod.name)}
+                  >
+                    <img
+                      src={prod.image_url && prod.image_url.startsWith('/uploads')
+                        ? `${window.ENV.BACKEND_API}${prod.image_url}`
+                        : prod.image_url}
+                      alt=""
+                      className="suggestion-img"
+                    />
+                    <div className="suggestion-info">
+                      <span className="suggestion-name">{prod.name}</span>
+                      {/* Optional: Show Price or Category */}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* ... (Rest of Right Nav) ... */}
           <div
             className={`right-item ${activeTab === "Delivery" ? "active" : ""}`}
             onMouseEnter={() => handleHover("Delivery")}
@@ -459,12 +601,6 @@ export default function Navbar({
       {activeSubmenu && window.innerWidth <= 768 && (
         <div className="mobile-dropdown-overlay">
           <div className="mobile-full-dropdown">
-            {/* {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
-              <div key={i} className="mobile-dropdown-item">
-                <div className="mob-title">{item.title}</div>
-                <div className="mob-desc">{item.desc}</div>
-              </div>
-            ))} */}
             {mobileDropdownContent[activeSubmenu]?.map((item, i) => (
               <div
                 key={i}
@@ -508,13 +644,53 @@ export default function Navbar({
             </button>
           </div>
 
-          <div className="search-input-row">
+          <div className="search-input-row" style={{ position: 'relative' }}>
             <input
               type="text"
               placeholder="Search Farmlet"
               className="search-input"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onKeyDown={handleKeyDown}
+              autoFocus
             />
-            <img src={searchIcon} alt="" className="search-popup-icon" />
+            {searchQuery ? (
+              <FaTimes
+                size={20}
+                color="#666"
+                className="search-popup-icon"
+                onClick={handleClearSearch}
+              />
+            ) : (
+              <img
+                src={searchIcon}
+                alt=""
+                className="search-popup-icon"
+                onClick={handleSearch}
+              />
+            )}
+
+            {/* LIVE SEARCH RESULTS DROPDOWN (Mobile) */}
+            {searchResults.length > 0 && searchQuery && (
+              <div className="mobile-search-suggestions">
+                {searchResults.map((prod) => (
+                  <div
+                    key={prod.id}
+                    className="suggestion-item"
+                    onClick={() => handleSuggestionClick(prod.name)}
+                  >
+                    <img
+                      src={prod.image_url && prod.image_url.startsWith('/uploads')
+                        ? `${window.ENV.BACKEND_API}${prod.image_url}`
+                        : prod.image_url}
+                      alt=""
+                      className="suggestion-img"
+                    />
+                    <span className="suggestion-name">{prod.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
         </div>

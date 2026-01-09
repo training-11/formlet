@@ -1,5 +1,5 @@
-// index.js
 import express from "express";
+import multer from "multer";
 
 import cors from "cors";
 import dotenv from "dotenv";
@@ -40,6 +40,21 @@ app.use("/api/pincode", pincodeRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/public", productRoute);
+
+// Error Handling Middleware (for Multer and others)
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    // A Multer error occurred when uploading.
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({ error: "File too large. Maximum limit is 100MB." });
+    }
+    return res.status(400).json({ error: err.message });
+  } else if (err) {
+    // An unknown error occurred when uploading.
+    return res.status(500).json({ error: err.message });
+  }
+  next();
+});
 
 
 const PORT = process.env.PORT || 5001;
