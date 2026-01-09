@@ -11,6 +11,7 @@ import Footer from "../Components/Home/Footer";
 import { useAuth } from "../Context/AuthContext";
 import CartSidebar from "../Components/Cart/CartSidebar";
 import AddToCartModal from "../Components/Cart/AddToCartModal";
+import ProductCard from "../Components/ProductCard";
 
 export default function ProductPage() {
   // const { category } = useParams(); // Unused for now
@@ -99,7 +100,7 @@ export default function ProductPage() {
           Bengaluru <FaChevronDown size={14} />
       {/* BODY LAYOUT: Flex container for Sidebar - Content - Cart */}
       {/* <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}> */}
- <div className="main-layout" style={{ display: "flex" }}>
+      <div className="main-layout" style={{ display: "flex" }}>
         {/* LEFT SIDEBAR & PRODUCTS GRID */}
         <div className="content-area" style={{ flexGrow: 1, display: "flex" }}>
           {/* LEFT SIDEBAR (Categories) */}
@@ -127,35 +128,16 @@ export default function ProductPage() {
 
             <div className="products">
               {filteredProducts.length > 0 ? (
-                filteredProducts.map((prod) => (
-                  <div className="product-card" key={prod.id}>
-                    {/* Render Ribbon if tags exist */}
-                    {prod.tags && prod.tags.length > 0 && (
-                      <div className="product-ribbon">
-                        {Array.isArray(prod.tags) ? prod.tags[0] : (typeof prod.tags === 'string' && prod.tags.startsWith('[') ? JSON.parse(prod.tags)[0] : prod.tags)}
-                      </div>
-                    )}
-                    <img
-                      src={getImageUrl(prod.image_url)}
-                      className="product-image"
-                      alt={prod.name}
-                    />
-
-                    {prod.location && <div className="product-location">{prod.location}</div>}
-                    <div className="product-name">{prod.name}</div>
-                    <input className="weight-input" value={prod.weight} readOnly />
-                    <div className="product-price">₹{prod.price}</div>
-
-                    {isAuthenticated ? (
-                      <button className="order-btn" onClick={() => handleOpenModal(prod)}>
-                        Add to Cart
-                      </button>
-                    ) : (
-                      <button className="order-btn" onClick={() => alert("Please sign in or check your pincode first!")}>
-                        Login to Order
-                      </button>
-                    )}
-                  </div>
+                Object.values(filteredProducts.reduce((acc, prod) => {
+                  if (!acc[prod.name]) acc[prod.name] = [];
+                  acc[prod.name].push(prod);
+                  return acc;
+                }, {})).map((group, index) => (
+                  <ProductCard
+                    key={index}
+                    variants={group}
+                    onAddToCart={handleOpenModal}
+                  />
                 ))
               ) : (
                 <p>No products found in this category.</p>
@@ -180,24 +162,24 @@ export default function ProductPage() {
           </div>
         )} */}
         {/* DESKTOP CART */}
-{isAuthenticated && (
-  <div className="desktop-cart">
-    <CartSidebar />
-  </div>
-)}
+        {isAuthenticated && (
+          <div className="desktop-cart">
+            <CartSidebar />
+          </div>
+        )}
 
-{/* MOBILE CART OVERLAY */}
-{isAuthenticated && showMobileCart && (
-  <div className="mobile-cart-overlay">
-    <CartSidebar />
-    <button
-      className="close-cart-btn"
-      onClick={() => setShowMobileCart(false)}
-    >
-      ✕
-    </button>
-  </div>
-)}
+        {/* MOBILE CART OVERLAY */}
+        {isAuthenticated && showMobileCart && (
+          <div className="mobile-cart-overlay">
+            <CartSidebar />
+            <button
+              className="close-cart-btn"
+              onClick={() => setShowMobileCart(false)}
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
 
       </div>
@@ -205,13 +187,13 @@ export default function ProductPage() {
       {/* BOTTOM BAR (Only show if NOT authenticated or cart is empty/hidden on mobile) */}
       {!isAuthenticated && <div className="bottom-login-bar">Login To Order</div>}
       {isAuthenticated && (
-  <div className="mobile-view-cart-bar">
-    <span>View Cart</span>
-    <button onClick={() => setShowMobileCart(true)}>
-      Open
-    </button>
-  </div>
-)}
+        <div className="mobile-view-cart-bar">
+          <span>View Cart</span>
+          <button onClick={() => setShowMobileCart(true)}>
+            Open
+          </button>
+        </div>
+      )}
 
       <Footer />
     </div>

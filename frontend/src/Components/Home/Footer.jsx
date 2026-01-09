@@ -9,6 +9,8 @@ import instagram from "../../Images/Instagram.svg";
 import youtube from "../../Images/Youtube.svg";
 
 
+import { FaPhoneAlt, FaCcVisa, FaCcMastercard, FaCcAmex, FaCreditCard } from "react-icons/fa";
+
 export default function Footer() {
   return (
     <footer className="footer">
@@ -19,6 +21,7 @@ export default function Footer() {
           <p>Sustainability</p>
           <p>Our packaging</p>
           <p>Growers & makers</p>
+          <p className="footer-terms">Terms and conditions | Privacy information | Cookie policy</p>
         </div>
 
         <div className="footer-column">
@@ -36,37 +39,52 @@ export default function Footer() {
           <p>Refer a Friend</p>
         </div>
 
-        <div className="footer-column">
-          <h3>Download our app</h3>
-         <div className="store-row">
-    <img src={appstore} alt="app store" className="store-img" />
-    <img src={playstore} alt="google play" className="store-img" />
-  </div>
+        <div className="footer-column app-payment-column">
+          <h3>App & Payment</h3>
+          <p className="app-subtitle">From App Store or Google Play</p>
+          <div className="store-buttons-vertical">
+            <img src={playstore} alt="google play" className="store-img" />
+            <img src={appstore} alt="app store" className="store-img" />
+          </div>
+
+          <div className="payment-gateways">
+            <p className="payment-title">Secured Payment Gateways</p>
+            <div className="payment-icons">
+              <img src="https://organicmandya.com/cdn/shop/files/9df20d065d424eb84b76f8b62e604c51.png?v=1722334866&width=500" alt="Payment Gateways" className="payment-gateway-img" />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* SOCIAL ICONS */}
-      <div className="social-icons">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            <img src={facebook} alt="Facebook" className="social-icon" />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <img src={twitter} alt="Twitter" className="social-icon" />
-          </a>
-          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer">
-            <img src={pinterest} alt="Pinterest" className="social-icon" />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <img src={instagram} alt="Instagram" className="social-icon" />
-          </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-            <img src={youtube} alt="YouTube" className="social-icon" />
-          </a>
-
+      {/* CONTACT & SOCIAL ROW */}
+      <div className="footer-contact-row">
+        <div className="footer-phone">
+          <div className="phone-icon-circle">
+            <FaPhoneAlt size={18} />
           </div>
-      <div className="footer-bottom">
-        <p>Terms and conditions | Privacy information | Cookie policy</p>
+          <span className="phone-number">+91 7386120893</span>
+        </div>
+
+        <div className="footer-social-wrapper">
+          <span className="follow-us-text">Follow Us</span>
+          <div className="social-icons">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <img src={facebook} alt="Facebook" className="social-icon" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+              <img src={twitter} alt="Twitter" className="social-icon" />
+            </a>
+
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <img src={instagram} alt="Instagram" className="social-icon" />
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+              <img src={youtube} alt="YouTube" className="social-icon" />
+            </a>
+          </div>
+        </div>
       </div>
+
     </footer>
   );
 }

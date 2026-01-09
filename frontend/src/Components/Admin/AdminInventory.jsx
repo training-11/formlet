@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./AdminInventory.css";
+import "./AdminProducts.css"; // Reuse styling for variants
 import { useAuth } from "../../Context/AuthContext";
 
 export default function AdminInventory() {
@@ -23,8 +24,13 @@ export default function AdminInventory() {
     const [newCategoryFile, setNewCategoryFile] = useState(null);
 
     const [newProduct, setNewProduct] = useState({
-        name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null, tag_ids: []
+        name: "", location: "", image_url: "", imageFile: null, tag_ids: []
     });
+
+    // Variants State
+    const [variants, setVariants] = useState([{ id: Date.now(), weight: "", price: "", stock: "" }]);
+    const [activeDropdown, setActiveDropdown] = useState(null);
+    const weightOptions = ["250g", "500g", "1kg", "2kg", "5kg", "1 Unit", "1 Bunch", "1 Dozen", "6 pcs", "12 pcs"];
 
 
     // Editing State
@@ -110,7 +116,8 @@ export default function AdminInventory() {
 
     const handleOpenAddModal = () => {
         setEditingProduct(null);
-        setNewProduct({ name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null, tag_ids: [] });
+        setNewProduct({ name: "", location: "", image_url: "", imageFile: null, tag_ids: [] });
+        setVariants([{ id: Date.now(), weight: "", price: "", stock: "" }]);
         setShowProductModal(true);
     };
 
@@ -125,69 +132,110 @@ export default function AdminInventory() {
 
         setNewProduct({
             name: prod.name,
-            weight: prod.weight,
-            price: prod.price,
             location: prod.location,
-            stock: prod.stock,
             image_url: prod.image_url,
             imageFile: null,
             tag_ids: currentTagIds || []
         });
+
+        // Initialize variants with current product's details
+        setVariants([{
+            id: Date.now(),
+            dbId: prod.id, // Important for updates
+            weight: prod.weight || "",
+            price: prod.price,
+            stock: prod.stock
+        }]);
+
         setShowProductModal(true);
+    };
+
+    // Variant Helpers
+    const handleVariantChange = (index, field, value) => {
+        const updated = [...variants];
+        updated[index][field] = value;
+        setVariants(updated);
+    };
+
+    const addVariant = () => {
+        setVariants([...variants, { id: Date.now(), weight: "", price: "", stock: "" }]);
+    };
+
+    const removeVariant = (index) => {
+        if (variants.length === 1) return;
+        setVariants(variants.filter((_, i) => i !== index));
+    };
+
+    const selectWeight = (index, value) => {
+        handleVariantChange(index, 'weight', value);
+        setActiveDropdown(null);
     };
 
     const handleSaveProduct = async (e) => {
         e.preventDefault();
         if (!selectedCategory) return alert("Select a category first!");
 
-        try {
-            const formData = new FormData();
-            formData.append("category_id", selectedCategory.id);
-            formData.append("name", newProduct.name);
-            formData.append("weight", newProduct.weight);
-            formData.append("price", newProduct.price);
-            formData.append("location", newProduct.location || "");
-            formData.append("stock", newProduct.stock);
-            // formData.append("image_url", newProduct.image_url); // We can still send this if no new file
-            // Actually, backend prioritizes file. If no file, it looks at body.image_url.
+        // Loop through variants and save each one
+        let successCount = 0;
 
-            if (newProduct.imageFile) {
-                formData.append("image", newProduct.imageFile);
-            } else {
-                formData.append("image_url", newProduct.image_url);
-            }
+        for (const variant of variants) {
+            // Skip empty variants if multiple
+            if (variants.length > 1 && !variant.weight && !variant.price) continue;
 
-            // Append Tags
-            if (newProduct.tag_ids && newProduct.tag_ids.length > 0) {
-                newProduct.tag_ids.forEach(tagId => formData.append("tag_ids", tagId));
-            }
+            try {
+                const formData = new FormData();
+                formData.append("category_id", selectedCategory.id);
+                formData.append("name", newProduct.name);
+                formData.append("location", newProduct.location || "");
 
-            let url = `${window.ENV.BACKEND_API}/api/admin/products`;
-            let method = "POST";
+                // Variant specific
+                formData.append("weight", variant.weight);
+                formData.append("price", variant.price);
+                formData.append("stock", variant.stock || 0);
 
-            if (editingProduct) {
-                url = `${window.ENV.BACKEND_API}/api/admin/products/${editingProduct.id}`;
-                method = "PUT";
-            }
+                if (newProduct.imageFile) {
+                    formData.append("image", newProduct.imageFile);
+                } else {
+                    formData.append("image_url", newProduct.image_url);
+                }
 
-            const res = await fetch(url, {
-                method: method,
-                headers: {
-                    Authorization: `Bearer ${currentUser.token}`
-                    // Content-Type must NOT be set when sending FormData, browser does it with boundary
-                },
-                body: formData
-            });
+                if (newProduct.tag_ids && newProduct.tag_ids.length > 0) {
+                    newProduct.tag_ids.forEach(tagId => formData.append("tag_ids", tagId));
+                }
 
-            if (res.ok) {
-                setShowProductModal(false);
-                setEditingProduct(null);
-                setNewProduct({ name: "", weight: "", price: "", location: "", stock: 0, image_url: "", imageFile: null });
-                fetchEverything();
-            } else {
-                alert("Failed to save product");
-            }
-        } catch (err) { console.error(err); }
+                // Determine URL and Method
+                // If variant has dbId, it is an UPDATE to that specific ID.
+                // If NOT, it is a create.
+                let url = `${window.ENV.BACKEND_API}/api/admin/products`;
+                let method = "POST";
+
+                if (variant.dbId) {
+                    url = `${window.ENV.BACKEND_API}/api/admin/products/${variant.dbId}`;
+                    method = "PUT";
+                }
+
+                const res = await fetch(url, {
+                    method: method,
+                    headers: { Authorization: `Bearer ${currentUser.token}` },
+                    body: formData
+                });
+
+                if (res.ok) {
+                    successCount++;
+                } else {
+                    const err = await res.json();
+                    console.error("Failed to save variant", variant, err);
+                    alert(`Failed to save variant ${variant.weight}: ${err.message}`);
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        if (successCount > 0) {
+            setShowProductModal(false);
+            setEditingProduct(null);
+            setNewProduct({ name: "", location: "", image_url: "", imageFile: null });
+            fetchEverything();
+        }
     };
 
     const handleFileChange = (e) => {
@@ -209,10 +257,14 @@ export default function AdminInventory() {
 
     // Helper for Image URLs
     const getImageUrl = (url) => {
-        if (url && url.startsWith("/uploads")) {
+        if (!url) return "";
+        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("data:")) {
+            return url;
+        }
+        if (url.startsWith("/uploads")) {
             return `${window.ENV.BACKEND_API}${url}`;
         }
-        return url;
+        return url.startsWith("/") ? url : `/${url}`;
     };
 
     return (
@@ -279,15 +331,41 @@ export default function AdminInventory() {
                                 <label>Name</label>
                                 <input required value={newProduct.name} onChange={e => setNewProduct({ ...newProduct, name: e.target.value })} />
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Price (₹)</label>
-                                    <input required type="number" value={newProduct.price} onChange={e => setNewProduct({ ...newProduct, price: e.target.value })} />
-                                </div>
-                                <div className="form-group">
-                                    <label>Weight</label>
-                                    <input value={newProduct.weight} onChange={e => setNewProduct({ ...newProduct, weight: e.target.value })} />
-                                </div>
+                            <div className="form-group">
+                                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Variants (Weight, Price, Stock)</label>
+                                {variants.map((variant, index) => (
+                                    <div key={variant.id} className="variant-row">
+                                        <div className="weight-wrapper">
+                                            <input
+                                                placeholder="Weight (e.g. 1kg)"
+                                                value={variant.weight}
+                                                onChange={(e) => handleVariantChange(index, 'weight', e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <input
+                                            type="number"
+                                            placeholder="Price (₹)"
+                                            value={variant.price}
+                                            onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
+                                            required
+                                        />
+                                        <input
+                                            type="number"
+                                            placeholder="Stock"
+                                            value={variant.stock}
+                                            onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
+                                        />
+                                        {variants.length > 1 && (
+                                            <button type="button" className="remove-variant-btn" onClick={() => removeVariant(index)}>
+                                                &times;
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                                <button type="button" className="add-variant-btn" onClick={addVariant}>
+                                    + Add Another Variant
+                                </button>
                             </div>
 
                             {/* IMAGE INPUT */}
@@ -300,6 +378,11 @@ export default function AdminInventory() {
                                     </div>
                                 )}
                                 <input type="file" accept="image/*" onChange={handleFileChange} />
+                                {newProduct.imageFile && (
+                                    <p style={{ fontSize: 12, color: 'blue', marginTop: 5 }}>
+                                        Selected File Size: {(newProduct.imageFile.size / 1024 / 1024).toFixed(2)} MB
+                                    </p>
+                                )}
                             </div>
 
                             <div className="form-group">

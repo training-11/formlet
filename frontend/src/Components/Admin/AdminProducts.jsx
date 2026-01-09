@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./AdminPincodes.css";
+import "./AdminProducts.css";
 import { useAuth } from "../../Context/AuthContext";
 
 export default function AdminProducts() {
@@ -14,17 +15,19 @@ export default function AdminProducts() {
     const [editId, setEditId] = useState(null);
 
     // Form State
+    // Form State
     const initialFormState = {
         name: "",
         category_id: "",
-        weight: "",
-        price: "",
         location: "",
-        stock: 0,
         image_url: "",
         tag_ids: []
     };
     const [newItem, setNewItem] = useState(initialFormState);
+    const [variants, setVariants] = useState([{ id: Date.now(), weight: "", price: "", stock: "" }]);
+    const [activeDropdown, setActiveDropdown] = useState(null);
+
+    const weightOptions = ["250g", "500g", "1kg", "2kg", "5kg", "1 Unit", "1 Bunch", "1 Dozen", "6 pcs", "12 pcs"];
 
     useEffect(() => {
         fetchData();
@@ -63,6 +66,28 @@ export default function AdminProducts() {
         setNewItem(prev => ({ ...prev, tag_ids: selectedTags }));
     };
 
+    // Variant Handlers
+    const handleVariantChange = (index, field, value) => {
+        const updated = [...variants];
+        updated[index][field] = value;
+        setVariants(updated);
+    };
+
+    const addVariant = () => {
+        setVariants([...variants, { id: Date.now(), weight: "", price: "", stock: "" }]);
+    };
+
+    const removeVariant = (index) => {
+        if (variants.length === 1) return;
+        const updated = variants.filter((_, i) => i !== index);
+        setVariants(updated);
+    };
+
+    const selectWeight = (index, value) => {
+        handleVariantChange(index, 'weight', value);
+        setActiveDropdown(null);
+    };
+
     const handleEdit = (prod) => {
         setEditMode(true);
         setEditId(prod.id);
@@ -77,13 +102,18 @@ export default function AdminProducts() {
         setNewItem({
             name: prod.name,
             category_id: prod.category_id,
-            weight: prod.weight || "",
-            price: prod.price,
             location: prod.location || "",
-            stock: prod.stock || 0,
             image_url: prod.image_url || "",
             tag_ids: currentTagIds || []
         });
+
+        setVariants([{
+            id: Date.now(),
+            dbId: prod.id, // Store original DB ID
+            weight: prod.weight || "",
+            price: prod.price,
+            stock: prod.stock || 0
+        }]);
 
         // Scroll to top
         window.scrollTo(0, 0);
@@ -93,6 +123,7 @@ export default function AdminProducts() {
         setEditMode(false);
         setEditId(null);
         setNewItem(initialFormState);
+        setVariants([{ id: Date.now(), weight: "", price: "", stock: "" }]);
     };
 
     const handleSubmit = async (e) => {
@@ -100,27 +131,48 @@ export default function AdminProducts() {
         setLoading(true);
 
         try {
-            const url = editMode
-                ? `${window.ENV.BACKEND_API}/api/admin/products/${editId}`
-                : `${window.ENV.BACKEND_API}/api/admin/products`;
+            let successCount = 0;
 
-            const method = editMode ? "PUT" : "POST";
+            for (const variant of variants) {
+                // Skip completely empty variants if multiple exist
+                if (variants.length > 1 && !variant.weight && !variant.price) continue;
 
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${currentUser.token}`
-                },
-                body: JSON.stringify(newItem)
-            });
+                const payload = {
+                    ...newItem,
+                    weight: variant.weight,
+                    price: variant.price,
+                    stock: variant.stock || 0
+                };
 
-            if (response.ok) {
+                // Decoupled Logic: If variant has a dbId, it's an UPDATE. If not, it's a CREATE.
+                const isUpdate = !!variant.dbId;
+                const url = isUpdate
+                    ? `${window.ENV.BACKEND_API}/api/admin/products/${variant.dbId}`
+                    : `${window.ENV.BACKEND_API}/api/admin/products`;
+
+                const method = isUpdate ? "PUT" : "POST";
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${currentUser.token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    successCount++;
+                } else {
+                    const err = await response.json();
+                    console.error("Failed to save variant:", variant, err);
+                    alert(`Failed to save ${variant.weight}: ${err.message}`);
+                }
+            }
+
+            if (successCount > 0) {
                 handleCancel(); // Reset form
                 fetchData();    // Refresh list
-            } else {
-                const err = await response.json();
-                alert(err.message || "Failed to save product");
             }
         } catch (error) {
             console.error("Product Save Error:", error);
@@ -142,6 +194,17 @@ export default function AdminProducts() {
         }
     };
 
+    const getImageUrl = (url) => {
+        if (!url) return "";
+        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("data:")) {
+            return url;
+        }
+        if (url.startsWith("/uploads")) {
+            return `${window.ENV.BACKEND_API}${url}`;
+        }
+        return url.startsWith("/") ? url : `/${url}`;
+    };
+
     return (
         <div className="admin-pincodes-container">
             <h2>{editMode ? "Edit Product" : "Manage Products"}</h2>
@@ -153,10 +216,46 @@ export default function AdminProducts() {
                 </select>
 
                 <input type="text" name="name" placeholder="Product Name" value={newItem.name} onChange={handleInputChange} required style={{ padding: "10px" }} />
-                <input type="text" name="weight" placeholder="Weight (e.g. 1kg)" value={newItem.weight} onChange={handleInputChange} style={{ padding: "10px" }} />
-
-                <input type="number" name="price" placeholder="Price" value={newItem.price} onChange={handleInputChange} required style={{ padding: "10px" }} />
-                <input type="number" name="stock" placeholder="Stock Qty" value={newItem.stock} onChange={handleInputChange} style={{ padding: "10px" }} />
+                <div style={{ gridColumn: "span 2" }}>
+                    <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Variants (Weight & Price)</label>
+                    {variants.map((variant, index) => (
+                        <div key={variant.id} className="variant-row">
+                            <div className="weight-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Weight (e.g. 1kg)"
+                                    value={variant.weight}
+                                    onChange={(e) => handleVariantChange(index, 'weight', e.target.value)}
+                                    required
+                                    style={{ width: "100%", padding: "8px" }}
+                                />
+                            </div>
+                            <input
+                                type="number"
+                                placeholder="Price"
+                                value={variant.price}
+                                onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
+                                required
+                                style={{ padding: "8px" }}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Stock"
+                                value={variant.stock}
+                                onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
+                                style={{ padding: "8px" }}
+                            />
+                            {variants.length > 1 && (
+                                <button type="button" className="remove-variant-btn" onClick={() => removeVariant(index)}>
+                                    &times;
+                                </button>
+                            )}
+                        </div>
+                    ))}
+                    <button type="button" className="add-variant-btn" onClick={addVariant}>
+                        + Add Another Variant
+                    </button>
+                </div>
 
                 <input type="text" name="location" placeholder="Location" value={newItem.location} onChange={handleInputChange} style={{ padding: "10px" }} />
                 <input type="text" name="image_url" placeholder="Image URL" value={newItem.image_url} onChange={handleInputChange} style={{ padding: "10px" }} />
@@ -195,7 +294,7 @@ export default function AdminProducts() {
                     {products.map((prod) => (
                         <tr key={prod.id}>
                             <td>
-                                {prod.image_url && <img src={prod.image_url.startsWith("/uploads") ? `${window.ENV.BACKEND_API}${prod.image_url}` : prod.image_url} alt={prod.name} style={{ width: 40, height: 40, objectFit: 'cover' }} />}
+                                {prod.image_url && <img src={getImageUrl(prod.image_url)} alt={prod.name} style={{ width: 40, height: 40, objectFit: 'cover' }} />}
                             </td>
                             <td>
                                 {prod.name}
