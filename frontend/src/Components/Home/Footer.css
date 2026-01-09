@@ -1,24 +1,37 @@
 .footer {
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+}
+
+.footer-top-section {
   background-color: #01BF64;
-  background-size: cover;
   padding: 60px 80px;
   color: white;
-  font-family: 'Inter', sans-serif;
+}
+
+.footer-bottom-section {
+  background-color: #e0e0e0;
+  padding: 30px 80px;
+  color: #333;
 }
 
 .footer-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 0;
   max-width: 1600px;
-  margin: 0 auto 40px
+  margin: 0 auto;
 }
 
 /* Large Desktop/Monitor View */
 @media (min-width: 1400px) {
-  .footer {
+  .footer-top-section {
     padding: 70px 120px;
+  }
+
+  .footer-bottom-section {
+    padding: 30px 120px;
   }
 
   .footer-container {
@@ -141,12 +154,16 @@
 /* Mobile: up to 767px (exclude iPad Mini 768px) */
 @media (max-width: 767px) {
 
-  .footer {
-    background-color: #01BF64 !important;
-    padding: 40px 0;
-    padding-bottom: 120px;
-    /* ensure footer text not covered by sticky CTA */
+  .footer-top-section {
+    padding: 40px 20px;
     color: white;
+  }
+
+  .footer-bottom-section {
+    background-color: white !important;
+    padding: 30px 20px 120px 20px;
+    /* 120px bottom for sticky CTA */
+    color: #333;
   }
 
 
@@ -286,9 +303,14 @@
 
 @media (min-width: 768px) and (max-width: 1024px) {
 
-  .footer {
+  .footer-top-section {
     background-color: #01BF64;
     padding: 60px 60px;
+  }
+
+  .footer-bottom-section {
+    background-color: white;
+    padding: 30px 60px;
   }
 
   .footer-container {
@@ -356,9 +378,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  padding-top: 30px;
-  margin-top: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .footer-phone {
@@ -370,18 +391,18 @@
 .phone-icon-circle {
   width: 40px;
   height: 40px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  border: 2px solid #01BF64;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #01BF64;
 }
 
 .phone-number {
   font-size: 20px;
   font-weight: 600;
-  color: white;
+  color: #333;
   letter-spacing: 0.5px;
 }
 
@@ -394,7 +415,7 @@
 .follow-us-text {
   font-size: 16px;
   font-weight: 600;
-  color: white;
+  color: #333;
 }
 
 /* Override existing .social-icons specific positioning */
@@ -405,13 +426,25 @@
   gap: 10px !important;
 }
 
+.footer-bottom-section .social-icon {
+  color: #333;
+  filter: invert(1);
+  /* Assuming icons are white, this makes them black/dark */
+}
+
+.footer-bottom-section .social-icon:hover {
+  color: white;
+  filter: none;
+  /* Revert to original (white) on hover due to dark background change */
+}
+
 /* Mobile Responsiveness for Contact Row */
 @media (max-width: 767px) {
   .footer-contact-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 25px;
-    padding: 0 20px;
+    padding: 0;
     border-top: none;
   }
 
