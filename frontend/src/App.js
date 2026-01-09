@@ -9,6 +9,7 @@ import AdminOrderDetails from "./Components/Admin/AdminOrderDetails";
 import ResetPassword from "./Pages/ResetPassword";
 import DeliverySchedulePage from "./Pages/DeliverySchedulePage";
 import AccountPage from "./Pages/AccountPage";
+import Aboutfarmlet from "./Components/Home/Aboutfarmlet";
 
 
 
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/delivery-schedule" element={<DeliverySchedulePage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/about" element={<Aboutfarmlet />} />
 
         </Routes>
       </BrowserRouter>

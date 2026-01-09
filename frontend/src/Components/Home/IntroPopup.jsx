@@ -6,15 +6,16 @@ export default function IntroPopup() {
   const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-    const hasSeenPopup = localStorage.getItem("farmletIntroSeen");
-
+    // const hasSeenPopup = localStorage.getItem("farmletIntroSeen");
+ const hasSeenPopup = sessionStorage.getItem("farmletIntroSeen");
     if (!hasSeenPopup) {
       setShowPopup(true);  // Show only first time
     }
   }, []);
 
     const handleClose = () => {
-    localStorage.setItem("farmletIntroSeen", "true"); // ⭐ Save the state
+    // localStorage.setItem("farmletIntroSeen", "true"); 
+     sessionStorage.setItem("farmletIntroSeen", "true");
     setShowPopup(false);
   };
 //   const handleClose = () => {
@@ -28,9 +29,9 @@ export default function IntroPopup() {
     <div className="intro-overlay" style={{ backgroundImage: `url(${bgImage})` }}    onClick={handleClose}>
       <div className="intro-content" onClick={(e) => e.stopPropagation()} >
 
- <button className="close-btn" onClick={handleClose}>
+ {/* <button className="close-btn" onClick={handleClose}>
           ✕
-        </button>
+        </button> */}
 
         <h1>Welcome to Farmlet 🌿</h1>
 

@@ -19,6 +19,12 @@ import OrderHistoryModal from "./OrderHistoryModal";
 
 export default function Navbar({ signInOpen,
   setSignInOpen, }) {
+export default function Navbar({
+  signInOpen,
+  setSignInOpen,
+  mobileSearchOpen,
+  setMobileSearchOpen
+}) {
   const { currentUser, isAuthenticated, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("Shop");
   const [openModal, setOpenModal] = useState(false);
@@ -29,7 +35,7 @@ export default function Navbar({ signInOpen,
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ left: 0 });
   // const [searchOpen, setSearchOpen] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [internalMobileSearchOpen, setInternalMobileSearchOpen] = useState(false);
 
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Fresh Fruits");
@@ -87,6 +93,7 @@ export default function Navbar({ signInOpen,
       navigate("/delivery-schedule");
     } else {
       setOpenModal(true); // Open Sign In
+      if (typeof setSignInOpen === "function") setSignInOpen(true);
     }
   };
 
@@ -130,7 +137,6 @@ export default function Navbar({ signInOpen,
       "Certified B Corp",
       "Employee Ownership",
       "Founder's wishes",
-      "Who is Guy Singh-Watson?",
       "Charity partnerships"
     ],
     "Leafy & others": [
@@ -326,6 +332,7 @@ export default function Navbar({ signInOpen,
           <li
             className={activeTab === "About" ? "active" : ""}
             onMouseEnter={() => handleHover("About")}
+            onClick={() => navigate("/about")}
           >
             About Farmlet
           </li>
@@ -351,7 +358,13 @@ export default function Navbar({ signInOpen,
             className="mobile-search-icon"
             // onClick={() => {
             // if (window.innerWidth <= 768) setSearchOpen(true);
-            onClick={() => setMobileSearchOpen(true)}
+            onClick={() => {
+              if (typeof setMobileSearchOpen === "function") {
+                setMobileSearchOpen(true);
+              } else {
+                setInternalMobileSearchOpen(true);
+              }
+            }}
 
           />
 
@@ -403,7 +416,7 @@ export default function Navbar({ signInOpen,
 
         <div
           className={`mobile-submenu-item ${activeTab === "About" ? "active" : ""}`}
-          onClick={() => handleMobileClick("About")}
+          onClick={() => navigate("/about")}
         >
           About Farmlet
         </div>
@@ -475,7 +488,7 @@ export default function Navbar({ signInOpen,
       )}
 
       {/* 📱 Mobile Search Popup */}
-      {mobileSearchOpen && window.innerWidth <= 768 && (
+      {(mobileSearchOpen || internalMobileSearchOpen) && window.innerWidth <= 768 && (
         <div className="mobile-search-overlay">
 
           <div className="search-header">
@@ -483,7 +496,13 @@ export default function Navbar({ signInOpen,
 
             <button
               className="mobile-close-btn"
-              onClick={() => setMobileSearchOpen(false)}
+              onClick={() => {
+                if (typeof setMobileSearchOpen === "function") {
+                  setMobileSearchOpen(false);
+                } else {
+                  setInternalMobileSearchOpen(false);
+                }
+              }}
             >
               ✕
             </button>
