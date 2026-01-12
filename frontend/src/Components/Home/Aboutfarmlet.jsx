@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Aboutfarmlet.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import aboutImage from "../../Images/about.png";
+import aboutImage from "../../Images/About.png";
 
 export default function Aboutfarmlet() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
