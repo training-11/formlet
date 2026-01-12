@@ -3,39 +3,39 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  background: transparent;
 }
 
 .aboutfarmlet-container {
   flex: 1;
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 0;
-  background: transparent !important;
+  align-items: center;
   overflow: hidden;
 }
 
 .aboutfarmlet-content {
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent !important;
+  max-width: 1600px;
 }
 
+/* 🔑 CRITICAL IMAGE FIX */
 .aboutfarmlet-image {
   width: 100%;
   height: auto;
-  max-width: 100%;
-  object-fit: contain;
   display: block;
-  background-color: rgba(255, 255, 255, 0.5); /* semi transparent */
-  /* 🔑 THIS MATTERS */
-  /* background-color: transparent !important; */
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
+  object-fit: contain;
+
+  /* Prevent repaint + lag */
+  will-change: transform;
+  backface-visibility: hidden;
 }
+.aboutfarmlet-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  will-change: transform;
+  image-rendering: auto;
+}
+

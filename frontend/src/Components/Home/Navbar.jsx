@@ -78,6 +78,7 @@ export default function Navbar({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [mobileSearchOpen, internalMobileSearchOpen]);
+  
 
   // --- Fetch Products from API ---
   useEffect(() => {
