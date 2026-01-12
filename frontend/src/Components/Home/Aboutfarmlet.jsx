@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Aboutfarmlet.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -8,6 +8,12 @@ export default function Aboutfarmlet() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
 
+  // 🔑 PRELOAD IMAGE AS SOON AS COMPONENT IS CALLED
+  useEffect(() => {
+    const img = new Image();
+    img.src = aboutImage;
+  }, []);
+
   return (
     <div className="aboutfarmlet-page">
       <Navbar
@@ -16,15 +22,23 @@ export default function Aboutfarmlet() {
         signInOpen={signInOpen}
         setSignInOpen={setSignInOpen}
       />
+
       <div className="aboutfarmlet-container">
         <div className="aboutfarmlet-content">
-          <img 
-            src={aboutImage} 
-            alt="About Farmlet" 
-            className="aboutfarmlet-image"
-          />
+       
         </div>
       </div>
+      <img
+  src="/Images/About.png"
+  alt="About Farmlet"
+  className="aboutfarmlet-image"
+  loading="eager"
+  decoding="sync"
+/>
+
+  
+
+
       <Footer />
     </div>
   );
