@@ -29,7 +29,7 @@ export default function Aboutfarmlet() {
         </div>
       </div>
       <img
-  src="/Images/About.png"
+  src="/Images/about.png"
   alt="About Farmlet"
   className="aboutfarmlet-image"
   loading="eager"
