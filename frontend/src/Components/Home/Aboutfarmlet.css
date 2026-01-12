@@ -2,16 +2,14 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100%;
 }
 
 .aboutfarmlet-container {
   flex: 1;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  padding: 40px 0;
 }
 
 .aboutfarmlet-content {
@@ -19,23 +17,8 @@
   max-width: 1600px;
 }
 
-/* 🔑 CRITICAL IMAGE FIX */
 .aboutfarmlet-image {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: contain;
-
-  /* Prevent repaint + lag */
-  will-change: transform;
-  backface-visibility: hidden;
 }
-.aboutfarmlet-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  will-change: transform;
-  image-rendering: auto;
-}
-
