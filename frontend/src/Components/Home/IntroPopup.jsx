@@ -33,7 +33,7 @@ export default function IntroPopup() {
           ✕
         </button> */}
 
-        <h1>Welcome to Farmlet 🌿</h1>
+        <h1>Welcome to Farmlet <span>🌿</span></h1>
 
         <p className="intro-subtext">
           We connect customers directly with farmers to deliver fresh, organic,
