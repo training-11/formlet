@@ -66,6 +66,17 @@ export default function AdminCategories() {
         }
     };
 
+    const getImageUrl = (url) => {
+        if (!url) return "";
+        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("data:")) {
+            return url;
+        }
+        if (url.startsWith("/uploads") || url.startsWith("/api/uploads")) {
+            return `${window.ENV.BACKEND_API}${url}`;
+        }
+        return url.startsWith("/") ? url : `/${url}`;
+    };
+
     return (
         <div className="admin-pincodes-container">
             <h2>Manage Categories</h2>
@@ -101,7 +112,7 @@ export default function AdminCategories() {
                     {categories.map((cat) => (
                         <tr key={cat.id}>
                             <td>
-                                {cat.image_url && <img src={cat.image_url} alt={cat.name} style={{ width: 40, height: 40, objectFit: 'cover' }} />}
+                                {cat.image_url && <img src={getImageUrl(cat.image_url)} alt={cat.name} style={{ width: 40, height: 40, objectFit: 'cover' }} />}
                             </td>
                             <td>{cat.name}</td>
                             <td>

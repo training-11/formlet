@@ -21,7 +21,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 // Also serve frontend public images if we want to fallback? No, let's stick to what we have.
 // Wait, the seed script used '/images/'. Those are in frontend.
 // The new uploaded images will be '/uploads/filename.jpg'.

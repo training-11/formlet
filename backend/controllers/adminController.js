@@ -228,7 +228,7 @@ export const addCategory = async (req, res) => {
         let { name, image_url } = req.body;
 
         if (req.file) {
-            image_url = "/uploads/" + req.file.filename;
+            image_url = "/api/uploads/" + req.file.filename;
         }
 
         if (!name) return res.status(400).json({ message: "Category name is required" });
@@ -302,7 +302,7 @@ export const addProduct = async (req, res) => {
         // Handle Image Upload
         let image_url = req.body.image_url || ""; // Default or from body
         if (req.file) {
-            image_url = "/uploads/" + req.file.filename;
+            image_url = "/api/uploads/" + req.file.filename;
         }
 
         if (!category_id || !name || !price) {
@@ -372,7 +372,7 @@ export const updateProduct = async (req, res) => {
 
     // Handle Image Upload
     if (req.file) {
-        image_url = "/uploads/" + req.file.filename;
+        image_url = "/api/uploads/" + req.file.filename;
     }
 
     const connection = await db.getConnection();

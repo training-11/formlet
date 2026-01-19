@@ -18,8 +18,8 @@ export const getProductImage = (product) => {
         return rawUrl;
     }
 
-    // 3. If it's an uploaded file (starts with /uploads), prepend BACKEND_API
-    if (rawUrl.startsWith("/uploads")) {
+    // 3. If it's an uploaded file (starts with /uploads or /api/uploads), prepend BACKEND_API
+    if (rawUrl.startsWith("/uploads") || rawUrl.startsWith("/api/uploads")) {
         // Ensure BACKEND_API is defined; fallback to empty string if not (relative path)
         const backendApi = window.ENV?.BACKEND_API || "";
         return `${backendApi}${rawUrl}`;
