@@ -261,7 +261,7 @@ export default function AdminInventory() {
         if (url.startsWith("http") || url.startsWith("https") || url.startsWith("data:")) {
             return url;
         }
-        if (url.startsWith("/uploads")) {
+        if (url.startsWith("/uploads") || url.startsWith("/api/uploads")) {
             return `${window.ENV.BACKEND_API}${url}`;
         }
         return url.startsWith("/") ? url : `/${url}`;
