@@ -105,15 +105,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px; 
+    padding: 12px; 
   }
 
 .intro-content {
     background-color: #f5ead8;
     width: 100%;
     max-width: 400px;
-    min-height: 75vh;     
-    max-height: 85vh;
+    /* min-height: 75vh;      */
+    /* max-height: 85vh; */
+     height: auto;            
+    max-height: 90vh; 
     padding: 32px 24px;
     border-radius: 22px;
     /* overflow-y: auto;      */
@@ -123,8 +125,8 @@
        color: #2f4f2f;
     font-size: 40px;
     line-height: 1.2;
-    margin-bottom: 6px;
-    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-top: 40px;
   }
 
   /* 🌿 Move leaf to next line */
@@ -155,7 +157,7 @@
     border-radius: 10px;
 
     display: block;
-    margin: 20px auto 0;     /* ✅ center horizontally */
+    margin: 50px auto 20px;   
   }
 }
 

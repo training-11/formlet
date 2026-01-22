@@ -446,3 +446,15 @@ body {
     gap: 18px;
   }
 }
+
+/* ===================================== */
+/* iPad Pro ONLY – force 3 columns       */
+/* ===================================== */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+
+  .products {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 22px;
+  }
+}
