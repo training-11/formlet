@@ -289,7 +289,7 @@ export default function CartSidebar({ isCheckoutPage = false }) {
 
     return (
         <>
-            <div className="cart-sidebar">            
+            <div className="cart-sidebar">
                 <div className="cart-header">
                     <h2 className="your-order-title">Your order</h2>
                     <div className="pincode-info">
@@ -316,7 +316,7 @@ export default function CartSidebar({ isCheckoutPage = false }) {
                             <div className="cart-item-details">
                                 <div className="cart-row-top">
                                     <span className="cart-item-name">{item.name}</span>
-                                    <button className="remove-btn" onClick={() => removeFromCart(item.name)}>×</button>
+                                    <button className="remove-btn" onClick={() => removeFromCart(item.cartId)}>×</button>
                                 </div>
 
                                 <div className="cart-row-bottom">
@@ -447,7 +447,7 @@ export default function CartSidebar({ isCheckoutPage = false }) {
                         product={editingProduct}
                         onClose={() => setIsEditModalOpen(false)}
                         onConfirm={(prod, qty, freq, startDate) => {
-                            updateCartItem(prod.name, qty, freq, startDate);
+                            updateCartItem(prod.cartId, qty, freq, startDate);
                             setIsEditModalOpen(false);
                         }}
                     />
