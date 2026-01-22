@@ -10,7 +10,12 @@ export const AuthProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(() => {
         try {
             const saved = localStorage.getItem("cartItems");
-            return saved ? JSON.parse(saved) : [];
+            let items = saved ? JSON.parse(saved) : [];
+            // Migration: Add cartId if missing
+            if (items.length > 0) {
+                items = items.map((item, idx) => item.cartId ? item : { ...item, cartId: Date.now() + idx + Math.random() });
+            }
+            return items;
         } catch (error) {
             console.error("Failed to parse cart items", error);
             return [];
@@ -145,30 +150,37 @@ export const AuthProvider = ({ children }) => {
 
     const addToCart = (product, quantity = 1, frequency = "Once only", startDate = null) => {
         setCartItems((prev) => {
-            const exist = prev.find((item) => item.name === product.name);
+            // Find existing item with exact same configuration (Same Name/ID + Frequency + StartDate)
+            const exist = prev.find((item) =>
+                item.name === product.name &&
+                item.frequency === frequency &&
+                (item.startDate === startDate || (!item.startDate && !startDate))
+            );
+
             if (exist) {
                 return prev.map((item) =>
-                    item.name === product.name
-                        ? { ...item, quantity: item.quantity + quantity, frequency: frequency, startDate: startDate || item.startDate } // Update freq if re-added? Or keep old? Let's overwrite.
+                    item.cartId === exist.cartId
+                        ? { ...item, quantity: item.quantity + quantity }
                         : item
                 );
             }
-            return [...prev, { ...product, quantity, frequency, startDate }];
+            // Add new item with unique cartId
+            return [...prev, { ...product, cartId: Date.now() + Math.random(), quantity, frequency, startDate }];
         });
     };
 
-    const updateCartItem = (productName, newQuantity, newFrequency, newStartDate = null) => {
+    const updateCartItem = (cartId, newQuantity, newFrequency, newStartDate = null) => {
         setCartItems((prev) =>
             prev.map((item) =>
-                item.name === productName
+                item.cartId === cartId
                     ? { ...item, quantity: newQuantity, frequency: newFrequency || item.frequency, startDate: newStartDate !== undefined ? newStartDate : item.startDate }
                     : item
             )
         );
     };
 
-    const removeFromCart = (productName) => {
-        setCartItems((prev) => prev.filter((item) => item.name !== productName));
+    const removeFromCart = (cartId) => {
+        setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
     };
 
     const clearCart = () => {
