@@ -824,3 +824,22 @@
     display: none;
   }
 }
+
+/* =============================== */
+/* iPad Pro submenu one-line fix   */
+/* =============================== */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+
+  .submenu {
+    gap: 50px !important;           /* reduce spacing */
+    flex-wrap: nowrap !important;   /* force single row */
+    overflow-x: hidden;
+  }
+
+  .submenu-item {
+    white-space: nowrap !important; /* prevent text wrapping */
+    font-size: 16px !important;     /* slightly smaller for long text */
+    padding: 0 10px !important;
+  }
+}

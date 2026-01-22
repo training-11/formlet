@@ -292,3 +292,30 @@ body {
   }
 }
 
+/* ===================================== */
+/* iPad Pro – reduce large top gap ONLY  */
+/* 1024×1366 (portrait) & 1366×1024      */
+/* ===================================== */
+@media (width: 1024px) and (orientation: portrait),
+       (width: 1366px) and (orientation: landscape) {
+
+  .hero-features {
+    margin-top: -460px !important;   
+    padding-top: 20px !important;    
+    padding-bottom: 40px !important; 
+    gap: 180px !important;          
+    align-items: flex-start;
+  }
+
+  .hero-features .feature-box img {
+    width: 110px !important;        
+    margin-bottom: 8px;
+  }
+
+  .hero-features .feature-box p {
+    font-size: 22px !important;
+    line-height: 1.2;
+  }
+}
+
+
